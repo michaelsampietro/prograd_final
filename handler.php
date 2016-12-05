@@ -22,33 +22,7 @@
                     $array = array( 'Jatai' => 0,'Goiânia' => 0,'Goiás' => 0,'Catalão' => 0);
                     $sql = "SELECT COUNT(Estudante) AS count_est FROM `$ano` WHERE municipio=";
                     grafico_1($array, $sql); ?>],
-                            backgroundColor: [
-                            	'rgba(54, 162, 235, .7)',
-                            	'rgba(54, 162, 235, .7)',
-                            	'rgba(54, 162, 235, .7)',
-                            	'rgba(54, 162, 235, .7)',
-                            	'rgba(54, 162, 235, .7)'
-                            ],
-                            borderColor: [
-                                'rgba(0, 0, 0, .5)',
-                            	'rgba(0, 0, 0, .5)',
-                            	'rgba(0, 0, 0, .5)',
-                            	'rgba(0, 0, 0, .5)',
-                            	'rgba(0, 0, 0, .5)'
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero:true
-                                }
-                            }]
-                        }
-                    }
-                });
+                    opcoes_grafico();
             </script>
         </div>
         </div>
@@ -68,25 +42,7 @@
                     $array = array( 'BACHARELADO' => 0,'BACHARELADO E LIC.' => 0,'GRAU NÃO DEFINIDO' => 0,'LICENCIATURA' => 0);
                     $sql = "SELECT COUNT(Estudante) AS count_est FROM `$ano` WHERE grau_academico=";
                     grafico_1($array, $sql); ?>],
-                            backgroundColor: [
-                            	'rgba(54, 162, 235, .7)',
-                            	'rgba(54, 162, 235, .7)',
-                            	'rgba(54, 162, 235, .7)',
-                            	'rgba(54, 162, 235, .7)',
-                            	'rgba(54, 162, 235, .7)'
-                            ],
-                            borderColor: [
-                                'rgba(0, 0, 0, .5)',
-                            	'rgba(0, 0, 0, .5)',
-                            	'rgba(0, 0, 0, .5)',
-                            	'rgba(0, 0, 0, .5)',
-                            	'rgba(0, 0, 0, .5)'
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: { scales: { yAxes: [{ ticks: { beginAtZero:true} }] } }
-                });
+                    opcoes_grafico();
             </script>
         </div>
         <!-- end of chart -->
@@ -111,25 +67,7 @@
                     $array = array( 'BACHARELADO' => 0,'BACHARELADO E LIC.' => 0,'GRAU NÃO DEFINIDO' => 0,'LICENCIATURA' => 0);
                     $sql = "SELECT COUNT(Estudante) AS count_est FROM `$ano` WHERE Regional='Catalao' and grau_academico=";
                     grafico_1($array, $sql); ?>],
-                            backgroundColor: [
-                            	'rgba(54, 162, 235, .7)',
-                            	'rgba(54, 162, 235, .7)',
-                            	'rgba(54, 162, 235, .7)',
-                            	'rgba(54, 162, 235, .7)',
-                            	'rgba(54, 162, 235, .7)'
-                            ],
-                            borderColor: [
-                                'rgba(0, 0, 0, .5)',
-                            	'rgba(0, 0, 0, .5)',
-                            	'rgba(0, 0, 0, .5)',
-                            	'rgba(0, 0, 0, .5)',
-                            	'rgba(0, 0, 0, .5)'
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: { scales: { yAxes: [{ ticks: { beginAtZero:true} }] } }
-                });
+                    opcoes_grafico();
             </script>
         </div>
         <!-- end of chart -->
