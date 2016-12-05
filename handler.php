@@ -152,25 +152,7 @@ POR GRAU ACADÊMICO NA REGIONAL GOIÂNIA</h3>
                     $array = array( 'BACHARELADO' => 0,'BACHARELADO E LIC.' => 0,'GRAU NÃO DEFINIDO' => 0,'LICENCIATURA' => 0);
                     $sql = "SELECT COUNT(Estudante) AS count_est FROM `$ano` WHERE Regional='Goiania' and grau_academico=";
                     grafico_1($array, $sql); ?>],
-                            backgroundColor: [
-                            	'rgba(54, 162, 235, .7)',
-                            	'rgba(54, 162, 235, .7)',
-                            	'rgba(54, 162, 235, .7)',
-                            	'rgba(54, 162, 235, .7)',
-                            	'rgba(54, 162, 235, .7)'
-                            ],
-                            borderColor: [
-                                'rgba(0, 0, 0, .5)',
-                            	'rgba(0, 0, 0, .5)',
-                            	'rgba(0, 0, 0, .5)',
-                            	'rgba(0, 0, 0, .5)',
-                            	'rgba(0, 0, 0, .5)'
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: { scales: { yAxes: [{ ticks: { beginAtZero:true} }] } }
-                });
+                    opcoes_grafico();
             </script>
         </div>
         <!-- end of chart -->

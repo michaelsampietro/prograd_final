@@ -30,6 +30,30 @@ function dropdownAnos () {
   echo $str;
 }
 
+  function opcoes_grafico () {
+    $str = 'backgroundColor: [
+                              'rgba(54, 162, 235, .7)',
+                              'rgba(54, 162, 235, .7)',
+                              'rgba(54, 162, 235, .7)',
+                              'rgba(54, 162, 235, .7)',
+                              'rgba(54, 162, 235, .7)'
+                            ],
+                            borderColor: [
+                                'rgba(0, 0, 0, .5)',
+                              'rgba(0, 0, 0, .5)',
+                              'rgba(0, 0, 0, .5)',
+                              'rgba(0, 0, 0, .5)',
+                              'rgba(0, 0, 0, .5)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: { scales: { yAxes: [{ ticks: { beginAtZero:true} }] } }
+                });'
+
+    echo $str;
+  }
+
 	// Função geral para gerar gráficos. 
 	// Parametros: 
 	// $sql: string que define qual será a consulta sql
@@ -74,7 +98,7 @@ function dropdownAnos () {
 		echo ($str);
 	}
 
-  
+
 
 
 ?>
