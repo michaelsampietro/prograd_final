@@ -114,6 +114,29 @@
         </div>
     </div>
 
+    <div class='row'>
+        <div>
+            <h3 align="middle">NÚMERO DE ESTUDANTES MATRICULADOS EM ABRIL DE 2016
+                POR GRAU ACADÊMICO NA REGIONAL JATAÍ
+            </h3>
+            <canvas id="myChart5" width="auto" height="auto"></canvas>
+            <script>
+                var ctx = document.getElementById("myChart5");
+                var myChart5 = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ["Bacharelado", "Bacharelado/Licenciatura", "Grau Não Definido", "Licenciatura", "Total"],
+                        datasets: [{
+                            label: 'Número de estudantes',
+                            data: [<?php
+                    $array = array( 'BACHARELADO' => 0,'BACHARELADO E LIC.' => 0,'GRAU NÃO DEFINIDO' => 0,'LICENCIATURA' => 0);
+                    $sql = "SELECT COUNT(Estudante) AS count_est FROM `$ano` WHERE Regional='Jatai' and grau_academico=";
+                    grafico_1($array, $sql); ?>],
+                    <?php opcoes_grafico(); ?>;
+            </script>
+        </div>
+    </div>
+
 </div>
 <?php
     require_once 'includes/footer.php';
