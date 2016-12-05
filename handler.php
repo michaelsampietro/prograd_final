@@ -22,7 +22,7 @@
                     $array = array( 'Jatai' => 0,'Goiânia' => 0,'Goiás' => 0,'Catalão' => 0);
                     $sql = "SELECT COUNT(Estudante) AS count_est FROM `$ano` WHERE municipio=";
                     grafico_1($array, $sql); ?>],
-                    opcoes_grafico();
+                    <?php opcoes_grafico(); ?>;
             </script>
         </div>
         </div>
@@ -42,7 +42,7 @@
                     $array = array( 'BACHARELADO' => 0,'BACHARELADO E LIC.' => 0,'GRAU NÃO DEFINIDO' => 0,'LICENCIATURA' => 0);
                     $sql = "SELECT COUNT(Estudante) AS count_est FROM `$ano` WHERE grau_academico=";
                     grafico_1($array, $sql); ?>],
-                    opcoes_grafico();
+                    <?php opcoes_grafico(); ?>;
             </script>
         </div>
         <!-- end of chart -->
@@ -67,7 +67,7 @@
                     $array = array( 'BACHARELADO' => 0,'BACHARELADO E LIC.' => 0,'GRAU NÃO DEFINIDO' => 0,'LICENCIATURA' => 0);
                     $sql = "SELECT COUNT(Estudante) AS count_est FROM `$ano` WHERE Regional='Catalao' and grau_academico=";
                     grafico_1($array, $sql); ?>],
-                    opcoes_grafico();
+                    <?php opcoes_grafico(); ?>;
             </script>
         </div>
         <!-- end of chart -->
@@ -90,7 +90,7 @@ POR GRAU ACADÊMICO NA REGIONAL GOIÂNIA</h3>
                     $array = array( 'BACHARELADO' => 0,'BACHARELADO E LIC.' => 0,'GRAU NÃO DEFINIDO' => 0,'LICENCIATURA' => 0);
                     $sql = "SELECT COUNT(Estudante) AS count_est FROM `$ano` WHERE Regional='Goiania' and grau_academico=";
                     grafico_1($array, $sql); ?>],
-                    opcoes_grafico();
+                    <?php opcoes_grafico(); ?>;
             </script>
         </div>
         <!-- end of chart -->
