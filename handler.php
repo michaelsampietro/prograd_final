@@ -7,7 +7,7 @@
 <!-- Estrutura básica da biblioteca de Chart JS para criar um gráfico -->
 <div class="container">
     <div class="row">
-        <div class="grafico col-md-6 col-xs-5">
+        <div class="grafico col-md-6">
             <h3 align="middle">Número de estudantes matriculados em abril de 2016 por regional</h3>
             <canvas id="myChart" width="auto" height="auto"></canvas>
             <script>
