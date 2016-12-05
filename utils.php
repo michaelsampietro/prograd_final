@@ -31,7 +31,7 @@ function dropdownAnos () {
 }
 
   function opcoes_grafico () {
-    $str = 'backgroundColor: [
+    $str = "backgroundColor: [
                               'rgba(54, 162, 235, .7)',
                               'rgba(54, 162, 235, .7)',
                               'rgba(54, 162, 235, .7)',
@@ -49,7 +49,7 @@ function dropdownAnos () {
                         }]
                     },
                     options: { scales: { yAxes: [{ ticks: { beginAtZero:true} }] } }
-                });'
+                });"
 
     echo $str;
   }
