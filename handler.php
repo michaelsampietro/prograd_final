@@ -21,7 +21,7 @@
                             data: [<?php
                     $array = array( 'Jatai' => 0,'Goiânia' => 0,'Goiás' => 0,'Catalão' => 0);
                     $sql = "SELECT COUNT(Estudante) AS count_est FROM `$ano` WHERE municipio=";
-                    graficoTeste($array, $sql); ?>],
+                    grafico_1($array, $sql); ?>],
                             backgroundColor: [
                             	'rgba(54, 162, 235, .7)',
                             	'rgba(54, 162, 235, .7)',
@@ -65,7 +65,7 @@
                             data: [<?php
                     $array = array( 'BACHARELADO' => 0,'BACHARELADO E LIC.' => 0,'GRAU NÃO DEFINIDO' => 0,'LICENCIATURA' => 0);
                     $sql = "SELECT COUNT(Estudante) AS count_est FROM `$ano` WHERE grau_academico=";
-                    graficoTeste($array, $sql); ?>],
+                    grafico_1($array, $sql); ?>],
                             backgroundColor: [
                             	'rgba(54, 162, 235, .7)',
                             	'rgba(54, 162, 235, .7)',
@@ -107,7 +107,6 @@
                             label: 'Número de estudantes',
                             data: [<?php
                     $array = array( 'BACHARELADO' => 0,'BACHARELADO E LIC.' => 0,'GRAU NÃO DEFINIDO' => 0,'LICENCIATURA' => 0);
-                    $sql = "SELECT COUNT(Estudante) AS count_est FROM `$ano` WHERE grau_academico=";
                     graficoTeste($array, $sql); ?>],
                             backgroundColor: [
                             	'rgba(54, 162, 235, .7)',
