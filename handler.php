@@ -25,8 +25,8 @@
                     <?php opcoes_grafico(); ?>;
             </script>
         </div>
-        </div>
-        <div class='row'>
+    </div>
+    <div class='row'>
         <div >
             <h3 align="middle">Número de estudantes matriculados em abril de 2016 por regional</h3>
             <canvas id="myChart2" width="auto" height="auto"></canvas>
@@ -45,12 +45,8 @@
                     <?php opcoes_grafico(); ?>;
             </script>
         </div>
-        <!-- end of chart -->
     </div>
-    <!-- end of row -->
-    <!-- new row -->
-    <!-- Grafico referente ao
-    	NÚMERO DE ESTUDANTES MATRICULADOS EM ABRIL DE 2016 POR GRAU ACADÊMICO NA REGIONAL CATALÃO -->
+
     <div class='row'>
         <div>
             <h3 align="middle">Número de estudantes matriculados em abril de 2016 por grau acadêmico na regional Catalão</h3>
@@ -70,13 +66,13 @@
                     <?php opcoes_grafico(); ?>;
             </script>
         </div>
-        <!-- end of chart -->
     </div>
 
     <div class='row'>
         <div>
             <h3 align="middle">NÚMERO DE ESTUDANTES MATRICULADOS EM ABRIL DE 2016
-POR GRAU ACADÊMICO NA REGIONAL GOIÂNIA</h3>
+                POR GRAU ACADÊMICO NA REGIONAL GOIÂNIA
+            </h3>
             <canvas id="myChart4" width="auto" height="auto"></canvas>
             <script>
                 var ctx = document.getElementById("myChart4");
@@ -93,11 +89,32 @@ POR GRAU ACADÊMICO NA REGIONAL GOIÂNIA</h3>
                     <?php opcoes_grafico(); ?>;
             </script>
         </div>
-        <!-- end of chart -->
     </div>
-</div>
 
+    <div class='row'>
+        <div>
+            <h3 align="middle">NÚMERO DE ESTUDANTES MATRICULADOS EM ABRIL DE 2016
+                POR GRAU ACADÊMICO NA REGIONAL GOIÂNIA
+            </h3>
+            <canvas id="myChart5" width="auto" height="auto"></canvas>
+            <script>
+                var ctx = document.getElementById("myChart5");
+                var myChart5 = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ["Bacharelado", "Bacharelado/Licenciatura", "Grau Não Definido", "Licenciatura", "Total"],
+                        datasets: [{
+                            label: 'Número de estudantes',
+                            data: [<?php
+                    $array = array( 'BACHARELADO' => 0,'BACHARELADO E LIC.' => 0,'GRAU NÃO DEFINIDO' => 0,'LICENCIATURA' => 0);
+                    $sql = "SELECT COUNT(Estudante) AS count_est FROM `$ano` WHERE Regional='Goias' and grau_academico=";
+                    grafico_1($array, $sql); ?>],
+                    <?php opcoes_grafico(); ?>;
+            </script>
+        </div>
+    </div>
+
+</div>
 <?php
     require_once 'includes/footer.php';
     ?>
-
