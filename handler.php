@@ -107,6 +107,7 @@
                             label: 'Número de estudantes',
                             data: [<?php
                     $array = array( 'BACHARELADO' => 0,'BACHARELADO E LIC.' => 0,'GRAU NÃO DEFINIDO' => 0,'LICENCIATURA' => 0);
+                    $sql = "SELECT COUNT(Estudante) AS count_est FROM `$ano` WHERE Regional='Catalão' and grau_academico=";
                     graficoTeste($array, $sql); ?>],
                             backgroundColor: [
                             	'rgba(54, 162, 235, .7)',
