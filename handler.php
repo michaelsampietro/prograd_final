@@ -119,10 +119,10 @@
             <h3 align="middle">NÚMERO DE ESTUDANTES MATRICULADOS EM ABRIL DE 2016
                 POR GRAU ACADÊMICO NA REGIONAL JATAÍ
             </h3>
-            <canvas id="myChart5" width="auto" height="auto"></canvas>
+            <canvas id="myChart6" width="auto" height="auto"></canvas>
             <script>
-                var ctx = document.getElementById("myChart5");
-                var myChart5 = new Chart(ctx, {
+                var ctx = document.getElementById("myChart6");
+                var myChart6 = new Chart(ctx, {
                     type: 'bar',
                     data: {
                         labels: ["Bacharelado", "Bacharelado/Licenciatura", "Grau Não Definido", "Licenciatura", "Total"],
