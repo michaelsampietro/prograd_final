@@ -1,0 +1,26 @@
+.navbar img {
+	height: 250%;
+}
+
+#relatorios {
+	font-size: 2.0em;
+	padding-top: 30px;
+}
+
+.navbar {
+	height: 80px;
+}
+
+.grafico {
+	height: 700px;
+	width: 700px;
+}
+
+footer {
+	clear: both;
+	bottom: 0;
+}
+
+.panel { 
+	text-align: justify;
+ }
