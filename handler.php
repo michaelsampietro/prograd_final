@@ -20,7 +20,7 @@
                             label: 'Número de estudantes',
                             data: [<?php
                     $array = array( 'Jatai' => 0,'Goiânia' => 0,'Goiás' => 0,'Catalão' => 0);
-                    $sql = "SELECT COUNT(Estudante) AS count_est FROM `$ano` WHERE municipio=";
+                    $sql = "SELECT COUNT(Estudante) AS count_est FROM `$ano` WHERE municipio='";
                     grafico_1($array, $sql); ?>],
                             backgroundColor: [
                             	'rgba(54, 162, 235, .7)',
@@ -96,10 +96,10 @@
     <div class='row'>
         <div class="grafico col-md-6">
             <h3 align="middle">Número de estudantes matriculados em abril de 2016 por grau acadêmico na regional Catalão</h3>
-            <canvas id="myChart2" width="auto" height="auto"></canvas>
+            <canvas id="myChart3" width="auto" height="auto"></canvas>
             <script>
-                var ctx = document.getElementById("myChart2");
-                var myChart2 = new Chart(ctx, {
+                var ctx = document.getElementById("myChart3");
+                var myChart3 = new Chart(ctx, {
                     type: 'bar',
                     data: {
                         labels: ["Bacharelado", "Bacharelado/Licenciatura", "Grau Não Definido", "Licenciatura", "Total"],
