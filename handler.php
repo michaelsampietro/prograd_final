@@ -52,7 +52,7 @@
             </script>
         </div>
         </div>
-        <div class='row'></div>
+        <div class='row'>
         <div class="grafico col-md-6">
             <h3 align="middle">Número de estudantes matriculados em abril de 2016 por regional</h3>
             <canvas id="myChart2" width="auto" height="auto"></canvas>
