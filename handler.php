@@ -94,7 +94,7 @@
     <div class='row'>
         <div>
             <h3 align="middle">NÚMERO DE ESTUDANTES MATRICULADOS EM ABRIL DE 2016
-                POR GRAU ACADÊMICO NA REGIONAL GOIÂNIA
+                POR GRAU ACADÊMICO NA REGIONAL GOIAS
             </h3>
             <canvas id="myChart5" width="auto" height="auto"></canvas>
             <script>
