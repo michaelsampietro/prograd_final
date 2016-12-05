@@ -49,7 +49,7 @@ function dropdownAnos () {
                         }]
                     },
                     options: { scales: { yAxes: [{ ticks: { beginAtZero:true} }] } }
-                });"
+                });";
 
     echo $str;
   }
