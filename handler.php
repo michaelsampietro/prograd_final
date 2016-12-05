@@ -135,7 +135,7 @@
         <!-- end of chart -->
     </div>
 </div>
-<button id="printbutton" onclick="window.print();" />
+
 <?php
 	
     require_once 'includes/footer.php';
