@@ -34,7 +34,7 @@ function dropdownAnos () {
 	// Parametros: 
 	// $where: string que define qual será a clausula 'where ...' da consulta SQL
 	// $array: array que contém os dados das legendas (regionais, graus academicos, etc)
-	function graficoTeste ($array, $sql) {
+	function grafico_1 ($array, $sql) {
 		$conn = connect();
 		$ano = htmlspecialchars($_POST['anos']);
 
@@ -73,5 +73,11 @@ function dropdownAnos () {
  		$conn->close();
 		echo ($str);
 	}
+
+  function grafico_2 ($array) {
+    $conn = connect();
+    $ano = htmlspecialchars($_POST['anos']);
+
+  }
 
 ?>
