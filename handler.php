@@ -20,7 +20,7 @@
                             label: 'Número de estudantes',
                             data: [<?php
                     $array = array( 'Jatai' => 0,'Goiânia' => 0,'Goiás' => 0,'Catalão' => 0);
-                    $sql = "SELECT COUNT(Estudante) AS count_est FROM `$ano` WHERE municipio=";
+                    $sql = "SELECT COUNT(Estudante) AS count_est FROM `$ano` WHERE municipio='";
                     grafico_1($array, $sql); ?>],
                             backgroundColor: [
                             	'rgba(54, 162, 235, .7)',
