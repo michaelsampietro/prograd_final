@@ -28,7 +28,7 @@
     </div>
     <div class='row'>
         <div >
-            <h3 align="middle">Número de estudantes matriculados em abril de 2016 por regional</h3>
+            <h3 align="middle">Número de estudantes matriculados em abril de 2016 por grau acadêmico</h3>
             <canvas id="myChart2" width="auto" height="auto"></canvas>
             <script>
                 var ctx = document.getElementById("myChart2");
@@ -133,6 +133,22 @@
                     $sql = "SELECT COUNT(Estudante) AS count_est FROM `$ano` WHERE Regional='Jatai' and grau_academico=";
                     graficoBarra($array, $sql); ?>],
                     <?php opcoes_grafico(); ?>;
+            </script>
+        </div>
+    </div>
+
+    <div class='row'>
+        <div>
+            <h3 align="middle">NÚMERO DE ESTUDANTES MATRICULADOS EM ABRIL DE 2016
+                POR GRAU ACADÊMICO NA REGIONAL JATAÍ
+            </h3>
+            <canvas id="myChart7" width="auto" height="auto"></canvas>
+            <script>
+                var ctx = document.getElementById("myChart7");
+                var myLineChart = Chart.Line(ctx, {
+                    data: data,
+                    options: options
+                });
             </script>
         </div>
     </div>
