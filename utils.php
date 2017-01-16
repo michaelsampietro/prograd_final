@@ -58,7 +58,7 @@ function dropdownAnos () {
 	// Parametros: 
 	// $sql: string que define qual será a consulta sql
 	// $array: array que contém os dados das legendas (regionais, graus academicos, etc)
-	function grafico_1 ($array, $sql) {
+	function graficoBarra ($array, $sql) {
 		$conn = connect();
 		$ano = htmlspecialchars($_POST['anos']);
 
