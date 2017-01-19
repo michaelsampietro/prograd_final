@@ -1,5 +1,9 @@
-<?php require_once('includes/header.php'); ?>
-
+<?php ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+    
+    require_once('includes/header.php');
+    require_once('utils.php');  ?>
 <div class='container'>
     <div class="row">
         <div class="col-xs-12 col-md-5">
@@ -20,7 +24,7 @@
                             </label>
                             <select class='form-control' id='sel1' name='anos'>
                                 <!-- Função para gerar um dropdown com anos -->
-                                <?php require_once( 'utils.php'); dropdownAnos(); ?>
+                                <?php dropdownAnos(); ?>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Ver relatórios</button>
@@ -30,5 +34,4 @@
         </div>
     </div>
 </div>
-
 <?php require_once('includes/footer.php'); ?>

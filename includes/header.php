@@ -8,12 +8,13 @@
 	  	<!-- Arquivo CSS -->
 	  	<link rel="stylesheet" type="text/css" href="style.css">
 
-	  	<!-- Arquivo de gráficos -->
+	  	<!-- Google Visualization API -->
+ 		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+	  	<!-- Chart.js -->
 	  	<script src="charts/Chart.js"></script>
 
-	  	<!-- API Google para criação de gráficos -->
-  		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
+  		<!-- Arquivos Bootstrap -->
 	  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
