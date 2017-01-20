@@ -188,12 +188,6 @@ $arrayGrauAcademico = array(
         google.charts.setOnLoadCallback(drawChart);
         
         function drawChart() {
-            //Pega os anos (tabelas) existentes no banco de dados para utilizar na variável data abaixo para poder inserir os dados.
-            var vetorAnos = [ <?php  
-                $sql = 'SHOW TABLES';
-                $vetor = array(consultaSimples($sql));
-            ?> ];
-
             // Desenha o gráfico de linhas múltiplas correspondente ao número de cursos por regional.
             var data = google.visualization.arrayToDataTable([
             ["Anos", 'Goiânia', 'Jataí ', 'Catalão', 'Goiás', 'Total'],
@@ -211,7 +205,7 @@ $arrayGrauAcademico = array(
             
             <?php
             $sql = "SHOW TABLES";
-            $arrayAnos = consultaSimplesRetornaViaPost ($sql);
+            $arrayAnos = consultaSimplesRetornaArray ($sql);
 
             foreach ($arrayAnos as $key => $ano) {
                 $sql = "SELECT COUNT(distinct curso) AS count FROM `$ano` WHERE regional=";
