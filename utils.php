@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
     function connect() {
       $host = 'localhost';
       $user = 'root';
@@ -19,6 +22,7 @@
       
       $conn = connect();
       $tabelas = $conn->query('SHOW TABLES');
+      //$tabelas = $conn->query("SELECT distinct(ano_ingresso) from `2016-1` order by ano_ingresso desc ");
       
       $str = "";
       while ($tabela = $tabelas->fetch_array()) {
@@ -73,7 +77,7 @@
     
                 
                 while($row = $result->fetch_assoc()) {
-                    $array[$key] = $row["count_est"];
+                    $array[$key] = $row["count"];
                 }
             }
     
@@ -97,15 +101,33 @@
         echo ($str);
       }
     
+      // Retorna uma consulta como um array
       function consultaSimples ($sql) {
         $conn = connect();
         $ano = htmlspecialchars($_POST['anos']);
-    
-        $res = $conn->query($sql);
-        if (!$res) 
-          echo $conn->error();
-    
-        $conn->close();
-        echo $res;
+        
+        if ($query = $conn->query($sql)) {
+          $resultado = $query->fetch_all();
+        }
       } 
+
+      function consultaSimplesRetornaViaPost ($sql) {
+        //Conectando ao banco
+        $conn = connect();
+
+        $arrayResultados = array();
+        // Realiza consulta e fetch todos os resultados na variável resultado
+        if ($query = $conn->query($sql)) {
+          $resultado = $query->fetch_all();
+          foreach ($resultado as $key => $value) {
+            foreach ($value as $key => $ano) {
+              array_push($arrayResultados, $ano);
+            }
+          }
+        }
+
+        return $arrayResultados;
+        $conn->close();
+      }
+
     ?>
