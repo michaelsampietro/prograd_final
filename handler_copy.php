@@ -211,17 +211,16 @@ $arrayGrauAcademico = array(
             
             <?php
             $sql = "SHOW TABLES";
-            $arrayAnos = consultaSimplesRetornaViaPost ($sql);
+            $arrayAnos = consultaSimplesRetornaArray ($sql);
 
             foreach ($arrayAnos as $key => $ano) {
-                $sql = "SELECT COUNT(distinct curso) AS count FROM `$ano` WHERE regional=";
-                echo "['$ano',";
-                chartData($arrayUnidades, $sql);
-                if ($ano < $anoSelecionadoPOST)
+                if ($ano <= $anoSelecionadoPOST) {
+                    $sql = "SELECT COUNT(distinct curso) AS count FROM `$ano` WHERE regional=";
+                    echo "['$ano',";
+                    chartData($arrayUnidades, $sql);
                     echo "],\n";
-                else 
-                    echo "]";
-            } 
+                }
+            }
             ?> ]);
 
           var options = {
@@ -233,19 +232,6 @@ $arrayGrauAcademico = array(
           chart.draw(data, options);  
       }
     </script>
-
-    
-<?php 
-    
-    ?> 
-
-
-
-
-
-
-
-
 
 
     <!-- Tabela com o número de vagas ofertadas por regional -->
@@ -344,6 +330,7 @@ $arrayGrauAcademico = array(
     function insereTabelaVagasRegional() {
 
         var tamanhoTabela = document.getElementById("tabelaVagasRegional").rows.length;
+        
         var vetorDados = [
             <?php
                 /* Faz pesquisa e retorna um array com ano e qtd de vagas. */
