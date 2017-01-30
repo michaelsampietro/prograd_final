@@ -17,7 +17,7 @@
         <div class="col-xs-12 col-md-offset-1 col-md-5">
             <div class='panel panel-default'>
                 <div class='panel-body'>
-                    <form action="handler_copy.php" method="post">
+                    <form action="handler.php" method="post">
                         <div class='form-group'>
                             <label for='sel1'>
                                 <h3>Escolha um ano abaixo:</h3>

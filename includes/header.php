@@ -21,6 +21,20 @@
 
   		<!-- Jquery -->
   		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  		<script type="text/javascript">
+  			//create trigger to resizeEnd event     
+			$(window).resize(function() {
+			    if(this.resizeTO) clearTimeout(this.resizeTO);
+			    this.resizeTO = setTimeout(function() {
+			        $(this).trigger('resizeEnd');
+			    }, 500);
+			});
+
+			//redraw graph when window resize is completed  
+			$(window).on('resizeEnd', function() {
+			    drawChart();
+			});
+  		</script>
 
 	</head>
 
