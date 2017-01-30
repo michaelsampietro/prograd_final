@@ -149,7 +149,7 @@ function consultaSimplesRetornaString($sql)
   $conn = connect();
 
   $result = $conn->query($sql);
-  if (!$result) 
+  if (!$result)
     echo $conn->error;
 
   $aux = 0;

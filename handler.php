@@ -28,9 +28,16 @@ $arrayAcaoAfirmativa = array(
     'UFGInclui - Quilombola' => 0,
     'UFGInclui - Surdo' => 0,
 );
+$arrayRendas = array(
+    '(DC Renda Inferior)' => 0,
+    '(PPI Renda Inferior)' => 0,
+    '(DC Renda Superior)' => 0,
+    '(PPI Renda Superior)' => 0,
+);
+
 ?>
 
-<div class="container">
+<div class="container" style="margin: 0 auto;">
     <!-- Gráfico com o numero de estudantes matriculados em abril de 2016 por regional -->
     <div class="row">
         <div>
@@ -463,7 +470,7 @@ $arrayAcaoAfirmativa = array(
                     echo $res = consultaSimplesRetornaString($sql);
                 }
                 // Faz a consulta que retorna a porcentagem de estudantes femininos em todas as regionais (TOTAL)
-                $sql = "SELECT count(*) * 100.0 / ( SELECT COUNT(Estudante) FROM `2016-1` ) AS count FROM `2016-1` WHERE sexo = 'feminino'";
+                $sql = "SELECT count(*) * 100.0 / ( SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` ) AS count FROM `$anoSelecionadoPOST` WHERE sexo = 'feminino'";
                 echo $res = consultaSimplesRetornaString($sql);
             ?>]
             },
@@ -476,7 +483,7 @@ $arrayAcaoAfirmativa = array(
                     
                     echo $res = consultaSimplesRetornaString($sql);
                 }
-                $sql = "SELECT count(*) * 100.0 / ( SELECT COUNT(Estudante) FROM `2016-1` ) AS count FROM `2016-1` WHERE sexo = 'masculino'";
+                $sql = "SELECT count(*) * 100.0 / ( SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` ) AS count FROM `$anoSelecionadoPOST` WHERE sexo = 'masculino'";
                 echo $res = consultaSimplesRetornaString($sql);
             ?>]
             }
@@ -766,7 +773,7 @@ $arrayAcaoAfirmativa = array(
 
     </script>
 
-    <!-- Tabela com a faix das médias globais usadas nos gráficos -->
+    <!-- Tabela com a faixa das médias globais usadas nos gráficos -->
     <h3 class="text-center">Faixas das médias globais usadas nas próximas tabelas</h3>
     <table class="table table-responsive text-center col-xs-6">
     <thead>
@@ -894,7 +901,7 @@ $arrayAcaoAfirmativa = array(
     <!-- Gráfico do número de estudantes c/ ação afirmativa , que ingressaram até 2012 -->
     <div class="row">
         <div>
-            <h3 align="middle">Número De Estudantes Matriculados Em Abril De 2016 Por Ação Afirmativa Na Ufg Com Ingresso Até 2012 (Anterior a Lei De Cotas)</h3>
+            <h3 align="middle">Número De Estudantes Matriculados Em <?php echo $anoSelecionadoPOST; ?> Por Ação Afirmativa Na Ufg Com Ingresso Até 2012 (Anterior a Lei De Cotas)</h3>
             <canvas id="myChart10" style="width: 900px; height: 500px"></canvas>
             <script>
                 var ctx = document.getElementById("myChart10");
@@ -934,11 +941,10 @@ $arrayAcaoAfirmativa = array(
         </div>
     </div>
 
-
-    <!-- Gráfico DA PORCENTAGEM de estudantes c/ ação afirmativa , que ingressaram até 2012 -->
+    <!-- Gráfico DA PORCENTAGEM (GRAFICO PIZZA) de estudantes c/ ação afirmativa , que ingressaram até 2012 -->
     <div class="row">
         <div>
-            <h3 align="middle">Porcentagem De Estudantes Matriculados Em Abril De 2016 Por Ação Afirmativa Na Ufg Com Ingresso Até 2012 (Anterior a Lei De Cotas)</h3>
+            <h3 align="middle">Porcentagem De Estudantes Matriculados Em <?php echo $anoSelecionadoPOST; ?> Por Ação Afirmativa Na Ufg Com Ingresso Até 2012 (Anterior a Lei De Cotas)</h3>
             <canvas id="myChart11" style="width: 900px; height: 500px"></canvas>
             <script>
                 var ctx = document.getElementById("myChart11");
@@ -992,53 +998,586 @@ $arrayAcaoAfirmativa = array(
 
     <!-- Tabela acao afirmativa -->
     <div class="row">
-        <table class="table table-responsive text-center">
-            <tr>
-                <th rowspan="2">Regional</th>
-                <th colspan="5">Lei de Cotas</th>
-                <th colspan="3">Programa UFGInclui 2013 a 2015</th>
-            </tr>
-            <tr>
-                <td>AC</td>
-                <td>L1<br>(Baixa renda)</td>
-                <td>L2<br>(Baixa Renda PPI)</td>
-                <td>L3<br>(Independente da Renda</td>
-                <td>L4<br>(Independente da renda PPI)</td>
-                <td>Vagas Extra para Indígena</td>
-                <td>Vaga Extra para Quilombola</td>
-                <td>Reserva de 15 vagas para Surdo</td>
-            </tr>
-            <?php
-            foreach ($arrayUnidades as $unidade => $value) : ?>
-            <tr>
-                <td><?php echo $unidade; ?></td>
+        <div>
+            <h3 class="text-center">Numero De Estudantes Matriculados <?php echo $anoSelecionadoPOST;?> Por Ação Afirmativa Por Regional Com Ingresso a Partir De 2013 (Lei De Cotas E Programa UFGInclui)</h3>
+            <table class="table table-responsive text-center">
+                <tr>
+                    <th rowspan="2" class="text-center" style="vertical-align: middle;">Regional</th>
+                    <th colspan="5" class="text-center" style="vertical-align: middle;">Lei de Cotas</th>
+                    <th colspan="3" class="text-center" style="vertical-align: middle;">Programa UFGInclui 2013 a 2015</th>
+                </tr>
+                <tr>
+                    <th class="text-center" style="vertical-align: middle;">AC</th>
+                    <th class="text-center" style="vertical-align: middle;">L1<br>(Baixa renda)</th>
+                    <th class="text-center" style="vertical-align: middle;">L2<br>(Baixa Renda PPI)</th>
+                    <th class="text-center" style="vertical-align: middle;">L3<br>(Independente da Renda</th>
+                    <th class="text-center" style="vertical-align: middle;">L4<br>(Independente da Renda PPI)</th>
+                    <th class="text-center" style="vertical-align: middle;">Vagas Extras Para Indígenas</th>
+                    <th class="text-center" style="vertical-align: middle;">Vagas Extras Para Quilombolas</th>
+                    <th class="text-center" style="vertical-align: middle;">Reserva de 15 Vagas Para Surdos</th>
+                </tr>
                 <?php
-                echo "<td>";
-                // Consulta de Ampla Concorrencia
-                $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST` WHERE Regional = '$unidade' and `acao_afirmativa` <> '(PPI Renda Superior)' and `acao_afirmativa` <> '(PPI Renda Inferior)' and `acao_afirmativa` <> '(DC Renda Superior)' and `acao_afirmativa` <> '(DC Renda Inferior)' and `ano_ingresso` >= 2013";
-                echo consultaSimplesRetornaUmValor($sql);
-                echo "</td>";
+                foreach ($arrayUnidades as $unidade => $value) : ?>
+                <tr>
+                    <th class="text-center" style="vertical-align: middle;"><?php echo $unidade; ?></th>
+                    <?php
+                    echo "<td>";
+                    // Consulta de Ampla Concorrencia
+                    $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST` WHERE Regional = '$unidade' and `acao_afirmativa` <> '(PPI Renda Superior)' and `acao_afirmativa` <> '(PPI Renda Inferior)' and `acao_afirmativa` <> '(DC Renda Superior)' and `acao_afirmativa` <> '(DC Renda Inferior)' and `ano_ingresso` >= 2013";
+                    echo consultaSimplesRetornaUmValor($sql);
+                    echo "</td>";
 
-                // Consulta L1 (DC Renda Inferior)
-                echo "<td>";
-                $sql = "SELECT count(*) AS count FROM `2016-1` WHERE Regional = '$unidade' and `acao_afirmativa` = '(DC Renda Inferior)' and `ano_ingresso` >= 2013";
-                echo consultaSimplesRetornaUmValor($sql);
-                echo "</td>";
-                ?>
-                
+                    // Loop para inserir os valores da Lei de Cotas
+                    foreach ($arrayRendas as $renda => $value) {
+                        echo "<td>";
+                        $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST` WHERE Regional = '$unidade' and `acao_afirmativa` = '$renda' and `ano_ingresso` >= 2013";
+                        echo consultaSimplesRetornaUmValor($sql);
+                        echo "</td>";
+                    }
 
-            </tr>
-            <?php endforeach; ?>
-        </table>
+                    // Loop para inserir os valores do programa UFGInclui.
+                    // Nesse caso específico, escola pública e negros escola pública ficam de fora.
+                    foreach ($arrayAcaoAfirmativa as $acao => $value) {
+                        if ($acao !== 'UFGInclui - Escola Pública' and $acao !== 'UFGInclui - Negro Escola Pública') {
+                            echo "<td>";
+                            $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST` WHERE Regional = '$unidade' and `acao_afirmativa` = '$acao' and `ano_ingresso` >= 2013";
+                            echo consultaSimplesRetornaUmValor($sql);
+                            echo "</td>";
+                        }
+                    }
+                    ?>
+                </tr>
+                <?php endforeach; ?>
+
+                <!-- Criação da última linha, referente ao total (Soma dos valores das columas acima).
+                A estrutura é basicamente a mesma da inserção das estruturas, mas decidi separar para deixar o código um pouco mais legível. As queries continuam basicamente a mesma, a diferença é que é passado um vetor contendo todas as regionais para uma função que retorna a soma da consulta realizada em todas as regionais, obtendo assim o valor total desejado. -->
+                <tr>
+                    <th class="text-center" style="vertical-align: middle;">Total</th>
+                    <?php 
+                    echo "<td>";
+                    $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` <> '(PPI Renda Superior)' and `acao_afirmativa` <> '(PPI Renda Inferior)' and `acao_afirmativa` <> '(DC Renda Superior)' and `acao_afirmativa` <> '(DC Renda Inferior)' and `ano_ingresso` >= 2013 and Regional = ";
+                    echo consultaSimplesRetornaSomaAsString($arrayUnidades, $sql);
+                    echo "</td>";
+
+                    // soma das leis de cotas
+                    foreach ($arrayRendas as $renda => $value) {
+                        echo "<td>";
+                            $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` = '$renda' and `ano_ingresso` >= 2013 and Regional = ";
+                            echo consultaSimplesRetornaSomaAsString($arrayUnidades, $sql);
+                            echo "</td>";
+                    }
+
+                    // Soma do UFGInclui
+                    // Novamente, escola pública e negro escola pública ficam de fora, como especificado pelo documento modelo. (/doc/modelo.pdf, pag. 32)
+                    foreach ($arrayAcaoAfirmativa as $acao => $value) {
+                        if ($acao !== 'UFGInclui - Escola Pública' and $acao !== 'UFGInclui - Negro Escola Pública') {
+                            echo "<td>";
+                            $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` = '$acao' and `ano_ingresso` >= 2013 and Regional = ";
+                            echo consultaSimplesRetornaSomaAsString($arrayUnidades, $sql);
+                            echo "</td>";
+                        }
+                    }
+                    ?>
+                </tr>
+            </table>
+        </div>
     </div>
+
+    <!-- Gráfico do numero de estudantes via lei de cotas e UFG Inclui a partir de 2013 -->
+    <div class="row">
+        <div>
+            <h3 align="middle">Porcentagem De Estudantes Matriculados Em <?php echo $anoSelecionadoPOST; ?> Por Ação Afirmativa Na Ufg Com Ingresso A Partir de 2013 (Lei de Cotas e Programa UFGInclui)</h3>
+            <canvas id="myChart12" style="width: 900px; height: 500px"></canvas>
+            <script>
+                var ctx = document.getElementById("myChart12");
+
+                var data = {
+                    labels: [
+                        "AC", 
+                        "L1",
+                        "L2",
+                        "L3",
+                        "L4",
+                        "Indígena",
+                        "Quilombola",
+                        "Surdo"
+                    ],
+                    datasets: [
+                        {
+                            label: 'Número de estudantes',
+                            backgroundColor: "#36A2EB",
+                            data: [
+                                <?php
+                                // Total por ampla concorrencia
+                                $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` <> '(PPI Renda Superior)' and `acao_afirmativa` <> '(PPI Renda Inferior)' and `acao_afirmativa` <> '(DC Renda Superior)' and `acao_afirmativa` <> '(DC Renda Inferior)' and `ano_ingresso` >= 2013";
+                                echo consultaSimplesRetornaString($sql);
+
+                                // total por renda superior/inferior (cotas)
+                                foreach ($arrayRendas as $renda => $value) {
+                                    $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` = '$renda' and `ano_ingresso` >= 2013";
+                                    echo consultaSimplesRetornaString($sql);
+                                }
+
+                                // total ufg inclui.
+                                // ps: escola publica e negro escola publica não é considerado, de acordo com o documento (/doc/modelo.pdf, pag 33)
+                                foreach ($arrayAcaoAfirmativa as $acao => $value) {
+                                    if ($acao !== 'UFGInclui - Escola Pública' and $acao !== 'UFGInclui - Negro Escola Pública') {
+                                        $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` = '$acao' and `ano_ingresso` >= 2013";
+                                        echo consultaSimplesRetornaString($sql);
+                                    }
+                                }
+                                ?>
+                            ]
+                        }
+                    ]
+                };
+
+                var myBarChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: data,
+                    options: {
+                        barValueSpacing: 20,
+                        scales: {
+                            yAxes: [
+                                {
+                                    ticks: {
+                                        min: 0,
+                                        beginAtZero:true
+                                    }
+                                }
+                            ]
+                        } 
+                    }
+                });
+            </script>
+        </div>
+    </div>
+
+    <!-- Gráfico DA PORCENTAGEM (GRAFICO PIZZA) de estudantes via lei de cotas e UFG Inclui que ingressaram a partir de 2013 -->
+    <div class="row">
+        <div>
+            <h3 align="middle">Porcentagem de Estudantes Matriculados em <?php echo $anoSelecionadoPOST; ?> por Ação Afirmativa na UFG com Ingresso a Partir de 2013 (Lei de Cotas e Programa UFGInclui)</h3>
+            <canvas id="myChart13" style="width: 900px; height: 500px"></canvas>
+            <script>
+                var ctx = document.getElementById("myChart13");
+
+                var data = {
+                    labels: [
+                        "UFGInclui e Lei de Cotas", 
+                        "AC"
+                    ],
+                    datasets: [
+                        {
+                            label: 'Porcentagem de estudantes',
+                            backgroundColor: [
+                                "#36A2EB",
+                                "#FFCE56"
+                            ],
+                            data: [
+                                <?php 
+                                $sql = "SELECT Count(*) / 
+                                               ( 
+                                                      SELECT Count(*) 
+                                                      FROM   `$anoSelecionadoPOST` 
+                                                      WHERE  `ano_ingresso` >= 2013) * 100.0 AS count 
+                                        FROM   `$anoSelecionadoPOST` 
+                                        WHERE  `ano_ingresso` >= 2013 
+                                        AND    `acao_afirmativa` =";
+                                echo consultaSimplesRetornaSomaAsString($arrayRendas, $sql);
+                                echo " ,";
+                                $sql = "SELECT count(*) / (SELECT COUNT(*) 
+                                                           FROM   `$anoSelecionadoPOST` 
+                                                           WHERE  `ano_ingresso` >= 2013) * 100.0 AS count 
+                                        FROM   `$anoSelecionadoPOST` 
+                                        WHERE  `acao_afirmativa` <> '(DC Renda Inferior)' 
+                                               and `acao_afirmativa` <> '(DC Renda Superior)' 
+                                               and `acao_afirmativa` <> '(PPI Renda Inferior)' 
+                                               and `acao_afirmativa` <> '(PPI Renda Superior)' 
+                                               and `ano_ingresso` >= 2013 ";
+                                echo consultaSimplesRetornaString($sql);
+                                
+                                ?>
+                            ]
+                        }
+                    ]
+                };
+
+                var myBarChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: data,
+                    options: {
+                        barValueSpacing: 20,
+                        scales: {
+                            yAxes: [
+                                {
+                                    ticks: {
+                                        min: 0,
+                                        beginAtZero:true
+                                    }
+                                }
+                            ]
+                        } 
+                    }
+                });
+            </script>
+        </div>
+    </div>
+
+    <!-- PORCENTAGEM de alunos que ingressaram via ampla concorrência e ação afirmativa (QUALQUER!) -->
+    <div class="row">
+        <div>
+            <h3 align="middle">Porcentagem de Estudantes Matriculados em <?php echo $anoSelecionadoPOST; ?> por Ação Afirmativa na UFG (Lei de Cotas e Programa UFGInclui)</h3>
+            <canvas id="myChart14" style="width: 900px; height: 500px"></canvas>
+            <script>
+                var ctx = document.getElementById("myChart14");
+
+                var data = {
+                    labels: [
+                        "Ação Afirmativa", 
+                        "AC"
+                    ],
+                    datasets: [
+                        {
+                            label: 'Porcentagem de estudantes',
+                            backgroundColor: [
+                                "#36A2EB",
+                                "#FFCE56",
+                            ],
+                            data: [
+                                <?php
+                                $sql = "SELECT Count(*) / (SELECT Count(*) 
+                                                           FROM   `$anoSelecionadoPOST`) * 100.0 AS count 
+                                        FROM   `$anoSelecionadoPOST` 
+                                        WHERE  `acao_afirmativa` <> '(DC Renda Inferior)' 
+                                               AND `acao_afirmativa` <> '(DC Renda Superior)' 
+                                               AND `acao_afirmativa` <> '(PPI Renda Inferior)' 
+                                               AND `acao_afirmativa` <> '(PPI Renda Superior)' 
+                                               AND `acao_afirmativa` <> ( 'UFGInclui - Negro Escola Pública' ) 
+                                               AND `acao_afirmativa` <> 'UFGInclui - Indígena' 
+                                               AND `acao_afirmativa` <> ( 'UFGInclui - Escola Pública' ) 
+                                               AND `acao_afirmativa` <> ( 'UFGInclui - Quilombola' ) 
+                                               AND `acao_afirmativa` <> ( 'UFGInclui - Surdo' ) ";
+
+                                // Ao invés de fazer uma nova pesquisa, é mais eficiente simplesmente fazer a diferença (visto que esses são os únicos dois dados no gráfico. Sendo assim, a função retorna um array para um vetor auxiliar. A diferença entre 100 e esse vetor será a outra porcentagem necessária.
+                                $amplaConcorrencia = consultaSimplesRetornaArray($sql);
+                                $acaoAfirmativa = 100 - $amplaConcorrencia[0];
+
+                                echo round($acaoAfirmativa, 2) . ", ";
+                                echo round($amplaConcorrencia[0], 2)
+                                ?>
+                            ]
+                        }
+                    ]
+                };
+
+                var myBarChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: data,
+                    options: {
+                        barValueSpacing: 20,
+                        scales: {
+                            yAxes: [
+                                {
+                                    ticks: {
+                                        min: 0,
+                                        beginAtZero:true
+                                    }
+                                }
+                            ]
+                        } 
+                    }
+                });
+            </script>
+        </div>
+    </div>
+
+    <!-- Estudantes Ingressantes SISU em 2016 por Ação Afirmativa e Ampla Concorrência -->
+    <div class="row">
+        <div>
+            <h3 align="middle">Número De Estudantes Ingressantes SISU Em <?php echo $anoSelecionadoPOST; ?> por Ação Afirmativa e Ampla Concorrência</h3>
+            <canvas id="myChart15" style="width: 900px; height: 500px"></canvas>
+            <script>
+                var ctx = document.getElementById("myChart15");
+
+                var data = {
+                    labels: [
+                        "AC", 
+                        "L1", 
+                        "L2", 
+                        "L3", 
+                        "L4"
+                    ],
+                    datasets: [
+                        {
+                            label: 'Número de estudantes',
+                            backgroundColor: 'rgba(54, 162, 235, .7)',
+                            data: [
+                                <?php
+                                $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` <> '(DC Renda Inferior)' and `acao_afirmativa` <> '(DC Renda Superior)' and `acao_afirmativa` <> '(PPI Renda Inferior)' and `acao_afirmativa` <> '(PPI Renda Superior)' and `acao_afirmativa` <> ('UFGInclui - Negro Escola Pública') and `acao_afirmativa` <> 'UFGInclui - Indígena' and `acao_afirmativa` <> ('UFGInclui - Escola Pública') and `acao_afirmativa` <> ('UFGInclui - Quilombola') and `acao_afirmativa` <> ('UFGInclui - Surdo') and `ano_ingresso` = 2016 and `forma_ingresso` = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'";
+                                echo consultaSimplesRetornaString($sql);
+
+                                foreach ($arrayRendas as $renda => $value) {
+                                    $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST` WHERE forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU' and `ano_ingresso` = $anoSelecionadoPOST and `acao_afirmativa` = '$renda'";
+                                    echo consultaSimplesRetornaString($sql);
+                                }
+                                ?>
+                            ]
+                        }
+                    ]
+                };
+
+                var myBarChart = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: {
+                    barValueSpacing: 20,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                min: 0,
+                                beginAtZero:true
+                            }
+                        }]
+                    } 
+                }
+                });
+            </script>
+        </div>
+    </div>
+
+    <!-- PORCENTAGEM de alunos que ingressaram em 2016 por SISU via ampla concorrência e ação afirmativa -->
+    <div class="row">
+        <div>
+            <h3 align="middle">Porcentagem de Estudantes Ingressantes SISU em <?php echo $anoSelecionadoPOST; ?> por Ação Afirmativa e Ampla Concorrência</h3>
+            <canvas id="graficoIngressantesSISU" style="width: 900px; height: 500px"></canvas>
+            <script>
+                var ctx = document.getElementById("graficoIngressantesSISU");
+
+                var data = {
+                    labels: [
+                        "Ação Afirmativa", 
+                        "AC"
+                    ],
+                    datasets: [
+                        {
+                            label: 'Porcentagem de estudantes',
+                            backgroundColor: [
+                                "#36A2EB",
+                                "#FFCE56"
+                            ],
+                            data: [
+                                <?php
+                                $sql = "SELECT count(*) / (SELECT COUNT(*) 
+                                                           FROM `$anoSelecionadoPOST` 
+                                                           WHERE ano_ingresso = '$anoSelecionadoPOST' 
+                                                                 and forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'
+                                        ) * 100.0 AS count 
+                                        FROM `$anoSelecionadoPOST` 
+                                        WHERE `acao_afirmativa` <> '(DC Renda Inferior)' 
+                                               and `acao_afirmativa` <> '(DC Renda Superior)' 
+                                               and `acao_afirmativa` <> '(PPI Renda Inferior)' 
+                                               and `acao_afirmativa` <> '(PPI Renda Superior)' 
+                                               and `acao_afirmativa` <> 'UFGInclui - Negro Escola Pública' 
+                                               and `acao_afirmativa` <> 'UFGInclui - Indígena' 
+                                               and `acao_afirmativa` <> 'UFGInclui - Escola Pública' 
+                                               and `acao_afirmativa` <> 'UFGInclui - Quilombola' 
+                                               and `acao_afirmativa` <> 'UFGInclui - Surdo' 
+                                               and ano_ingresso = '$anoSelecionadoPOST' 
+                                               and forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'";
+
+                                // Ao invés de fazer uma nova pesquisa, é mais eficiente simplesmente fazer a diferença (visto que esses são os únicos dois dados no gráfico. Sendo assim, a função retorna um array para um vetor auxiliar. A diferença entre 100 e esse vetor será a outra porcentagem necessária.
+                                $amplaConcorrencia = consultaSimplesRetornaArray($sql);
+                                $acaoAfirmativa = 100 - $amplaConcorrencia[0];
+
+                                echo round($acaoAfirmativa, 2) . ", ";
+                                echo round($amplaConcorrencia[0], 2);
+                                ?>
+                            ]
+                        }
+                    ]
+                };
+
+                var myBarChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: data,
+                    options: {
+                        barValueSpacing: 20,
+                        scales: {
+                            yAxes: [
+                                {
+                                    ticks: {
+                                        min: 0,
+                                        beginAtZero:true
+                                    }
+                                }
+                            ]
+                        } 
+                    }
+                });
+            </script>
+        </div>
+    </div>
+
+    <!-- Estudantes Ingressantes SISU em 2016 POR REGIONAL!! -->
+    <?php 
+    foreach ($arrayUnidades as $unidade => $value) : ?>
+        <!-- Gráfico barra para cada unidade -->
+        <div class="row">
+            <div>
+                <h3 align="middle">Número De Estudantes Ingressantes SISU Em <?php echo $anoSelecionadoPOST; ?> por Ação Afirmativa e Ampla Concorrência na Regional <?php echo $unidade; ?></h3>
+                <canvas id="graficoBarraIngressantesSISURegional<?php echo $unidade;?>" style="width: 900px; height: 500px"></canvas>
+                <script>
+                    var ctx = document.getElementById("graficoBarraIngressantesSISURegional<?php echo $unidade;?>");
+
+                    var data = {
+                        labels: [
+                            "AC", 
+                            "L1", 
+                            "L2", 
+                            "L3", 
+                            "L4"
+                        ],
+                        datasets: [
+                            {
+                                label: 'Número de estudantes',
+                                backgroundColor: 'rgba(54, 162, 235, .7)',
+                                data: [
+                                    <?php
+                                    $sql = "SELECT Count(*) AS count 
+                                            FROM   `$anoSelecionadoPOST` 
+                                            WHERE  `acao_afirmativa` <> '(DC Renda Inferior)' 
+                                                   AND `acao_afirmativa` <> '(DC Renda Superior)' 
+                                                   AND `acao_afirmativa` <> '(PPI Renda Inferior)' 
+                                                   AND `acao_afirmativa` <> '(PPI Renda Superior)' 
+                                                   AND `acao_afirmativa` <> 'UFGInclui - Negro Escola Pública' 
+                                                   AND `acao_afirmativa` <> 'UFGInclui - Indígena' 
+                                                   AND `acao_afirmativa` <> 'UFGInclui - Escola Pública'
+                                                   AND `acao_afirmativa` <> 'UFGInclui - Quilombola'
+                                                   AND `acao_afirmativa` <> 'UFGInclui - Surdo'
+                                                   AND `ano_ingresso` = 2016 
+                                                   AND `forma_ingresso` = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'
+                                                   AND `Regional` = '$unidade'";
+                                    echo consultaSimplesRetornaString($sql);
+
+                                    foreach ($arrayRendas as $renda => $value) {
+                                        $sql = "SELECT Count(*) AS count 
+                                                FROM   `$anoSelecionadoPOST` 
+                                                WHERE  forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU' 
+                                                       AND `ano_ingresso` = $anoSelecionadoPOST 
+                                                       AND `acao_afirmativa` = '$renda' 
+                                                       AND `Regional` = '$unidade'";
+                                        echo consultaSimplesRetornaString($sql);
+                                    }
+                                    ?>
+                                ]
+                            }
+                        ]
+                    };
+
+                    var myBarChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: data,
+                    options: {
+                        barValueSpacing: 20,
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    min: 0,
+                                    beginAtZero:true
+                                }
+                            }]
+                        } 
+                    }
+                    });
+                </script>
+            </div>
+        </div>
+
+        <!-- Gráfico pizza para cada unidade -->
+        <div class="row">
+        <div>
+            <h3 align="middle">Porcentagem de Estudantes Ingressantes SISU em <?php echo $anoSelecionadoPOST; ?> por Ação Afirmativa e Ampla Concorrência na Regional <?php echo $unidade;?></h3>
+            <canvas id="graficoPizzaIngressantesSISURegional<?php echo $unidade;?>" style="width: 900px; height: 500px"></canvas>
+            <script>
+                var ctx = document.getElementById("graficoPizzaIngressantesSISURegional<?php echo $unidade;?>");
+
+                var data = {
+                    labels: [
+                        "Ação Afirmativa", 
+                        "AC"
+                    ],
+                    datasets: [
+                        {
+                            label: 'Porcentagem de estudantes',
+                            backgroundColor: [
+                                "#36A2EB",
+                                "#FFCE56"
+                            ],
+                            data: [
+                                <?php
+                                $sql = "SELECT count(*) / (SELECT COUNT(*) 
+                                                           FROM `$anoSelecionadoPOST` 
+                                                           WHERE ano_ingresso = '$anoSelecionadoPOST' 
+                                                                 and forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'
+                                                                 and `Regional` = '$unidade'
+                                        ) * 100.0 AS count 
+                                        FROM `$anoSelecionadoPOST` 
+                                        WHERE `acao_afirmativa` <> '(DC Renda Inferior)' 
+                                               and `acao_afirmativa` <> '(DC Renda Superior)' 
+                                               and `acao_afirmativa` <> '(PPI Renda Inferior)' 
+                                               and `acao_afirmativa` <> '(PPI Renda Superior)' 
+                                               and `acao_afirmativa` <> 'UFGInclui - Negro Escola Pública' 
+                                               and `acao_afirmativa` <> 'UFGInclui - Indígena' 
+                                               and `acao_afirmativa` <> 'UFGInclui - Escola Pública' 
+                                               and `acao_afirmativa` <> 'UFGInclui - Quilombola' 
+                                               and `acao_afirmativa` <> 'UFGInclui - Surdo' 
+                                               and ano_ingresso = '$anoSelecionadoPOST' 
+                                               and forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'
+                                               and `Regional` = '$unidade'";
+
+                                // Ao invés de fazer uma nova pesquisa, é mais eficiente simplesmente fazer a diferença (visto que esses são os únicos dois dados no gráfico. Sendo assim, a função retorna um array para um vetor auxiliar. A diferença entre 100 e esse vetor será a outra porcentagem necessária.
+                                $amplaConcorrencia = consultaSimplesRetornaArray($sql);
+                                $acaoAfirmativa = 100 - $amplaConcorrencia[0];
+
+                                echo round($acaoAfirmativa, 2) . ", ";
+                                echo round($amplaConcorrencia[0], 2);
+                                ?>
+                            ]
+                        }
+                    ]
+                };
+
+                var myBarChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: data,
+                    options: {
+                        barValueSpacing: 20,
+                        scales: {
+                            yAxes: [
+                                {
+                                    ticks: {
+                                        min: 0,
+                                        beginAtZero:true
+                                    }
+                                }
+                            ]
+                        } 
+                    }
+                });
+            </script>
+        </div>
+    </div>
+    <?php endforeach; ?>
+
+
 
 <!-- On Page Load script -->
 <script type="text/javascript">
     
-function onPageLoad() {
-    drawChart();
-    insereTabelaVagasRegional();
-}   
+    function onPageLoad() {
+        drawChart();
+        insereTabelaVagasRegional();
+    }   
 </script>
 </div>
 <?php

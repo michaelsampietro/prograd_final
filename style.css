@@ -26,6 +26,10 @@ footer {
     margin: 0 auto;
     float: none;
 }
+
+td.tabela-negrito {
+	font-weight: bold;
+}
 /*
 .googleVisualizationApiChartDivExterna {
 	min-height:500px;
