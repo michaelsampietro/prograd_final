@@ -109,17 +109,6 @@ function chartData($array, $sql)
   echo ($str);
 }
 
-// Retorna uma consulta como um array
-
-function consultaSimples($sql)
-{
-  $conn = connect();
-  $ano = htmlspecialchars($_POST['anos']);
-  if ($query = $conn->query($sql)) {
-    $resultado = $query->fetch_all();
-  }
-}
-
 function consultaSimplesRetornaArray($sql)
 {
 
@@ -191,6 +180,32 @@ function consultaSimplesRetornaSomaAsString($array, $sql)
   echo round(end($array), 2);
 }
 
+function consultaSimplesRetornaMediaAsString($array, $sql)
+{
+  $conn = connect();
+  $ano = htmlspecialchars($_POST['anos']);
+  foreach($array as $key => $value) {
+    $result = $conn->query($sql . "'" . $key . "'");
+    if (!$result) echo $conn->error;
+    while ($row = $result->fetch_assoc()) {
+      $array[$key] = $row["count"];
+    }
+  }
+
+  // Calculando o tamanho "real" do array, retirando as posições com 0.
+  $tamanhoArray = 0;
+  foreach ($array as $key => $value) {
+    if ($value != NULL)
+      $tamanhoArray+=1;
+  }
+
+  // Dando push no array para inserir o Total, que é a média de todas as regionais
+  array_push($array, array_sum($array)/$tamanhoArray);
+
+  $conn->close();
+  echo round(end($array), 2);
+}
+
 function consultaSimplesRetornaUmValor ($sql) {
   $conn = connect();
 
@@ -204,7 +219,7 @@ function consultaSimplesRetornaUmValor ($sql) {
   }
 
   $conn->close();
-  echo end($array);
+  echo round(end($array), 2);
 }
 
 ?>

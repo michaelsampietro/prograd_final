@@ -34,7 +34,12 @@ $arrayRendas = array(
     '(DC Renda Superior)' => 0,
     '(PPI Renda Superior)' => 0,
 );
-
+$arrayBackgroundColor = array(
+    'Goiânia' => "rgba(54, 162, 235, .7)",
+    'Jataí' => "rgba(184, 18, 0, 0.7)",
+    'Catalão' => "rgba(0, 66, 10, 0.7)",
+    'Goiás' => "rgba(209, 206, 0, 0.7)",
+);
 ?>
 
 <div class="container" style="margin: 0 auto;">
@@ -114,7 +119,7 @@ $arrayRendas = array(
     </div>
     <?php $aux++; endforeach; ?>
 
-    <!-- Gráfico de linhas múltiplas --> 
+    <!-- Numero de cursos/habilitacoes por Regional --> 
     <div class="row">
         <h2 align="middle">Numero de Crusos/Hbilitações por Regional - de 2005 a <?php
             echo $anoSelecionadoPOST;
@@ -282,7 +287,7 @@ $arrayRendas = array(
 
         }
     }
-</script>
+    </script>
 
     <!-- Número de vagas por Regional gráfico de linhas múltiplas -->
      <div class="row">
@@ -340,13 +345,11 @@ $arrayRendas = array(
     <!-- Gráfico com o ano de ingresso dos estudantes matriculados -->
     <div class='row'>
         <div>
-            <h3 align="middle">NÚMERO DE ESTUDANTES MATRICULADOS EM ABRIL DE 2016
-                POR GRAU ACADÊMICO NA REGIONAL JATAÍ
+            <h3 align="middle">Ano De Ingresso Dos Estudantes Matriculados em <?php echo $anoSelecionadoPOST; ?> 
             </h3>
             <canvas id="myChart7" style="width: 1100px; height: 500px"></canvas>
         </div>
     </div>
-
     <script type="text/javascript">
         var ctx = document.getElementById("myChart7");
 
@@ -362,64 +365,22 @@ $arrayRendas = array(
                     }
                 ?>],
             datasets: [
-                {
-                    label: "Goiânia",
-                    backgroundColor: 'rgba(54, 162, 235, .7)',
-                    data: [<?php 
-                    $sql = "SELECT COUNT(Estudante) AS count FROM `$anoSelecionadoPOST` WHERE ano_ingresso > 2004 and ano_ingresso < 2011 and Regional = 'Goiania'";
-                    echo $res = consultaSimplesRetornaString($sql);
-                    foreach ($arrayAnos as $key => $ano) {
-                        $sql = "SELECT COUNT(Estudante) AS count FROM `$anoSelecionadoPOST` WHERE ano_ingresso = " . $ano . " and Regional = 'Goiania' ";
+                <?php foreach ($arrayUnidades as $unidade => $value): ?>
+                    {
+                        label: <?php echo "'$unidade'"; ?>,
+                        backgroundColor: <?php echo "'$arrayBackgroundColor[$unidade]'"; ?>,
+                        data: [<?php 
+                            $sql = "SELECT COUNT(Estudante) AS count FROM `$anoSelecionadoPOST` WHERE ano_ingresso > 2004 and ano_ingresso < 2011 and Regional = '$unidade'";
+                            echo $res = consultaSimplesRetornaString($sql);
+                            foreach ($arrayAnos as $key => $ano) {
+                                $sql = "SELECT COUNT(Estudante) AS count FROM `$anoSelecionadoPOST` WHERE ano_ingresso = " . $ano . " and Regional = '$unidade' ";
                         
-                        echo $res = consultaSimplesRetornaString($sql);
-                        
-                    }
-                ?>]
-                },
-                {
-                    label: "Jataí",
-                    backgroundColor: "rgba(184, 18, 0, 0.7)",
-                    data: [<?php 
-                    $sql = "SELECT COUNT(Estudante) AS count FROM `$anoSelecionadoPOST` WHERE ano_ingresso > 2004 and ano_ingresso < 2011 and Regional = 'Jataí'";
-                    echo $res = consultaSimplesRetornaString($sql);
-                    foreach ($arrayAnos as $key => $ano) {
-                        $sql = "SELECT COUNT(Estudante) AS count FROM `$anoSelecionadoPOST` WHERE ano_ingresso = " . $ano . " and Regional = 'Jataí' ";
-                        
-                        echo $res = consultaSimplesRetornaString($sql);
-                        
-                    }
-                ?>]
-                },
-                {
-                    label: "Catalão",
-                    backgroundColor: "rgba(0, 66, 10, 0.7)",
-                    data: [<?php 
-                    $sql = "SELECT COUNT(Estudante) AS count FROM `$anoSelecionadoPOST` WHERE ano_ingresso > 2004 and ano_ingresso < 2011 and Regional = 'Catalão'";
-                    echo $res = consultaSimplesRetornaString($sql);
-                    foreach ($arrayAnos as $key => $ano) {
-                        $sql = "SELECT COUNT(Estudante) AS count FROM `$anoSelecionadoPOST` WHERE ano_ingresso = " . $ano . " and Regional = 'Catalão' ";
-                        
-                        echo $res = consultaSimplesRetornaString($sql);
-                        
-                    }
-                ?>]
-                },
-                {
-                    label: "Goiás",
-                    backgroundColor: "rgba(209, 206, 0, 0.7)",
-                    data: [<?php 
-                    $sql = "SELECT COUNT(Estudante) AS count FROM `$anoSelecionadoPOST` WHERE ano_ingresso > 2004 and ano_ingresso < 2011 and Regional = 'Goiás'";
-                    echo $res = consultaSimplesRetornaString($sql);
-                    foreach ($arrayAnos as $key => $ano) {
-                        $sql = "SELECT COUNT(Estudante) AS count FROM `$anoSelecionadoPOST` WHERE ano_ingresso = " . $ano . " and Regional = 'Goiás' ";
-                        
-                        echo $res = consultaSimplesRetornaString($sql);
-                        
-                    }
-                ?>]
-                }
-            ]
-        };
+                            echo $res = consultaSimplesRetornaString($sql);
+                        }
+                        ?>]
+                    },
+                <?php endforeach;?>] 
+            };
 
         var myBarChart = new Chart(ctx, {
             type: 'bar',
@@ -446,66 +407,64 @@ $arrayRendas = array(
             <canvas id="myChart8" style="width: 1100px; height: 500px"></canvas>
         </div>
     </div>
-
     <script type="text/javascript">
-    var ctx = document.getElementById("myChart8");
+        var ctx = document.getElementById("myChart8");
 
-    var data = {
-        labels: [<?php 
-                // Imprime as labels do gráfico, com base no array de unidades
-                foreach ($arrayUnidades as $unidade => $value) {
-                    echo "'" . $unidade . "',";
-                }
-                echo "'Total'";
-            ?>],
-        datasets: [
-            {
-                label: "Feminino",
-                backgroundColor: 'rgba(184, 18, 0, 0.7)',
-                data: [<?php 
-                // Faz a consulta para cada unidade do sexo feminino e imprime a variável
-                foreach ($arrayUnidades as $unidade => $value) {
-                    $sql = "SELECT count(sexo) * 100.0 / (select count(*) from `$anoSelecionadoPOST` where Regional = '$unidade') as count FROM `$anoSelecionadoPOST` where Regional = '$unidade' and sexo = 'feminino'";
-                    
+        var data = {
+            labels: [<?php 
+                    // Imprime as labels do gráfico, com base no array de unidades
+                    foreach ($arrayUnidades as $unidade => $value) {
+                        echo "'" . $unidade . "',";
+                    }
+                    echo "'Total'";
+                ?>],
+            datasets: [
+                {
+                    label: "Feminino",
+                    backgroundColor: 'rgba(184, 18, 0, 0.7)',
+                    data: [<?php 
+                    // Faz a consulta para cada unidade do sexo feminino e imprime a variável
+                    foreach ($arrayUnidades as $unidade => $value) {
+                        $sql = "SELECT count(sexo) * 100.0 / (select count(*) from `$anoSelecionadoPOST` where Regional = '$unidade') as count FROM `$anoSelecionadoPOST` where Regional = '$unidade' and sexo = 'feminino'";
+                        
+                        echo $res = consultaSimplesRetornaString($sql);
+                    }
+                    // Faz a consulta que retorna a porcentagem de estudantes femininos em todas as regionais (TOTAL)
+                    $sql = "SELECT count(*) * 100.0 / ( SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` ) AS count FROM `$anoSelecionadoPOST` WHERE sexo = 'feminino'";
                     echo $res = consultaSimplesRetornaString($sql);
-                }
-                // Faz a consulta que retorna a porcentagem de estudantes femininos em todas as regionais (TOTAL)
-                $sql = "SELECT count(*) * 100.0 / ( SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` ) AS count FROM `$anoSelecionadoPOST` WHERE sexo = 'feminino'";
-                echo $res = consultaSimplesRetornaString($sql);
-            ?>]
-            },
-            {
-                label: "Masculino",
-                backgroundColor: "rgba(54, 162, 235, .7)",
-                data: [<?php 
-                foreach ($arrayUnidades as $unidade => $value) {
-                    $sql = "SELECT count(sexo) * 100.0 / (select count(*) from `$anoSelecionadoPOST` where Regional = '$unidade') as count FROM `$anoSelecionadoPOST` where Regional = '$unidade' and sexo = 'masculino'";
-                    
+                ?>]
+                },
+                {
+                    label: "Masculino",
+                    backgroundColor: "rgba(54, 162, 235, .7)",
+                    data: [<?php 
+                    foreach ($arrayUnidades as $unidade => $value) {
+                        $sql = "SELECT count(sexo) * 100.0 / (select count(*) from `$anoSelecionadoPOST` where Regional = '$unidade') as count FROM `$anoSelecionadoPOST` where Regional = '$unidade' and sexo = 'masculino'";
+                        
+                        echo $res = consultaSimplesRetornaString($sql);
+                    }
+                    $sql = "SELECT count(*) * 100.0 / ( SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` ) AS count FROM `$anoSelecionadoPOST` WHERE sexo = 'masculino'";
                     echo $res = consultaSimplesRetornaString($sql);
+                ?>]
                 }
-                $sql = "SELECT count(*) * 100.0 / ( SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` ) AS count FROM `$anoSelecionadoPOST` WHERE sexo = 'masculino'";
-                echo $res = consultaSimplesRetornaString($sql);
-            ?>]
-            }
-        ]
-    };
+            ]
+        };
 
-    var myBarChart = new Chart(ctx, {
-            type: 'bar',
-            data: data,
-            options: {
-                barValueSpacing: 20,
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            min: 0,
-                            beginAtZero:true
-                        }
-                    }]
-                } 
-            }
-        });
-
+        var myBarChart = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: {
+                    barValueSpacing: 20,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                min: 0,
+                                beginAtZero:true
+                            }
+                        }]
+                    } 
+                }
+            });
     </script>
 
     <!-- Gráfico porcentagem de estudantes por faixa etaria matriculados -->
@@ -517,81 +476,81 @@ $arrayRendas = array(
         </div>
     </div>
     <script type="text/javascript">
-    var ctx = document.getElementById("myChart9");
+        var ctx = document.getElementById("myChart9");
 
-    var data = {
-        // Intervalos de idades que devem ser calculadas. O intervalo foi definido de acordo com o documento PDF
-        labels: ["< 18",  "de 18 a 20", "de 21 a 23", "de 24 a 26", "de 27 a 29", "de 30 a 35", "de 36 a 40", "de 41 a 45", "> 45"],
-        datasets: [
-            {
-                label: "Idade",
-                backgroundColor: 'rgba(54, 162, 235, .7)',
-                data: [
-                // Faz um loop com 9 iterações, onde cada iteração representa um intervalo (especificados nas labels acima) e, para cada iteração faz uma consulta em um intervalo de idade diferente
-                <?php 
-                    for ($i=0; $i < 9; $i++) { 
-                        switch ($i) {
-                            case 0:
-                                $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST`) AS count FROM `$anoSelecionadoPOST` WHERE FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) < 18";
-                                echo $res = consultaSimplesRetornaString($sql);
-                                break;
-                            case 1:
-                                $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST`) AS count FROM `$anoSelecionadoPOST` WHERE FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 18 AND 20";
-                                echo $res = consultaSimplesRetornaString($sql);
-                                break;
-                            case 2:
-                                $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST`) AS count FROM `$anoSelecionadoPOST` WHERE FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 21 AND 23";
-                                echo $res = consultaSimplesRetornaString($sql);
-                                break;
-                            case 3:
-                                $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST`) AS count FROM `$anoSelecionadoPOST` WHERE FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 24 AND 26";
-                                echo $res = consultaSimplesRetornaString($sql);
-                                break;
-                            case 4:
-                                $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST`) AS count FROM `$anoSelecionadoPOST` WHERE FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 27 AND 29";
-                                echo $res = consultaSimplesRetornaString($sql);
-                                break;
-                            case 5:
-                                $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST`) AS count FROM `$anoSelecionadoPOST` WHERE FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 30 AND 35";
-                                echo $res = consultaSimplesRetornaString($sql);
-                                break;
-                            case 6:
-                                $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST`) AS count FROM `$anoSelecionadoPOST` WHERE FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 36 AND 40";
-                                echo $res = consultaSimplesRetornaString($sql);
-                                break;
-                            case 7:
-                                $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST`) AS count FROM `$anoSelecionadoPOST` WHERE FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 41 AND 45";
-                                echo $res = consultaSimplesRetornaString($sql);
-                                break;
-                            case 8:
-                               $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST`) AS count FROM `$anoSelecionadoPOST` WHERE FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) > 45";
-                                echo $res = consultaSimplesRetornaString($sql);
-                                break;
-                            default:
-                                break;
-                        
+        var data = {
+            // Intervalos de idades que devem ser calculadas. O intervalo foi definido de acordo com o documento PDF
+            labels: ["< 18",  "de 18 a 20", "de 21 a 23", "de 24 a 26", "de 27 a 29", "de 30 a 35", "de 36 a 40", "de 41 a 45", "> 45"],
+            datasets: [
+                {
+                    label: "Idade",
+                    backgroundColor: 'rgba(54, 162, 235, .7)',
+                    data: [
+                    // Faz um loop com 9 iterações, onde cada iteração representa um intervalo (especificados nas labels acima) e, para cada iteração faz uma consulta em um intervalo de idade diferente
+                    <?php 
+                        for ($i=0; $i < 9; $i++) { 
+                            switch ($i) {
+                                case 0:
+                                    $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST`) AS count FROM `$anoSelecionadoPOST` WHERE FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) < 18";
+                                    echo $res = consultaSimplesRetornaString($sql);
+                                    break;
+                                case 1:
+                                    $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST`) AS count FROM `$anoSelecionadoPOST` WHERE FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 18 AND 20";
+                                    echo $res = consultaSimplesRetornaString($sql);
+                                    break;
+                                case 2:
+                                    $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST`) AS count FROM `$anoSelecionadoPOST` WHERE FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 21 AND 23";
+                                    echo $res = consultaSimplesRetornaString($sql);
+                                    break;
+                                case 3:
+                                    $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST`) AS count FROM `$anoSelecionadoPOST` WHERE FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 24 AND 26";
+                                    echo $res = consultaSimplesRetornaString($sql);
+                                    break;
+                                case 4:
+                                    $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST`) AS count FROM `$anoSelecionadoPOST` WHERE FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 27 AND 29";
+                                    echo $res = consultaSimplesRetornaString($sql);
+                                    break;
+                                case 5:
+                                    $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST`) AS count FROM `$anoSelecionadoPOST` WHERE FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 30 AND 35";
+                                    echo $res = consultaSimplesRetornaString($sql);
+                                    break;
+                                case 6:
+                                    $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST`) AS count FROM `$anoSelecionadoPOST` WHERE FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 36 AND 40";
+                                    echo $res = consultaSimplesRetornaString($sql);
+                                    break;
+                                case 7:
+                                    $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST`) AS count FROM `$anoSelecionadoPOST` WHERE FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 41 AND 45";
+                                    echo $res = consultaSimplesRetornaString($sql);
+                                    break;
+                                case 8:
+                                   $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST`) AS count FROM `$anoSelecionadoPOST` WHERE FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) > 45";
+                                    echo $res = consultaSimplesRetornaString($sql);
+                                    break;
+                                default:
+                                    break;
+                            
+                            }
                         }
-                    }
-                ?>]
-            }
-        ]
-    };
+                    ?>]
+                }
+            ]
+        };
 
-    var myBarChart = new Chart(ctx, {
-            type: 'bar',
-            data: data,
-            options: {
-                barValueSpacing: 20,
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            min: 0,
-                            beginAtZero:true
-                        }
-                    }]
-                } 
-            }
-        });
+        var myBarChart = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: {
+                    barValueSpacing: 20,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                min: 0,
+                                beginAtZero:true
+                            }
+                        }]
+                    } 
+                }
+            });
     </script>
 
     <!-- Gráfico com porcentagem de alunos matriculados nas regionais por faixa etária-->
@@ -606,81 +565,81 @@ $arrayRendas = array(
         </div>
     </div>
     <script type="text/javascript">
-    var ctx = document.getElementById("chartAnosRegional<?php echo $unidade; ?>");
+        var ctx = document.getElementById("chartAnosRegional<?php echo $unidade; ?>");
 
-    var data = {
-        // Intervalos de idades que devem ser calculadas. O intervalo foi definido de acordo com o documento PDF
-        labels: ["< 18",  "de 18 a 20", "de 21 a 23", "de 24 a 26", "de 27 a 29", "de 30 a 35", "de 36 a 40", "de 41 a 45", "> 45"],
-        datasets: [
-            {
-                label: "Idade",
-                backgroundColor: 'rgba(54, 162, 235, .7)',
-                data: [
-                // Faz um loop com 9 iterações, onde cada iteração representa um intervalo (especificados nas labels acima) e, para cada iteração faz uma consulta em um intervalo de idade diferente
-                <?php 
-                    for ($i=0; $i < 9; $i++) { 
-                        switch ($i) {
-                            case 0:
-                                $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` where Regional = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE Regional = '$unidade' AND FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) < 18 ";
-                                echo $res = consultaSimplesRetornaString($sql);
-                                break;
-                            case 1:
-                                $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` where Regional = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE Regional = '$unidade' AND FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 18 AND 20";
-                                echo $res = consultaSimplesRetornaString($sql);
-                                break;
-                            case 2:
-                                $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` where Regional = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE Regional = '$unidade' AND FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 21 AND 23";
-                                echo $res = consultaSimplesRetornaString($sql);
-                                break;
-                            case 3:
-                                $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` where Regional = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE Regional = '$unidade' AND FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 24 AND 26";
-                                echo $res = consultaSimplesRetornaString($sql);
-                                break;
-                            case 4:
-                                $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` where Regional = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE Regional = '$unidade' AND FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 27 AND 29";
-                                echo $res = consultaSimplesRetornaString($sql);
-                                break;
-                            case 5:
-                                $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` where Regional = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE Regional = '$unidade' AND FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 30 AND 35";
-                                echo $res = consultaSimplesRetornaString($sql);
-                                break;
-                            case 6:
-                                $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` where Regional = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE Regional = '$unidade' AND FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 36 AND 40";
-                                echo $res = consultaSimplesRetornaString($sql);
-                                break;
-                            case 7:
-                                $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` where Regional = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE Regional = '$unidade' AND FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 41 AND 45";
-                                echo $res = consultaSimplesRetornaString($sql);
-                                break;
-                            case 8:
-                               $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` where Regional = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE Regional = '$unidade' AND FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) > 45";
-                                echo $res = consultaSimplesRetornaString($sql);
-                                break;
-                            default:
-                                break;
-                        
+        var data = {
+            // Intervalos de idades que devem ser calculadas. O intervalo foi definido de acordo com o documento PDF
+            labels: ["< 18",  "de 18 a 20", "de 21 a 23", "de 24 a 26", "de 27 a 29", "de 30 a 35", "de 36 a 40", "de 41 a 45", "> 45"],
+            datasets: [
+                {
+                    label: "Idade",
+                    backgroundColor: 'rgba(54, 162, 235, .7)',
+                    data: [
+                    // Faz um loop com 9 iterações, onde cada iteração representa um intervalo (especificados nas labels acima) e, para cada iteração faz uma consulta em um intervalo de idade diferente
+                    <?php 
+                        for ($i=0; $i < 9; $i++) { 
+                            switch ($i) {
+                                case 0:
+                                    $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` where Regional = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE Regional = '$unidade' AND FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) < 18 ";
+                                    echo $res = consultaSimplesRetornaString($sql);
+                                    break;
+                                case 1:
+                                    $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` where Regional = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE Regional = '$unidade' AND FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 18 AND 20";
+                                    echo $res = consultaSimplesRetornaString($sql);
+                                    break;
+                                case 2:
+                                    $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` where Regional = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE Regional = '$unidade' AND FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 21 AND 23";
+                                    echo $res = consultaSimplesRetornaString($sql);
+                                    break;
+                                case 3:
+                                    $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` where Regional = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE Regional = '$unidade' AND FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 24 AND 26";
+                                    echo $res = consultaSimplesRetornaString($sql);
+                                    break;
+                                case 4:
+                                    $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` where Regional = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE Regional = '$unidade' AND FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 27 AND 29";
+                                    echo $res = consultaSimplesRetornaString($sql);
+                                    break;
+                                case 5:
+                                    $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` where Regional = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE Regional = '$unidade' AND FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 30 AND 35";
+                                    echo $res = consultaSimplesRetornaString($sql);
+                                    break;
+                                case 6:
+                                    $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` where Regional = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE Regional = '$unidade' AND FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 36 AND 40";
+                                    echo $res = consultaSimplesRetornaString($sql);
+                                    break;
+                                case 7:
+                                    $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` where Regional = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE Regional = '$unidade' AND FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN 41 AND 45";
+                                    echo $res = consultaSimplesRetornaString($sql);
+                                    break;
+                                case 8:
+                                   $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` where Regional = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE Regional = '$unidade' AND FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) > 45";
+                                    echo $res = consultaSimplesRetornaString($sql);
+                                    break;
+                                default:
+                                    break;
+                            
+                            }
                         }
-                    }
-                ?>]
-            }
-        ]
-    };
+                    ?>]
+                }
+            ]
+        };
 
-    var myBarChart = new Chart(ctx, {
-            type: 'bar',
-            data: data,
-            options: {
-                barValueSpacing: 20,
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            min: 0,
-                            beginAtZero:true
-                        }
-                    }]
-                } 
-            }
-        });
+        var myBarChart = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: {
+                    barValueSpacing: 20,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                min: 0,
+                                beginAtZero:true
+                            }
+                        }]
+                    } 
+                }
+            });
 
     </script>
     <?php $aux++; endforeach; ?>
@@ -898,6 +857,13 @@ $arrayRendas = array(
         </script>
     <?php endforeach; ?>
 
+
+    <!-- ************************************************ -->
+            <!-- INÍCIO DADOS ACAO AFIRMATIVA!!! -->
+    <!-- ************************************************ -->
+
+    <!-- FALTA UMA TABELA AQUI!!, TABELA DA PAG. 29 -->
+
     <!-- Gráfico do número de estudantes c/ ação afirmativa , que ingressaram até 2012 -->
     <div class="row">
         <div>
@@ -1000,7 +966,7 @@ $arrayRendas = array(
     <div class="row">
         <div>
             <h3 class="text-center">Numero De Estudantes Matriculados <?php echo $anoSelecionadoPOST;?> Por Ação Afirmativa Por Regional Com Ingresso a Partir De 2013 (Lei De Cotas E Programa UFGInclui)</h3>
-            <table class="table table-responsive text-center">
+            <table class="table table-responsive text-center table-bordered">
                 <tr>
                     <th rowspan="2" class="text-center" style="vertical-align: middle;">Regional</th>
                     <th colspan="5" class="text-center" style="vertical-align: middle;">Lei de Cotas</th>
@@ -1418,9 +1384,8 @@ $arrayRendas = array(
         </div>
     </div>
 
-    <!-- Estudantes Ingressantes SISU em 2016 POR REGIONAL!! -->
-    <?php 
-    foreach ($arrayUnidades as $unidade => $value) : ?>
+    <!-- Estudantes Ingressantes SISU em 2016 POR REGIONAL!! (Ampla concorrencia e acao afirmativa) -->
+    <?php foreach ($arrayUnidades as $unidade => $value) : ?>
         <!-- Gráfico barra para cada unidade -->
         <div class="row">
             <div>
@@ -1495,79 +1460,638 @@ $arrayRendas = array(
 
         <!-- Gráfico pizza para cada unidade -->
         <div class="row">
-        <div>
-            <h3 align="middle">Porcentagem de Estudantes Ingressantes SISU em <?php echo $anoSelecionadoPOST; ?> por Ação Afirmativa e Ampla Concorrência na Regional <?php echo $unidade;?></h3>
-            <canvas id="graficoPizzaIngressantesSISURegional<?php echo $unidade;?>" style="width: 900px; height: 500px"></canvas>
-            <script>
-                var ctx = document.getElementById("graficoPizzaIngressantesSISURegional<?php echo $unidade;?>");
+            <div>
+                <h3 align="middle">Porcentagem de Estudantes Ingressantes SISU em <?php echo $anoSelecionadoPOST; ?> por Ação Afirmativa e Ampla Concorrência na Regional <?php echo $unidade;?></h3>
+                <canvas id="graficoPizzaIngressantesSISURegional<?php echo $unidade;?>" style="width: 900px; height: 500px"></canvas>
+                <script>
+                    var ctx = document.getElementById("graficoPizzaIngressantesSISURegional<?php echo $unidade;?>");
 
-                var data = {
-                    labels: [
-                        "Ação Afirmativa", 
-                        "AC"
-                    ],
-                    datasets: [
-                        {
-                            label: 'Porcentagem de estudantes',
-                            backgroundColor: [
-                                "#36A2EB",
-                                "#FFCE56"
-                            ],
-                            data: [
-                                <?php
-                                $sql = "SELECT count(*) / (SELECT COUNT(*) 
-                                                           FROM `$anoSelecionadoPOST` 
-                                                           WHERE ano_ingresso = '$anoSelecionadoPOST' 
-                                                                 and forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'
-                                                                 and `Regional` = '$unidade'
-                                        ) * 100.0 AS count 
-                                        FROM `$anoSelecionadoPOST` 
-                                        WHERE `acao_afirmativa` <> '(DC Renda Inferior)' 
-                                               and `acao_afirmativa` <> '(DC Renda Superior)' 
-                                               and `acao_afirmativa` <> '(PPI Renda Inferior)' 
-                                               and `acao_afirmativa` <> '(PPI Renda Superior)' 
-                                               and `acao_afirmativa` <> 'UFGInclui - Negro Escola Pública' 
-                                               and `acao_afirmativa` <> 'UFGInclui - Indígena' 
-                                               and `acao_afirmativa` <> 'UFGInclui - Escola Pública' 
-                                               and `acao_afirmativa` <> 'UFGInclui - Quilombola' 
-                                               and `acao_afirmativa` <> 'UFGInclui - Surdo' 
-                                               and ano_ingresso = '$anoSelecionadoPOST' 
-                                               and forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'
-                                               and `Regional` = '$unidade'";
+                    var data = {
+                        labels: [
+                            "Ação Afirmativa", 
+                            "AC"
+                        ],
+                        datasets: [
+                            {
+                                label: 'Porcentagem de estudantes',
+                                backgroundColor: [
+                                    "#36A2EB",
+                                    "#FFCE56"
+                                ],
+                                data: [
+                                    <?php
+                                    $sql = "SELECT count(*) / (SELECT COUNT(*) 
+                                                               FROM `$anoSelecionadoPOST` 
+                                                               WHERE ano_ingresso = '$anoSelecionadoPOST' 
+                                                                     and forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'
+                                                                     and `Regional` = '$unidade'
+                                            ) * 100.0 AS count 
+                                            FROM `$anoSelecionadoPOST` 
+                                            WHERE `acao_afirmativa` <> '(DC Renda Inferior)' 
+                                                   and `acao_afirmativa` <> '(DC Renda Superior)' 
+                                                   and `acao_afirmativa` <> '(PPI Renda Inferior)' 
+                                                   and `acao_afirmativa` <> '(PPI Renda Superior)' 
+                                                   and `acao_afirmativa` <> 'UFGInclui - Negro Escola Pública' 
+                                                   and `acao_afirmativa` <> 'UFGInclui - Indígena' 
+                                                   and `acao_afirmativa` <> 'UFGInclui - Escola Pública' 
+                                                   and `acao_afirmativa` <> 'UFGInclui - Quilombola' 
+                                                   and `acao_afirmativa` <> 'UFGInclui - Surdo' 
+                                                   and ano_ingresso = '$anoSelecionadoPOST' 
+                                                   and forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'
+                                                   and `Regional` = '$unidade'";
 
-                                // Ao invés de fazer uma nova pesquisa, é mais eficiente simplesmente fazer a diferença (visto que esses são os únicos dois dados no gráfico. Sendo assim, a função retorna um array para um vetor auxiliar. A diferença entre 100 e esse vetor será a outra porcentagem necessária.
-                                $amplaConcorrencia = consultaSimplesRetornaArray($sql);
-                                $acaoAfirmativa = 100 - $amplaConcorrencia[0];
+                                    // Ao invés de fazer uma nova pesquisa, é mais eficiente simplesmente fazer a diferença (visto que esses são os únicos dois dados no gráfico. Sendo assim, a função retorna um array para um vetor auxiliar. A diferença entre 100 e esse vetor será a outra porcentagem necessária.
+                                    $amplaConcorrencia = consultaSimplesRetornaArray($sql);
+                                    $acaoAfirmativa = 100 - $amplaConcorrencia[0];
 
-                                echo round($acaoAfirmativa, 2) . ", ";
-                                echo round($amplaConcorrencia[0], 2);
-                                ?>
-                            ]
-                        }
-                    ]
-                };
+                                    echo round($acaoAfirmativa, 2) . ", ";
+                                    echo round($amplaConcorrencia[0], 2);
+                                    ?>
+                                ]
+                            }
+                        ]
+                    };
 
-                var myBarChart = new Chart(ctx, {
-                    type: 'pie',
-                    data: data,
-                    options: {
-                        barValueSpacing: 20,
-                        scales: {
-                            yAxes: [
-                                {
-                                    ticks: {
-                                        min: 0,
-                                        beginAtZero:true
+                    var myBarChart = new Chart(ctx, {
+                        type: 'pie',
+                        data: data,
+                        options: {
+                            barValueSpacing: 20,
+                            scales: {
+                                yAxes: [
+                                    {
+                                        ticks: {
+                                            min: 0,
+                                            beginAtZero:true
+                                        }
                                     }
-                                }
-                            ]
-                        } 
-                    }
-                });
-            </script>
+                                ]
+                            } 
+                        }
+                    });
+                </script>
+            </div>
+        </div>
+    <?php endforeach; ?>
+
+    <!-- TABELA - Média Das Médias Globais Por Ação Afirmativa E Por Regional De Estudantes Matriculados Em Abril De 2016 Com Ingresso Até 2012 -->
+    <div class="row">
+        <h3 class="text-center">Média Das Médias Globais Por Ação Afirmativa E Por Regional De Estudantes Matriculados Em <?php echo $anoSelecionadoPOST; ?> Com Ingresso Até 2012</h3>
+        <table class="table table-bordered table-responsive text-center">
+            <tr>
+                <th></th>
+                <th></th>
+                <th colspan="5" class="text-center">UFCInclui até 2012</th>
+            </tr>
+            <tr>
+                <th class="text-center"></th>
+                <th class="text-center">Ampla Concorrência</th>
+                <th class="text-center">10% para Escola Pública</th>
+                <th class="text-center">10% para Negro Escola Pública</th>
+                <th class="text-center">Vaga Extra para Indígena</th>
+                <th class="text-center">Vaga Extra para Negro Quilombola</th>
+                <th class="text-center">Reserva de 15 vagas Surdo *</th>
+            </tr>
+            <?php foreach ($arrayUnidades as $unidade => $value) : ?>
+                <tr>
+                    <th class="text-center"><?php echo $unidade; ?></th>
+
+                    <!-- Dados ampla concorrência -->
+                    <td class="mediaAmplaConcorrencia">
+                        <?php 
+                        $sql = "SELECT AVG(`media_global`) AS count
+                                FROM `$anoSelecionadoPOST`
+                                WHERE  `acao_afirmativa` <> '(DC Renda Inferior)' 
+                                        AND `acao_afirmativa` <> '(DC Renda Superior)' 
+                                        AND `acao_afirmativa` <> '(PPI Renda Inferior)' 
+                                        AND `acao_afirmativa` <> '(PPI Renda Superior)' 
+                                        AND `acao_afirmativa` <> ( 'UFGInclui - Negro Escola Pública' ) 
+                                        AND `acao_afirmativa` <> 'UFGInclui - Indígena' 
+                                        AND `acao_afirmativa` <> ( 'UFGInclui - Escola Pública' ) 
+                                        AND `acao_afirmativa` <> ( 'UFGInclui - Quilombola' ) 
+                                        AND `acao_afirmativa` <> ( 'UFGInclui - Surdo' )
+                                        AND `ano_ingresso` <= 2012
+                                        AND `Regional` = '$unidade'";
+
+                        echo consultaSimplesRetornaUmValor($sql);
+                        ?>
+                    </td>
+
+                    <!-- Loop por acao afirmativa (UFG Inclui apenas!) -->
+                    <?php foreach ($arrayAcaoAfirmativa as $acao => $value) : ?>
+                        <?php 
+                            $aux = array("esc-pub", "negro-esc-pub", "indigena", "quilombola", "surdo"); 
+                            $index = 0;
+                        ?>
+                        <td class="media-<?php echo $aux[$index]; ?>">
+                            <?php $sql = "SELECT AVG(`media_global`) AS count
+                                    FROM `$anoSelecionadoPOST`
+                                    WHERE `acao_afirmativa` = '$acao'
+                                           AND `ano_ingresso` <= 2012
+                                           AND `Regional` = '$unidade'";
+
+                            echo consultaSimplesRetornaUmValor($sql); 
+                            ?>
+                        </td>
+                    <?php $index++; endforeach; ?>
+            <?php endforeach; ?>
+
+            <!-- Linha TOTAL -->
+            </tr>
+                <!-- Criação da última linha (TOTAL), referente à média das columas acima.
+                A estrutura é basicamente a mesma da inserção das estruturas, mas decidi separar para deixar o código um pouco mais legível. As queries continuam basicamente a mesma, a diferença é que é passado um vetor contendo todas as regionais para uma função que retorna a soma da consulta realizada em todas as regionais, obtendo assim o valor total desejado. -->
+                <tr>
+                    <th class="text-center" style="vertical-align: middle;">Total</th>
+                    <td>
+                    <?php 
+                    $sql = "SELECT AVG(`media_global`) AS count
+                            FROM `$anoSelecionadoPOST`
+                            WHERE  `acao_afirmativa` <> '(DC Renda Inferior)' 
+                                    AND `acao_afirmativa` <> '(DC Renda Superior)' 
+                                    AND `acao_afirmativa` <> '(PPI Renda Inferior)' 
+                                    AND `acao_afirmativa` <> '(PPI Renda Superior)' 
+                                    AND `acao_afirmativa` <> ( 'UFGInclui - Negro Escola Pública' ) 
+                                    AND `acao_afirmativa` <> 'UFGInclui - Indígena' 
+                                    AND `acao_afirmativa` <> ( 'UFGInclui - Escola Pública' ) 
+                                    AND `acao_afirmativa` <> ( 'UFGInclui - Quilombola' ) 
+                                    AND `acao_afirmativa` <> ( 'UFGInclui - Surdo' )
+                                    AND `ano_ingresso` <= 2012
+                                    AND `Regional` = ";
+
+                    echo consultaSimplesRetornaMediaAsString($arrayUnidades, $sql);
+                    ?>
+                    </td>
+
+                    <!-- Média geral do UFGInclui -->
+                    <?php foreach ($arrayAcaoAfirmativa as $acao => $value) : ?>
+                        <td>
+                            <?php 
+                            $sql = "SELECT AVG(`media_global`) AS count 
+                                    FROM `$anoSelecionadoPOST` 
+                                    WHERE `acao_afirmativa` = '$acao' 
+                                           AND `ano_ingresso` <= 2012 
+                                           AND Regional = ";
+                            echo consultaSimplesRetornaMediaAsString($arrayUnidades, $sql);
+                            ?>
+                        </td>
+                    <?php endforeach; ?>
+                </tr>
+        </table>
+        <h7> * Para o curso de Letras: Libras da Regional Goiânia</h7>
+    </div>
+
+    <!-- BARRA AGRUPADA - Média Das Médias Globais Dos Estudantes Ingresso Pelo Programa Ufginclui Matriculados Em Abril/2016 Com Ingresso Anterior até 2012  -->
+    <div class='row'>
+        <div>
+            <h3 class="text-center">Média Das Médias Globais Dos Estudantes Ingresso Pelo Programa Ufginclui Matriculados Em <?php echo $anoSelecionadoPOST; ?> Com Ingresso Até 2012</h3>
+            <canvas id="myChartMediaGlobalBarraMultipla" style="width: 1100px; height: 500px"></canvas>
         </div>
     </div>
-    <?php endforeach; ?>
+    <script type="text/javascript">
+        var ctx = document.getElementById("myChartMediaGlobalBarraMultipla");
+
+        var data = {
+            labels: ["AC", <?php 
+                    // Imprime as labels do gráfico, com base no array de unidades
+                    foreach ($arrayAcaoAfirmativa as $acao => $value) {
+                        echo "'" . $acao . "',";
+                    }
+                ?>],
+            datasets: [ 
+                    // loop para cada label das acoes afirmativas
+                    <?php foreach ($arrayUnidades as $unidade => $value): ?>
+                    {
+                        label: <?php echo "\"$unidade\""?>,
+                        backgroundColor: <?php echo "\"$arrayBackgroundColor[$unidade]\""; ?>,
+                        data: [ <?php 
+                            $sql = "SELECT AVG(`media_global`) AS count
+                                    FROM `$anoSelecionadoPOST`
+                                    WHERE  `acao_afirmativa` <> '(DC Renda Inferior)' 
+                                            AND `acao_afirmativa` <> '(DC Renda Superior)' 
+                                            AND `acao_afirmativa` <> '(PPI Renda Inferior)' 
+                                            AND `acao_afirmativa` <> '(PPI Renda Superior)' 
+                                            AND `acao_afirmativa` <> ( 'UFGInclui - Negro Escola Pública' ) 
+                                            AND `acao_afirmativa` <> 'UFGInclui - Indígena' 
+                                            AND `acao_afirmativa` <> ( 'UFGInclui - Escola Pública' ) 
+                                            AND `acao_afirmativa` <> ( 'UFGInclui - Quilombola' ) 
+                                            AND `acao_afirmativa` <> ( 'UFGInclui - Surdo' )
+                                            AND `ano_ingresso` <= 2012
+                                            AND `Regional` = '$unidade'";
+
+                            echo consultaSimplesRetornaString($sql);
+                            // dentro de cada acao, é preciso calcular para todas as unidades, portanto um loop para as unidades:
+                            foreach ($arrayAcaoAfirmativa as $acao => $value) {
+                                $sql = "SELECT AVG(`media_global`) AS count
+                                    FROM `$anoSelecionadoPOST`
+                                    WHERE `acao_afirmativa` = '$acao'
+                                           AND `ano_ingresso` <= 2012
+                                           AND `Regional` = '$unidade'";
+
+                                echo consultaSimplesRetornaString($sql);
+                            }
+                        ?>]
+                    },
+                    <?php endforeach; ?>
+                
+            ]
+        };
+
+        var myBarChart = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: {
+                    barValueSpacing: 20,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                min: 0,
+                                beginAtZero:true
+                            }
+                        }]
+                    } 
+                }
+            });
+    </script>
+
+    <!-- TABELA - Média Das Médias Globais Dos Estudantes Ingresso Pelo Programa Ufginclui E Pela Lei De Cotas Matriculados Com Ingresso enrte 2013 e 2015 -->
+    <div class="row">
+        <div>
+            <h3 class="text-center">Média Das Médias Globais Dos Estudantes Ingresso Pelo Programa Ufginclui E Pela Lei De Cotas Matriculados Em <?pho echo $anoSelecionadoPOST; ?> Com Ingresso Entre 2013 e 2015</h3>
+            <table class="table table-responsive text-center table-bordered">
+                <tr>
+                    <th rowspan="2" class="text-center" style="vertical-align: middle;">Regional</th>
+                    <th colspan="5" class="text-center" style="vertical-align: middle;">Lei de Cotas</th>
+                    <th colspan="3" class="text-center" style="vertical-align: middle;">Programa UFGInclui 2013 a 2015</th>
+                </tr>
+                <tr>
+                    <th class="text-center" style="vertical-align: middle;">AC</th>
+                    <th class="text-center" style="vertical-align: middle;">L1<br>(Baixa renda)</th>
+                    <th class="text-center" style="vertical-align: middle;">L2<br>(Baixa Renda PPI)</th>
+                    <th class="text-center" style="vertical-align: middle;">L3<br>(Independente da Renda</th>
+                    <th class="text-center" style="vertical-align: middle;">L4<br>(Independente da Renda PPI)</th>
+                    <th class="text-center" style="vertical-align: middle;">Vagas Extras Para Indígenas</th>
+                    <th class="text-center" style="vertical-align: middle;">Vagas Extras Para Quilombolas</th>
+                    <th class="text-center" style="vertical-align: middle;">Reserva de 15 Vagas Para Surdos</th>
+                </tr>
+                <?php
+                foreach ($arrayUnidades as $unidade => $value) : ?>
+                <tr>
+                    <th class="text-center" style="vertical-align: middle;"><?php echo $unidade; ?></th>
+                    <?php
+                    echo "<td>";
+                    // Consulta de Ampla Concorrencia
+                    $sql = "SELECT AVG(`media_global`) AS count
+                                FROM `$anoSelecionadoPOST`
+                                WHERE  `acao_afirmativa` <> '(DC Renda Inferior)' 
+                                        AND `acao_afirmativa` <> '(DC Renda Superior)' 
+                                        AND `acao_afirmativa` <> '(PPI Renda Inferior)' 
+                                        AND `acao_afirmativa` <> '(PPI Renda Superior)' 
+                                        AND `acao_afirmativa` <> ( 'UFGInclui - Negro Escola Pública' ) 
+                                        AND `acao_afirmativa` <> 'UFGInclui - Indígena' 
+                                        AND `acao_afirmativa` <> ( 'UFGInclui - Escola Pública' ) 
+                                        AND `acao_afirmativa` <> ( 'UFGInclui - Quilombola' ) 
+                                        AND `acao_afirmativa` <> ( 'UFGInclui - Surdo' )
+                                        AND `ano_ingresso` >= 2013
+                                        AND `ano_ingresso` <= 2015
+                                        AND `Regional` = '$unidade'";
+                    echo consultaSimplesRetornaUmValor($sql);
+                    echo "</td>";
+
+                    // Loop para inserir os valores da Lei de Cotas
+                    foreach ($arrayRendas as $renda => $value) {
+                        echo "<td>";
+                        $sql = "SELECT AVG(`media_global`) AS count FROM `$anoSelecionadoPOST` WHERE Regional = '$unidade' and `acao_afirmativa` = '$renda' and `ano_ingresso` >= 2013 AND `ano_ingresso` <= 2015";
+                        echo consultaSimplesRetornaUmValor($sql);
+                        echo "</td>";
+                    }
+
+                    // Loop para inserir os valores do programa UFGInclui.
+                    // Nesse caso específico, escola pública e negros escola pública ficam de fora.
+                    foreach ($arrayAcaoAfirmativa as $acao => $value) {
+                        if ($acao !== 'UFGInclui - Escola Pública' and $acao !== 'UFGInclui - Negro Escola Pública') {
+                            echo "<td>";
+                            $sql = "SELECT AVG(`media_global`) AS count FROM `$anoSelecionadoPOST` WHERE Regional = '$unidade' and `acao_afirmativa` = '$acao' and `ano_ingresso` >= 2013 AND `ano_ingresso` <= 2015";
+                            echo consultaSimplesRetornaUmValor($sql);
+                            echo "</td>";
+                        }
+                    }
+                    ?>
+                </tr>
+                <?php endforeach; ?>
+
+
+                <!-- LINHA TOTAL -->
+                <!-- Criação da última linha, referente ao total (MÉDIA dos valores das columas acima). -->
+                <tr>
+                    <th class="text-center" style="vertical-align: middle;">Total</th>
+
+                    <!-- MEDIA AMPLA CONCORRENCIA -->
+                    <?php 
+                    echo "<td>";
+                    $sql = "SELECT AVG(`media_global`) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` <> '(PPI Renda Superior)' and `acao_afirmativa` <> '(PPI Renda Inferior)' and `acao_afirmativa` <> '(DC Renda Superior)' and `acao_afirmativa` <> '(DC Renda Inferior)' and `ano_ingresso` >= 2013 AND `ano_ingresso` <= 2015 and Regional = ";
+                    echo consultaSimplesRetornaMediaAsString($arrayUnidades, $sql);
+                    echo "</td>";
+
+                    // MEDIA das leis de cotas
+                    foreach ($arrayRendas as $renda => $value) {
+                        echo "<td>";
+                            $sql = "SELECT AVG(`media_global`) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` = '$renda' and `ano_ingresso` >= 2013 and  `ano_ingresso` <= 2015 AND Regional = ";
+                            echo consultaSimplesRetornaMediaAsString($arrayUnidades, $sql);
+                            echo "</td>";
+                    }
+
+                    // MEDIA do UFGInclui
+                    // Novamente, escola pública e negro escola pública ficam de fora, como especificado pelo documento modelo.
+                    foreach ($arrayAcaoAfirmativa as $acao => $value) {
+                        if ($acao !== 'UFGInclui - Escola Pública' and $acao !== 'UFGInclui - Negro Escola Pública') {
+                            echo "<td>";
+                            $sql = "SELECT AVG(`media_global`) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` = '$acao' and `ano_ingresso` >= 2013 and `ano_ingresso` <= 2015 and Regional = ";
+                            echo consultaSimplesRetornaMediaAsString($arrayUnidades, $sql);
+                            echo "</td>";
+                        }
+                    }
+                    ?>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- BARRA AGRUPADA - Média Das Médias Globais Dos Estudantes Matriculados Em Abril /2016 Com Ingresso Pelo Programa Ufginclui E Pela Lei De Cotas Com Ingresso De 2013 a 2015  -->
+    <div class='row'>
+        <div>
+            <h3 class="text-center">Média Das Médias Globais Dos Estudantes Ingresso Pelo Programa Ufginclui Matriculados Em <?php echo $anoSelecionadoPOST; ?> Com Ingresso Entre 2013 e 2015</h3>
+            <canvas id="myChartMediaGlobalBarraMultipla2" style="width: 1100px; height: 500px"></canvas>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var ctx = document.getElementById("myChartMediaGlobalBarraMultipla2");
+
+        var data = {
+            labels: ["AC", "L1", "L2", "L3", "L4", <?php 
+                foreach ($arrayAcaoAfirmativa as $acao => $value) {
+                    if ($acao !== 'UFGInclui - Escola Pública' and $acao !== 'UFGInclui - Negro Escola Pública')
+                        echo "'$acao', ";
+                }
+                ?>],
+            datasets: [ 
+                    // loop para cada label das acoes afirmativas
+                    <?php foreach ($arrayUnidades as $unidade => $value): ?>
+                    {
+                        label: <?php echo "\"$unidade\""?>,
+                        backgroundColor: <?php echo "\"$arrayBackgroundColor[$unidade]\""; ?>,
+                        data: [ <?php 
+                            // AMPLA CONCORRENCIA
+                            $sql = "SELECT AVG(`media_global`) AS count
+                                    FROM `$anoSelecionadoPOST`
+                                    WHERE  `acao_afirmativa` <> '(DC Renda Inferior)' 
+                                            AND `acao_afirmativa` <> '(DC Renda Superior)' 
+                                            AND `acao_afirmativa` <> '(PPI Renda Inferior)' 
+                                            AND `acao_afirmativa` <> '(PPI Renda Superior)' 
+                                            AND `acao_afirmativa` <> ( 'UFGInclui - Negro Escola Pública' ) 
+                                            AND `acao_afirmativa` <> 'UFGInclui - Indígena' 
+                                            AND `acao_afirmativa` <> ( 'UFGInclui - Escola Pública' ) 
+                                            AND `acao_afirmativa` <> ( 'UFGInclui - Quilombola' ) 
+                                            AND `acao_afirmativa` <> ( 'UFGInclui - Surdo' )
+                                            AND `ano_ingresso` >= 2013
+                                            AND `ano_ingresso` <= 2015
+                                            AND `Regional` = '$unidade'";
+
+                            echo consultaSimplesRetornaString($sql);
+
+                            // L1 L2 L3 L4
+                            foreach ($arrayRendas as $renda => $value) {
+                                $sql = "SELECT AVG(`media_global`) AS count
+                                        FROM `$anoSelecionadoPOST`
+                                        WHERE `Regional` = '$unidade'
+                                              and `ano_ingresso` >= 2013
+                                              and `ano_ingresso` <= 2015
+                                              and `acao_afirmativa` = '$renda'";
+
+                                echo consultaSimplesRetornaString($sql);
+                            }
+
+                            // UFG INDIGENA, QUILOMBO, SURDOS
+                            foreach ($arrayAcaoAfirmativa as $acao => $value) {
+                                if ($acao !== 'UFGInclui - Escola Pública' and $acao !== 'UFGInclui - Negro Escola Pública') {
+                                    $sql = "SELECT AVG(`media_global`) AS count
+                                    FROM `$anoSelecionadoPOST`
+                                    WHERE `acao_afirmativa` = '$acao'
+                                           AND `ano_ingresso` >= 2013
+                                           AND `ano_ingresso` <= 2015
+                                           AND `Regional` = '$unidade'";
+
+                                    echo consultaSimplesRetornaString($sql);
+                                }
+                            }
+                        ?>
+                        ]
+                    },
+                <?php endforeach; ?> 
+                ]
+            };
+
+        var myBarChart = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: {
+                    barValueSpacing: 20,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                min: 0,
+                                beginAtZero:true
+                            }
+                        }]
+                    } 
+                }
+            });
+    </script>
+
+    <!-- TABELA - Média Das Médias Globais Por ação Afirmativa E Por Regional De Estudantes Matriculados Em Abril De 2016* -->
+    <div class="row">
+        <h3>Média Das Médias Globais Por ação Afirmativa E Por Regional De Estudantes Matriculados Em <?php echo $anoSelecionadoPOST; ?>*</h3>
+        <table class="table-responsive table text-center">
+        <tr>
+            <th class="text-center"></th>
+            <th class="text-center">AC</th>
+            <th class="text-center">L1</th>
+            <th class="text-center">L2</th>
+            <th class="text-center">L3</th>
+            <th class="text-center">L4</th>
+            <th class="text-center">UFGInclui</th>
+        </tr>
+        <?php foreach ($arrayUnidades as $unidade => $value): ?>
+        <tr>
+            <th class="text-center"><?php echo $unidade;?></th>
+            <td>
+             <!-- AMPLA CONCORRENCIA -->
+                <?php
+                $sql = "SELECT AVG(`media_global`) AS count
+                        FROM `$anoSelecionadoPOST`
+                        WHERE `acao_afirmativa` NOT LIKE '%UFGInclui%'
+                               and `acao_afirmativa` NOT LIKE '%Renda%'
+                               and `ano_ingresso` <> '$anoSelecionadoPOST'
+                               and `Regional` = '$unidade'";
+
+                echo consultaSimplesRetornaUmValor($sql); 
+                ?>
+            </td>
+                <!-- L1 L2 L3 L4 -->
+                <?php foreach ($arrayRendas as $renda => $value) {
+                echo "\n<td>";
+                $sql = "SELECT AVG(`media_global`) AS count
+                    FROM `$anoSelecionadoPOST`
+                    WHERE `acao_afirmativa` = '$renda'
+                           and `ano_ingresso` <> '$anoSelecionadoPOST'
+                           and `Regional` = '$unidade'";
+
+                echo consultaSimplesRetornaUmValor($sql);
+                echo "</td>";
+                }?>
+            <!-- INDIGENA, QUILOMBO, SURDO -->
+            <?php
+            $sql = "SELECT AVG(`media_global`) AS count
+                FROM `$anoSelecionadoPOST`
+                WHERE `acao_afirmativa` LIKE '%UFGInclui%'
+                       and `ano_ingresso` <> '$anoSelecionadoPOST'
+                       and `Regional` = '$unidade'";
+            echo "\n<td>";
+            echo consultaSimplesRetornaUmValor($sql);
+            echo "</td>";
+            ?>
+        </tr>
+        <?php endforeach; ?>
+
+        <!-- ROW TOTAL -->
+        <tr class="TOTAL">
+            <th class="text-center">Total</th>
+
+            <!-- AMPLA CONCORRENCIA -->
+            <td>
+                <?php
+                $sql = "SELECT AVG(`media_global`) AS count
+                        FROM `$anoSelecionadoPOST`
+                        WHERE `acao_afirmativa` NOT LIKE '%UFGInclui%'
+                               and `acao_afirmativa` NOT LIKE '%Renda%'
+                               and `ano_ingresso` <> '$anoSelecionadoPOST'
+                               and `Regional` = ";
+
+                echo consultaSimplesRetornaMediaAsString($arrayUnidades, $sql); 
+                ?>
+            </td>
+            <!-- L1 L2 L3 L4 -->
+            <?php foreach ($arrayRendas as $renda => $value) {
+                $sql = "SELECT AVG(`media_global`) AS count
+                        FROM `$anoSelecionadoPOST`
+                        WHERE `acao_afirmativa` = '$renda'
+                               and `ano_ingresso` <> '$anoSelecionadoPOST'
+                               and `Regional` = ";
+
+            echo "\n<td>";
+            echo consultaSimplesRetornaMediaAsString($arrayUnidades, $sql); 
+            echo "</td>";
+            }?>
+
+            <!-- INDIGENA, QUILOMBO, SURDO -->
+            <?php 
+            $sql = "SELECT AVG(`media_global`) AS count
+                    FROM `$anoSelecionadoPOST`
+                    WHERE `acao_afirmativa` LIKE '%UFGInclui%'
+                           and `ano_ingresso` <> '$anoSelecionadoPOST'
+                           and `Regional` = ";
+
+            echo "<td>";
+            echo consultaSimplesRetornaMediaAsString($arrayUnidades, $sql); 
+            echo "</td>";
+            ?>
+        </tr>
+        </table>
+        <h7> * Para o cálculo da tabela acima, foram retirados os ingressantes de <?php echo $anoSelecionadoPOST; ?></h7>
+    </div>
+
+    <!-- BARRA AGRUPADA - Média Das Médias Globais Por ação Afirmativa E Por Regional De Estudantes Matriculados Em Abril De 2016* -->
+    <div class='row'>
+        <div>
+            <h3 class="text-center">Média Das Médias Globais Por ação Afirmativa E Por Regional De Estudantes Matriculados Em Abril De 2016*</h3>
+            <canvas id="myChartMediaGlobalBarraMultipla3" style="width: 1100px; height: 500px"></canvas>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var ctx = document.getElementById("myChartMediaGlobalBarraMultipla3");
+
+        var data = {
+            labels: ["AC", "L1", "L2", "L3", "L4", "UFGInclui"],
+            datasets: [ 
+                    // loop para cada label das acoes afirmativas
+                    <?php foreach ($arrayUnidades as $unidade => $value): ?>
+                    {
+                        label: <?php echo "\"$unidade\""?>,
+                        backgroundColor: <?php echo "\"$arrayBackgroundColor[$unidade]\""; ?>,
+                        data: [ <?php 
+                            // AMPLA CONCORRENCIA
+                            $sql = "SELECT AVG(`media_global`) AS count
+                                    FROM `$anoSelecionadoPOST`
+                                    WHERE  `acao_afirmativa` NOT LIKE '%Renda%' 
+                                            AND `acao_afirmativa` NOT LIKE '%UFGInclui%'
+                                            AND `ano_ingresso` <> '$anoSelecionadoPOST'
+                                            AND `Regional` = '$unidade'";
+
+                            echo consultaSimplesRetornaString($sql);
+
+                            // L1 L2 L3 L4
+                            foreach ($arrayRendas as $renda => $value) {
+                                $sql = "SELECT AVG(`media_global`) AS count
+                                        FROM `$anoSelecionadoPOST`
+                                        WHERE `Regional` = '$unidade'
+                                              and `ano_ingresso` <> '$anoSelecionadoPOST'
+                                              and `acao_afirmativa` = '$renda'";
+
+                                echo consultaSimplesRetornaString($sql);
+                            }
+
+                            // UFG inclui
+                            $sql = "SELECT AVG(`media_global`) AS count
+                                    FROM `$anoSelecionadoPOST`
+                                    WHERE `acao_afirmativa` LIKE '%UFGInclui%'
+                                           and `ano_ingresso` <> '$anoSelecionadoPOST'
+                                           and `Regional` = '$unidade'";
+
+                            $teste = consultaSimplesRetornaUmValor($sql);
+                            echo $teste;
+                        ?>
+                        ]
+                    },
+                    <?php endforeach; ?> 
+                ]
+            };
+
+        var myBarChart = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: {
+                    barValueSpacing: 20,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                min: 0,
+                                beginAtZero:true
+                            }
+                        }]
+                    } 
+                }
+            });
+    </script>
+
+    
+
+
+    <!-- ************************************************ -->
+            <!-- FIM DADOS ACAO AFIRMATIVA!!! -->
+    <!-- ************************************************ -->
+
+
+
+
 
 
 
