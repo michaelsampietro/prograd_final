@@ -1,14 +1,12 @@
 <?php
 ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 require_once 'utils.php';
 require_once 'includes/header.php';
 
 $anoSelecionadoPOST = htmlspecialchars($_POST['anos']);
-?>
 
-<?php
 $arrayUnidades      = array(
     'Goiânia' => 0,
     'Jataí' => 0,
@@ -42,15 +40,14 @@ $arrayBackgroundColor = array(
 );
 ?>
 
-<div class="container" style="margin: 0 auto;">
+<div id="container-geral" class="container" style="margin: 0 auto;">
     <h4>Clique no nome do gráfico para mostrá-lo!</h4>
     <!-- Gráfico com o numero de estudantes matriculados em abril de 2016 por regional -->
     <div class="row">
-        <div>
-            <h3 align="middle">Número de estudantes matriculados em abril de <?php echo $anoSelecionadoPOST ?> por regional</h3>
-            <canvas id="myChart" style="width: 900px; height: 500px; display: none;" ></canvas>
+            <h3 class="text-center" id="tituloMyChart1">Número de estudantes matriculados em abril de <?php echo $anoSelecionadoPOST ?> por regional</h3>
+            <canvas id="myChart1" style="width: 900px; height: 500px; display: none;" ></canvas>
             <script>
-                var ctx = document.getElementById("myChart");
+                var ctx = document.getElementById("myChart1");
                 var myChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
@@ -64,21 +61,13 @@ $arrayBackgroundColor = array(
                     <?php
                     opcoesGrafico();
                     ?>;
-
-                $(document).ready(function(){
-                    $("h3").click(function(){
-                        $("#myChart").toggle();
-                    });
-                });
             </script>
-        </div>
     </div>
 
     <!-- Grafico com o Número de estudantes matriculados em abril de 2016 por grau acadêmico -->
     <div class='row'>
-        <div >
-            <h3 align="middle">Número de estudantes matriculados em abril de 2016 por grau acadêmico</h3>
-            <canvas id="myChart2" style="width: 1100px; height: 500px"></canvas>
+            <h3 align="middle" id="tituloMyChart2">Número de estudantes matriculados em abril de 2016 por grau acadêmico</h3>
+            <canvas id="myChart2" style="width: 1100px; height: 500px; display: none;"></canvas>
             <script>
                 var ctx = document.getElementById("myChart2");
                 var myChart2 = new Chart(ctx, {
@@ -95,7 +84,6 @@ $arrayBackgroundColor = array(
                     opcoesGrafico();
                     ?>;
             </script>
-        </div>
     </div>
 
     <!-- Grafico com o Número de estudantes matriculados em abril de 2016 por grau acadêmico na regional Catalão-->
@@ -103,9 +91,8 @@ $arrayBackgroundColor = array(
     $aux = 0;
     foreach ($arrayUnidades as $unidade => $value): ?>
     <div class='row'>
-        <div>
-            <h3 align="middle">Número de estudantes matriculados em abril de <?php echo $anoSelecionadoPOST; ?> por grau acadêmico na regional <?php echo $unidade; ?></h3>
-            <canvas id="numeroEstudantesMatriculados<?php echo $aux;?>" style="width: 1100px; height: 500px"></canvas>
+            <h3 align="middle" id="tituloNumeroEstudantesMatriculados<?php echo $aux;?>">Número de estudantes matriculados em abril de <?php echo $anoSelecionadoPOST; ?> por grau acadêmico na regional <?php echo $unidade; ?></h3>
+            <canvas id="numeroEstudantesMatriculados<?php echo $aux;?>" style="width: 1100px; height: 500px; display: none;"></canvas>
             <script>
                 var ctx = document.getElementById("numeroEstudantesMatriculados<?php echo $aux;?>");
                 var myChart3 = new Chart(ctx, {
@@ -122,16 +109,15 @@ $arrayBackgroundColor = array(
                     opcoesGrafico();
                     ?>;
             </script>
-        </div>
     </div>
     <?php $aux++; endforeach; ?>
 
     <!-- Numero de cursos/habilitacoes por Regional --> 
     <div class="row">
-        <h2 align="middle">Numero de Crusos/Hbilitações por Regional - de 2005 a <?php
+        <h3 align="middle">Numero de Crusos/Hbilitações por Regional - de 2005 a <?php
             echo $anoSelecionadoPOST;
-            ?></h2>
-        <div id="line_chart" style="width: 100%; height: 500px;"></div>
+            ?></h3>
+        <div id="myChart3" style="width: 100%; height: 500px; display: none;"></div>
     </div>
     <!-- Script para o gráfico de linhas múltiplas --> 
     <script>
@@ -172,7 +158,7 @@ $arrayBackgroundColor = array(
             legend: { position: 'bottom' }
           };
         
-          var chart = new google.visualization.LineChart(document.getElementById('line_chart'));
+          var chart = new google.visualization.LineChart(document.getElementById('myChart3'));
         
           chart.draw(data, options);  
       }
@@ -180,8 +166,8 @@ $arrayBackgroundColor = array(
 
     <!-- Tabela com o número de vagas ofertadas por regional -->
     <div class="row table-responsive"">
-        <h2 class="text-center">Número de Vagas Ofertadas por Regional</h2>
-        <table id="tabelaVagasRegional" class="table" style="width: 900px;">
+        <h3 class="text-center" id="tituloMyTable0">Número de Vagas Ofertadas por Regional</h3>
+        <table id="myTable0" class="table" style="width: 900px; display: none;">
             <tr>
                 <th><br></th>
                 <th>2005</th>
@@ -273,7 +259,7 @@ $arrayBackgroundColor = array(
     // Faz a consulta dos dados no banco e insere na tabela vagasRegional
     function insereTabelaVagasRegional() {
 
-        var tamanhoTabela = document.getElementById("tabelaVagasRegional").rows.length;
+        var tamanhoTabela = document.getElementById("myTable0").rows.length;
         var vetorDados = [
             <?php
                 /* Faz pesquisa e retorna um array com ano e qtd de vagas. */
@@ -286,10 +272,10 @@ $arrayBackgroundColor = array(
             // inserir o html na tabela.
             if (i === 0) {
                 // se for a primeira posição, então insere um th (será o ano)
-                document.getElementById("tabelaVagasRegional").rows[i].insertAdjacentHTML('beforeend', "<th>" + vetorDados[i] + "</th>");
+                document.getElementById("myTable0").rows[i].insertAdjacentHTML('beforeend', "<th>" + vetorDados[i] + "</th>");
             } else {
                 // senão, insere um td normal.
-                document.getElementById("tabelaVagasRegional").rows[i].insertAdjacentHTML('beforeend', "<td>" + vetorDados[i] + "</td>");
+                document.getElementById("myTable0").rows[i].insertAdjacentHTML('beforeend', "<td>" + vetorDados[i] + "</td>");
             }
 
         }
@@ -298,10 +284,10 @@ $arrayBackgroundColor = array(
 
     <!-- Número de vagas por Regional gráfico de linhas múltiplas -->
     <div class="row">
-        <h2 align="middle">Número de Vagas Ofertadas de 2005 a <?php
+        <h3 align="middle">Número de Vagas Ofertadas de 2005 a <?php
             echo $anoSelecionadoPOST;
-            ?> por Regional</h2>
-        <div id="numVagasRegional" style="width: 1100px; height: 500px"></div>
+            ?> por Regional</h3>
+        <div id="numVagasRegional" style="width: 1100px; height: 500px; display: none;"></div>
     </div>
     <!-- Script para o gráfico de linhas múltiplas --> 
     <script>
@@ -351,11 +337,9 @@ $arrayBackgroundColor = array(
 
     <!-- Gráfico com o ano de ingresso dos estudantes matriculados -->
     <div class='row'>
-        <div>
             <h3 align="middle">Ano De Ingresso Dos Estudantes Matriculados em <?php echo $anoSelecionadoPOST; ?> 
             </h3>
-            <canvas id="myChart7" style="width: 1100px; height: 500px"></canvas>
-        </div>
+            <canvas id="myChart7" style="width: 1100px; height: 500px; display: none;"></canvas>
     </div>
     <script type="text/javascript">
         var ctx = document.getElementById("myChart7");
@@ -408,11 +392,9 @@ $arrayBackgroundColor = array(
 
     <!-- Gráfico número de estudantes por sexo e regional -->
     <div class='row'>
-        <div>
             <h3 class="text-center">Gráfico número de estudantes por sexo e regional
             </h3>
-            <canvas id="myChart8" style="width: 1100px; height: 500px"></canvas>
-        </div>
+            <canvas id="myChart8" style="width: 1100px; height: 500px; display: none;"></canvas>
     </div>
     <script type="text/javascript">
         var ctx = document.getElementById("myChart8");
@@ -476,11 +458,9 @@ $arrayBackgroundColor = array(
 
     <!-- Gráfico porcentagem de estudantes por faixa etaria matriculados -->
     <div class='row'>
-        <div>
             <h3 class="text-center">Porcentagem de estudantes por faixa etária matriculados em abril de <?php echo $anoSelecionadoPOST; ?>
             </h3>
-            <canvas id="myChart9" style="width: 1100px; height: 500px"></canvas>
-        </div>
+            <canvas id="myChart9" style="width: 1100px; height: 500px; display: none;"></canvas>
     </div>
     <script type="text/javascript">
         var ctx = document.getElementById("myChart9");
@@ -565,11 +545,9 @@ $arrayBackgroundColor = array(
     $aux = 0;
     foreach ($arrayUnidades as $unidade => $value): ?>
         <div class='row'>
-        <div>
             <h3 class="text-center">Porcentagem de estudantes por faixa etária matriculados em abril de <?php echo $anoSelecionadoPOST; ?> na regional <?php echo $unidade; ?>
             </h3>
-            <canvas id="chartAnosRegional<?php echo $unidade; ?>" style="width: 1100px; height: 500px"></canvas>
-        </div>
+            <canvas id="chartAnosRegional<?php echo $unidade; ?>" style="width: 1100px; height: 500px; display: none;"></canvas>
     </div>
     <script type="text/javascript">
         var ctx = document.getElementById("chartAnosRegional<?php echo $unidade; ?>");
@@ -652,11 +630,9 @@ $arrayBackgroundColor = array(
 
     <!-- Gráfico com porcentagem da media global dos alunos GERAL-->
     <div class='row'>
-        <div>
             <h3 class="text-center">Gráfico com porcentagem da media global dos alunos por intervalo <?php echo $anoSelecionadoPOST; ?>
             </h3>
-            <canvas id="chartPorcentagemMediaGlobalGeral" style="width: 1100px; height: 500px"></canvas>
-        </div>
+            <canvas id="chartPorcentagemMediaGlobalGeral" style="width: 1100px; height: 500px; display: none;"></canvas>
     </div>
     <script type="text/javascript">
         var ctx = document.getElementById("chartPorcentagemMediaGlobalGeral");
@@ -738,47 +714,47 @@ $arrayBackgroundColor = array(
     </script>
 
     <!-- Tabela com a faixa das médias globais usadas nos gráficos -->
-    <h3 class="text-center">Faixas das médias globais usadas nas próximas tabelas</h3>
-    <table class="table table-responsive text-center col-xs-6">
-        <thead>
-            <tr>
-                <th class="text-center">
-                    Valor
-                </th>
-                <th class="text-center">
-                    Faixa
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            // Loop para não precisar digitar toda a tabela
-            for ($i=0; $i < 10; $i++) {
-                $aux = $i;
-                $aux2 = $i;
-                $str = "<tr>
-                            <td>
-                                ".++$aux2."
-                            </td>
-                            <td>
-                                 $aux < MG <= " . ++$aux . "
-                            </td>
-                        </tr>";
-                echo $str;
-            }
-            ?>
-        </tbody>
-    </table>
+    <div>
+        <h3 class="text-center">Faixas das médias globais usadas nas próximas tabelas</h3>
+        <table class="table table-responsive text-center" style="display: none;">
+            <thead>
+                <tr>
+                    <th class="text-center">
+                        Valor
+                    </th>
+                    <th class="text-center">
+                        Faixa
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                // Loop para não precisar digitar toda a tabela
+                for ($i=0; $i < 10; $i++) {
+                    $aux = $i;
+                    $aux2 = $i;
+                    $str = "<tr>
+                                <td>
+                                    ".++$aux2."
+                                </td>
+                                <td>
+                                     $aux < MG <= " . ++$aux . "
+                                </td>
+                            </tr>";
+                    echo $str;
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
 
  <!-- Gráfico com porcentagem da media global dos alunos POR REGIONAL-->
     <?php
         foreach ($arrayUnidades as $unidade => $value): ?>
             <div class='row'>
-            <div>
                 <h3 class="text-center">Gráfico com porcentagem da media global dos alunos por intervalo <?php echo $anoSelecionadoPOST; ?> na regional <?php echo $unidade; ?>
                 </h3>
-                <canvas id="chartPorcentagemMediaGlobalUnidade<?php echo $unidade; ?>" style="width: 1100px; height: 500px"></canvas>
-            </div>
+                <canvas id="chartPorcentagemMediaGlobalUnidade<?php echo $unidade; ?>" style="width: 1100px; height: 500px; display: none;"></canvas>
         </div>
         <script type="text/javascript">
         var ctx = document.getElementById("chartPorcentagemMediaGlobalUnidade<?php echo $unidade; ?>");
@@ -871,9 +847,8 @@ $arrayBackgroundColor = array(
 
     <!-- Gráfico do número de estudantes c/ ação afirmativa , que ingressaram até 2012 -->
     <div class="row">
-        <div>
             <h3 align="middle">Número De Estudantes Matriculados Em <?php echo $anoSelecionadoPOST; ?> Por Ação Afirmativa Na Ufg Com Ingresso Até 2012 (Anterior a Lei De Cotas)</h3>
-            <canvas id="myChart10" style="width: 900px; height: 500px"></canvas>
+            <canvas id="myChart10" style="display: none;"></canvas>
             <script>
                 var ctx = document.getElementById("myChart10");
 
@@ -909,14 +884,12 @@ $arrayBackgroundColor = array(
                 }
                 });
             </script>
-        </div>
     </div>
 
     <!-- Gráfico DA PORCENTAGEM (GRAFICO PIZZA) de estudantes c/ ação afirmativa , que ingressaram até 2012 -->
     <div class="row">
-        <div>
             <h3 align="middle">Porcentagem De Estudantes Matriculados Em <?php echo $anoSelecionadoPOST; ?> Por Ação Afirmativa Na Ufg Com Ingresso Até 2012 (Anterior a Lei De Cotas)</h3>
-            <canvas id="myChart11" style="width: 900px; height: 500px"></canvas>
+            <canvas id="myChart11" style="width: 900px; height: 500px; display: none;"></canvas>
             <script>
                 var ctx = document.getElementById("myChart11");
 
@@ -964,14 +937,12 @@ $arrayBackgroundColor = array(
                     }
                 });
             </script>
-        </div>
     </div>
 
     <!-- Tabela acao afirmativa -->
     <div class="row">
-        <div>
             <h3 class="text-center">Numero De Estudantes Matriculados <?php echo $anoSelecionadoPOST;?> Por Ação Afirmativa Por Regional Com Ingresso a Partir De 2013 (Lei De Cotas E Programa UFGInclui)</h3>
-            <table class="table table-responsive text-center table-bordered">
+            <table class="table table-responsive text-center table-bordered" style="display: none;">
                 <tr>
                     <th rowspan="2" class="text-center" style="vertical-align: middle;">Regional</th>
                     <th colspan="5" class="text-center" style="vertical-align: middle;">Lei de Cotas</th>
@@ -1051,14 +1022,12 @@ $arrayBackgroundColor = array(
                     ?>
                 </tr>
             </table>
-        </div>
     </div>
 
     <!-- Gráfico do numero de estudantes via lei de cotas e UFG Inclui a partir de 2013 -->
     <div class="row">
-        <div>
             <h3 align="middle">Porcentagem De Estudantes Matriculados Em <?php echo $anoSelecionadoPOST; ?> Por Ação Afirmativa Na Ufg Com Ingresso A Partir de 2013 (Lei de Cotas e Programa UFGInclui)</h3>
-            <canvas id="myChart12" style="width: 900px; height: 500px"></canvas>
+            <canvas id="myChart12" style="width: 900px; height: 500px; display: none;"></canvas>
             <script>
                 var ctx = document.getElementById("myChart12");
 
@@ -1121,14 +1090,12 @@ $arrayBackgroundColor = array(
                     }
                 });
             </script>
-        </div>
     </div>
 
     <!-- Gráfico DA PORCENTAGEM (GRAFICO PIZZA) de estudantes via lei de cotas e UFG Inclui que ingressaram a partir de 2013 -->
     <div class="row">
-        <div>
             <h3 align="middle">Porcentagem de Estudantes Matriculados em <?php echo $anoSelecionadoPOST; ?> por Ação Afirmativa na UFG com Ingresso a Partir de 2013 (Lei de Cotas e Programa UFGInclui)</h3>
-            <canvas id="myChart13" style="width: 900px; height: 500px"></canvas>
+            <canvas id="myChart13" style="width: 900px; height: 500px; display: none;"></canvas>
             <script>
                 var ctx = document.getElementById("myChart13");
 
@@ -1191,14 +1158,12 @@ $arrayBackgroundColor = array(
                     }
                 });
             </script>
-        </div>
     </div>
 
     <!-- PORCENTAGEM de alunos que ingressaram via ampla concorrência e ação afirmativa (QUALQUER!) -->
     <div class="row">
-        <div>
             <h3 align="middle">Porcentagem de Estudantes Matriculados em <?php echo $anoSelecionadoPOST; ?> por Ação Afirmativa na UFG (Lei de Cotas e Programa UFGInclui)</h3>
-            <canvas id="myChart14" style="width: 900px; height: 500px"></canvas>
+            <canvas id="myChart14" style="width: 900px; height: 500px; display: none;"></canvas>
             <script>
                 var ctx = document.getElementById("myChart14");
 
@@ -1259,14 +1224,12 @@ $arrayBackgroundColor = array(
                     }
                 });
             </script>
-        </div>
     </div>
 
     <!-- Estudantes Ingressantes SISU em 2016 por Ação Afirmativa e Ampla Concorrência -->
     <div class="row">
-        <div>
             <h3 align="middle">Número De Estudantes Ingressantes SISU Em <?php echo $anoSelecionadoPOST; ?> por Ação Afirmativa e Ampla Concorrência</h3>
-            <canvas id="myChart15" style="width: 900px; height: 500px"></canvas>
+            <canvas id="myChart15" style="width: 900px; height: 500px; display: none;"></canvas>
             <script>
                 var ctx = document.getElementById("myChart15");
 
@@ -1313,14 +1276,12 @@ $arrayBackgroundColor = array(
                 }
                 });
             </script>
-        </div>
     </div>
 
     <!-- PORCENTAGEM de alunos que ingressaram em 2016 por SISU via ampla concorrência e ação afirmativa -->
     <div class="row">
-        <div>
             <h3 align="middle">Porcentagem de Estudantes Ingressantes SISU em <?php echo $anoSelecionadoPOST; ?> por Ação Afirmativa e Ampla Concorrência</h3>
-            <canvas id="graficoIngressantesSISU" style="width: 900px; height: 500px"></canvas>
+            <canvas id="graficoIngressantesSISU" style="width: 900px; height: 500px; display: none;"></canvas>
             <script>
                 var ctx = document.getElementById("graficoIngressantesSISU");
 
@@ -1386,16 +1347,14 @@ $arrayBackgroundColor = array(
                     }
                 });
             </script>
-        </div>
     </div>
 
     <!-- Estudantes Ingressantes SISU em 2016 POR REGIONAL!! (Ampla concorrencia e acao afirmativa) -->
     <?php foreach ($arrayUnidades as $unidade => $value) : ?>
         <!-- Gráfico barra para cada unidade -->
         <div class="row">
-            <div>
                 <h3 align="middle">Número De Estudantes Ingressantes SISU Em <?php echo $anoSelecionadoPOST; ?> por Ação Afirmativa e Ampla Concorrência na Regional <?php echo $unidade; ?></h3>
-                <canvas id="graficoBarraIngressantesSISURegional<?php echo $unidade;?>" style="width: 900px; height: 500px"></canvas>
+                <canvas id="graficoBarraIngressantesSISURegional<?php echo $unidade;?>" style="width: 900px; height: 500px; display: none;"></canvas>
                 <script>
                     var ctx = document.getElementById("graficoBarraIngressantesSISURegional<?php echo $unidade;?>");
 
@@ -1460,14 +1419,12 @@ $arrayBackgroundColor = array(
                     }
                     });
                 </script>
-            </div>
         </div>
 
         <!-- Gráfico pizza para cada unidade -->
         <div class="row">
-            <div>
                 <h3 align="middle">Porcentagem de Estudantes Ingressantes SISU em <?php echo $anoSelecionadoPOST; ?> por Ação Afirmativa e Ampla Concorrência na Regional <?php echo $unidade;?></h3>
-                <canvas id="graficoPizzaIngressantesSISURegional<?php echo $unidade;?>" style="width: 900px; height: 500px"></canvas>
+                <canvas id="graficoPizzaIngressantesSISURegional<?php echo $unidade;?>" style="width: 900px; height: 500px; display: none;"></canvas>
                 <script>
                     var ctx = document.getElementById("graficoPizzaIngressantesSISURegional<?php echo $unidade;?>");
 
@@ -1535,14 +1492,13 @@ $arrayBackgroundColor = array(
                         }
                     });
                 </script>
-            </div>
         </div>
     <?php endforeach; ?>
 
     <!-- TABELA - Média Das Médias Globais Por Ação Afirmativa E Por Regional De Estudantes Matriculados Em Abril De 2016 Com Ingresso Até 2012 -->
     <div class="row">
         <h3 class="text-center">Média Das Médias Globais Por Ação Afirmativa E Por Regional De Estudantes Matriculados Em <?php echo $anoSelecionadoPOST; ?> Com Ingresso Até 2012</h3>
-        <table class="table table-bordered table-responsive text-center">
+        <table class="table table-bordered table-responsive text-center" style="display: none;">
             <tr>
                 <th></th>
                 <th></th>
@@ -1647,10 +1603,8 @@ $arrayBackgroundColor = array(
 
     <!-- BARRA AGRUPADA - Média Das Médias Globais Dos Estudantes Ingresso Pelo Programa Ufginclui Matriculados Em Abril/2016 Com Ingresso Anterior até 2012  -->
     <div class='row'>
-        <div>
             <h3 class="text-center">Média Das Médias Globais Dos Estudantes Ingresso Pelo Programa Ufginclui Matriculados Em <?php echo $anoSelecionadoPOST; ?> Com Ingresso Até 2012</h3>
-            <canvas id="myChartMediaGlobalBarraMultipla" style="width: 1100px; height: 500px"></canvas>
-        </div>
+            <canvas id="myChartMediaGlobalBarraMultipla" style="width: 1100px; height: 500px; display: none;"></canvas>
     </div>
     <script type="text/javascript">
         var ctx = document.getElementById("myChartMediaGlobalBarraMultipla");
@@ -1720,9 +1674,8 @@ $arrayBackgroundColor = array(
 
     <!-- TABELA - Média Das Médias Globais Dos Estudantes Ingresso Pelo Programa Ufginclui E Pela Lei De Cotas Matriculados Com Ingresso enrte 2013 e 2015 -->
     <div class="row">
-        <div>
             <h3 class="text-center">Média Das Médias Globais Dos Estudantes Ingresso Pelo Programa Ufginclui E Pela Lei De Cotas Matriculados Em <?pho echo $anoSelecionadoPOST; ?> Com Ingresso Entre 2013 e 2015</h3>
-            <table class="table table-responsive text-center table-bordered">
+            <table class="table table-responsive text-center table-bordered" style="display: none;">
                 <tr>
                     <th rowspan="2" class="text-center" style="vertical-align: middle;">Regional</th>
                     <th colspan="5" class="text-center" style="vertical-align: middle;">Lei de Cotas</th>
@@ -1818,15 +1771,12 @@ $arrayBackgroundColor = array(
                     ?>
                 </tr>
             </table>
-        </div>
     </div>
 
     <!-- BARRA AGRUPADA - Média Das Médias Globais Dos Estudantes Matriculados Em Abril /2016 Com Ingresso Pelo Programa Ufginclui E Pela Lei De Cotas Com Ingresso De 2013 a 2015  -->
     <div class='row'>
-        <div>
             <h3 class="text-center">Média Das Médias Globais Dos Estudantes Ingresso Pelo Programa Ufginclui Matriculados Em <?php echo $anoSelecionadoPOST; ?> Com Ingresso Entre 2013 e 2015</h3>
-            <canvas id="myChartMediaGlobalBarraMultipla2" style="width: 1100px; height: 500px"></canvas>
-        </div>
+            <canvas id="myChartMediaGlobalBarraMultipla2" style="width: 1100px; height: 500px; display: none;"></canvas>
     </div>
     <script type="text/javascript">
         var ctx = document.getElementById("myChartMediaGlobalBarraMultipla2");
@@ -1915,7 +1865,7 @@ $arrayBackgroundColor = array(
     <!-- TABELA - Média Das Médias Globais Por ação Afirmativa E Por Regional De Estudantes Matriculados Em Abril De 2016* -->
     <div class="row">
         <h3>Média Das Médias Globais Por ação Afirmativa E Por Regional De Estudantes Matriculados Em <?php echo $anoSelecionadoPOST; ?>*</h3>
-        <table class="table-responsive table text-center">
+        <table class="table-responsive table text-center" style="display: none;">
         <tr>
             <th class="text-center"></th>
             <th class="text-center">AC</th>
@@ -2016,10 +1966,8 @@ $arrayBackgroundColor = array(
 
     <!-- BARRA AGRUPADA - Média Das Médias Globais Por ação Afirmativa E Por Regional De Estudantes Matriculados Em Abril De 2016* -->
     <div class='row'>
-        <div>
             <h3 class="text-center">Média Das Médias Globais Por ação Afirmativa E Por Regional De Estudantes Matriculados Em Abril De 2016*</h3>
-            <canvas id="myChartMediaGlobalBarraMultipla3" style="width: 1100px; height: 500px"></canvas>
-        </div>
+            <canvas id="myChartMediaGlobalBarraMultipla3" style="width: 1100px; height: 500px; display: none;"></canvas>
     </div>
     <script type="text/javascript">
         var ctx = document.getElementById("myChartMediaGlobalBarraMultipla3");
@@ -2106,7 +2054,10 @@ $arrayBackgroundColor = array(
     function onPageLoad() {
         drawChart();
         insereTabelaVagasRegional();
-    }   
+    }
+
+
+
 </script>
 </div>
 <?php

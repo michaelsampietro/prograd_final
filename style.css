@@ -31,6 +31,18 @@ td.tabela-negrito {
 	font-weight: bold;
 }
 
+#container-geral div canvas {
+	display: none;
+}
+
+#container-geral div div {
+	display: none;
+}
+
+#container-geral div table {
+	display: none;
+}
+
 /*
 .googleVisualizationApiChartDivExterna {
 	min-height:500px;

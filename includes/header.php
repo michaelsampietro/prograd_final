@@ -34,6 +34,32 @@
 			$(window).on('resizeEnd', function() {
 			    drawChart();
 			});
+
+			// abrindo/fechando quando tem canvas
+		    $(document).ready(function() {
+
+		    	$(".row").each(function() {
+		    		$("h3").click(function(){
+    					$(this).siblings("canvas").toggle();
+		    		});
+		    	});
+		    });
+
+		    $(document).ready(function() {
+		    	$(".row").each(function() {
+		    		$("h3").click(function(){
+    					$(this).siblings("div").toggle();
+		    		});
+		    	});
+		    });
+
+		    $(document).ready(function() {
+		    	$(".row").each(function() {
+		    		$("h3").click(function(){
+    					$(this).siblings("table").toggle();
+		    		});
+		    	});
+		    });
   		</script>
 
 	</head>
