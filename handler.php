@@ -40,16 +40,23 @@ $arrayBackgroundColor = array(
 );
 ?>
 
+<script>
+    $.LoadingOverlay("show", {
+        color: "rgba(250,250,250,0.9)",
+        fade        : "fast",
+    });
+</script>
+
 <div id="container-geral" class="container" style="margin: 0 auto;">
     <h4>Clique no nome do gráfico para mostrá-lo!</h4>
     <!-- Gráfico com o numero de estudantes matriculados em abril de 2016 por regional -->
     <div class="row">
             <h3 id="tituloMyChart1">Número de estudantes matriculados em abril de <?php echo $anoSelecionadoPOST ?> por regional</h3>
             <canvas id="myChart1" style="width: 900px; height: 500px; display: none;"></canvas>
-            <table class="table table-responsive table-bordered col-md-7 col-xs-12"><tr><td>Regional</td><td>Número de Estudantes<br></td></tr>
+            <table class="table table-responsive table-bordered col-md-7 col-xs-12"><tr><th>Regional</th><th>Número de Estudantes</th></tr>
                 <?php foreach ($arrayUnidades as $unidade => $value) : ?>
                 <tr>
-                    <td><?php echo $unidade; ?></td>
+                    <td><?php echo ucwords($unidade); ?></td>
                     <td><?php 
                     $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `municipio` = '$unidade'";
                     consultaSimplesRetornaUmValor($sql);
@@ -88,6 +95,25 @@ $arrayBackgroundColor = array(
     <div class='row'>
             <h3 id="tituloMyChart2">Número de estudantes matriculados em abril de 2016 por grau acadêmico</h3>
             <canvas id="myChart2" style="width: 1100px; height: 500px; display: none;"></canvas>
+            <table class="table table-responsive table-bordered col-md-7 col-xs-12"><tr><th>Grau Acadêmico</th><th>Número de Estudantes</th></tr>
+                <?php foreach ($arrayGrauAcademico as $grauAcademico => $value) : ?>
+                <tr>
+                    <td><?php echo ucwords(strtolower($grauAcademico)); ?></td>
+                    <td><?php 
+                    $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `grau_academico` = '$grauAcademico'";
+                    consultaSimplesRetornaUmValor($sql);
+                    ?>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+                <tr>
+                    <td>Total</td>
+                    <td><?php 
+                    $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `grau_academico` =";
+                    consultaSimplesRetornaSomaAsString($arrayGrauAcademico, $sql);
+                    ?></td>
+                </tr>
+            </table>
             <script>
                 var ctx = document.getElementById("myChart2");
                 var myChart2 = new Chart(ctx, {
@@ -113,6 +139,25 @@ $arrayBackgroundColor = array(
     <div class='row'>
             <h3 id="tituloNumeroEstudantesMatriculados<?php echo $aux;?>">Número de estudantes matriculados em abril de <?php echo $anoSelecionadoPOST; ?> por grau acadêmico na regional <?php echo $unidade; ?></h3>
             <canvas id="numeroEstudantesMatriculados<?php echo $aux;?>" style="width: 1100px; height: 500px; display: none;"></canvas>
+            <table class="table table-responsive table-bordered"><tr><th>Grau Acadêmico</th><th>Número de Estudantes (Regional <?php echo $unidade; ?>)</th></tr>
+                <?php foreach ($arrayGrauAcademico as $grauAcademico => $value) : ?>
+                <tr>
+                    <td><?php echo ucwords(strtolower($grauAcademico)); ?></td>
+                    <td><?php 
+                    $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade' and `grau_academico` = '$grauAcademico'";
+                    consultaSimplesRetornaUmValor($sql);
+                    ?>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+                <tr>
+                    <td>Total</td>
+                    <td><?php 
+                    $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade' and `grau_academico` = ";
+                    consultaSimplesRetornaSomaAsString($arrayGrauAcademico, $sql);
+                    ?></td>
+                </tr>
+            </table>
             <script>
                 var ctx = document.getElementById("numeroEstudantesMatriculados<?php echo $aux;?>");
                 var myChart3 = new Chart(ctx, {
@@ -134,10 +179,10 @@ $arrayBackgroundColor = array(
 
     <!-- Numero de cursos/habilitacoes por Regional --> 
     <div class="row">
-        <h3>Numero de Crusos/Hbilitações por Regional - de 2005 a <?php
+        <h3>Numero de Cursos/Habilitações por Regional - de 2005 a <?php
             echo $anoSelecionadoPOST;
             ?></h3>
-        <div id="myChart3" style="width: 100%; height: 500px; display: none;"></div>
+        <div id="myChart3" style="width: 100%; height: 500px;"></div>
     </div>
     <!-- Script para o gráfico de linhas múltiplas --> 
     <script>
@@ -1522,7 +1567,7 @@ $arrayBackgroundColor = array(
             <tr>
                 <th></th>
                 <th></th>
-                <th colspan="5" class="text-center">UFCInclui até 2012</th>
+                <th colspan="5" class="text-center">UFGInclui até 2012</th>
             </tr>
             <tr>
                 <th class="text-center"></th>

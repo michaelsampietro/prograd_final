@@ -21,6 +21,11 @@
 
   		<!-- Jquery -->
   		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+  		<!-- Biblioteca de loading -->
+  		<script src="https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay.min.js"></script>
+  		<script src="https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay_progress.min.js"></script>
+
   		<script type="text/javascript">
   			//create trigger to resizeEnd event     
 			$(window).resize(function() {
@@ -37,7 +42,6 @@
 
 			// abrindo/fechando quando tem canvas
 		    $(document).ready(function() {
-
 		    	$(".row").each(function() {
 		    		$("h3").click(function(){
     					$(this).siblings("canvas").toggle();
@@ -60,6 +64,11 @@
 		    		});
 		    	});
 		    });
+
+		    $(document).ready(function() {
+		    	$.LoadingOverlay("hide");
+		    })
+
   		</script>
 
 	</head>
