@@ -45,7 +45,27 @@ $arrayBackgroundColor = array(
     <!-- Gráfico com o numero de estudantes matriculados em abril de 2016 por regional -->
     <div class="row">
             <h3 class="text-center" id="tituloMyChart1">Número de estudantes matriculados em abril de <?php echo $anoSelecionadoPOST ?> por regional</h3>
-            <canvas id="myChart1" style="width: 900px; height: 500px; display: none;" ></canvas>
+            <canvas id="myChart1" style="width: 900px; height: 500px; display: none;"></canvas>
+            <table class="table table-responsive table-bordered"><tr><td>Regional</td><td>Número de Estudantes<br></td></tr>
+                <?php foreach ($arrayUnidades as $unidade => $value) : ?>
+                <tr>
+                    <td><?php echo $unidade; ?></td>
+                    <td><?php 
+                    $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `municipio` = '$unidade'";
+                    consultaSimplesRetornaUmValor($sql);
+                    ?>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+                <tr>
+                    <td>Total</td>
+                    <td><?php 
+                    $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `municipio` =";
+                    consultaSimplesRetornaSomaAsString($arrayUnidades, $sql);
+                    ?></td>
+                </tr>
+            </table>
+            
             <script>
                 var ctx = document.getElementById("myChart1");
                 var myChart = new Chart(ctx, {
