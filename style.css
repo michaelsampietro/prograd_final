@@ -43,6 +43,14 @@ td.tabela-negrito {
 	display: none;
 }
 
+.text-center {
+	text-align: left;
+}
+
+h3 {
+	text-align: left;
+}
+
 /*
 .googleVisualizationApiChartDivExterna {
 	min-height:500px;
