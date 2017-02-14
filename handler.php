@@ -180,9 +180,10 @@ $arrayBackgroundColor = array(
     <!-- Numero de cursos/habilitacoes por Regional --> 
     <div class="row">
         <h3>Numero de Cursos/Habilitações por Regional - de 2005 a <?php echo $anoSelecionadoPOST; ?></h3>
-        <canvas id="myChartHabilitacoes" style="width: 100%; height: 500px;"></canvas>
+        <canvas id="myChartHabilitacoes" style="width: 100%; height: 500px; display: none;"></canvas>
         <!-- auto generated -->
         <table id="tabelaNumeroDeCursos" class="table table-responsive table-bordered"><tr id="rowAnos"><th></th><th>2005</th><th>2006</th><th>2007</th><th>2008</th><th>2009</th><th>2010</th><th>2011</th><th>2012</th><th>2013</th><th>2014</th><th>2015</th></tr><tr id="rowGoiânia"><td>Goiânia</td><td>58</td><td>63</td><td>66</td><td>66</td><td>81</td><td>85</td><td>86</td><td>86</td><td>89</td><td>90</td><td>90</td></tr><tr id="rowJataí"><td>Jataí</td><td>11</td><td>15</td><td>18</td><td>20</td><td>21</td><td>23</td><td>23</td><td>24</td><td>24</td><td>25</td><td>25</td></tr><tr id="rowCatalão"><td>Catalão</td><td>9</td><td>14</td><td>16</td><td>19</td><td>24</td><td>25</td><td>25</td><td>25</td><td>25</td><td>26</td><td>26</td></tr><tr id="rowGoiás"><td>Goiás</td><td>1</td><td>1</td><td>1</td><td>1</td><td>3</td><td>3</td><td>3</td><td>3</td><td>5</td><td>6</td><td>7</td></tr><tr id="rowTotal"><td>Total</td><td>79</td><td>93</td><td>101</td><td>106</td><td>129</td><td>136</td><td>137</td><td>138</td><td>143</td><td>147</td><td>148</td></tr></table>
+        <!-- Script da tabela -->
         <script type="text/javascript">
             // Faz a consulta dos dados no banco e insere na tabela de numero de cursos/habilitacoes
             function insereTabelaNumeroDeCursos() {
@@ -193,7 +194,7 @@ $arrayBackgroundColor = array(
                     // para deixar mais dinamico, utilizar um loop para todas as unidades
                     <?php foreach ($arrayUnidades as $unidade => $value) : ?>
                         <?php 
-                            /* Faz pesquisa e retorna um array com ano e qtd de cursos. */
+                            // setando a variavel que vai fazer a query
                             $sql = "SELECT COUNT(distinct curso) AS count FROM `$anoBase` WHERE `ano_ingresso` = '$anoBase' and `Regional` = '$unidade'";
                         ?>
 
@@ -254,134 +255,45 @@ $arrayBackgroundColor = array(
         });    
     </script>
 
-    <!-- Tabela com o número de vagas ofertadas por regional -->
-    <div class="row"">
-        <h3 class="text-left">Número de Vagas Ofertadas por Regional</h3>
-        <table id="myTable0" class="table table-responsive" style="width: 900px; display: none;">
-            <tr>
-                <th><br></th>
-                <th>2005</th>
-                <th>2006</th>
-                <th>2007</th>
-                <th>2008</th>
-                <th>2009</th>
-                <th>2010</th>
-                <th>2011</th>
-                <th>2012</th>
-                <th>2013</th>
-                <th>2014</th>
-                <th>2015</th>
-            </tr>
-            <tr>
-                <td>Goiânia</td>
-                <td>2318</td>
-                <td>2508</td>
-                <td>2548</td>
-                <td>2523</td>
-                <td>3786</td>
-                <td>4046</td>
-                <td>4065</td>
-                <td>4045</td>
-                <td>4135</td>
-                <td>4325</td>
-                <td>4265</td>
-            </tr>
-            <tr>
-                <td>Jataí</td>
-                <td>360</td>
-                <td>550</td>
-                <td>610</td>
-                <td>705</td>
-                <td>880</td>
-                <td>980</td>
-                <td>980</td>
-                <td>1020</td>
-                <td>1020</td>
-                <td>1050</td>
-                <td>1080</td>
-            </tr>
-            <tr>
-                <td>Catalão</td>
-                <td>300</td>
-                <td>500</td>
-                <td>590</td>
-                <td>710</td>
-                <td>950</td>
-                <td>970</td>
-                <td>980</td>
-                <td>980</td>
-                <td>990</td>
-                <td>1110</td>
-                <td>1110</td>
-            </tr>
-            <tr>
-                <td>Goiás</td>
-                <td>60</td>
-                <td>60</td>
-                <td>60</td>
-                <td>160</td>
-                <td>160</td>
-                <td>160</td>
-                <td>160</td>
-                <td>160</td>
-                <td>210</td>
-                <td>380</td>
-                <td>470</td>
-            </tr>
-            <tr>
-                <td>Total</td>
-                <td>3038</td>
-                <td>3618</td>
-                <td>3808</td>
-                <td>3998</td>
-                <td>5776</td>
-                <td>6156</td>
-                <td>6185</td>
-                <td>6205</td>
-                <td>6355</td>
-                <td>6865</td>
-                <td>6925</td>
-            </tr>
-        </table>
-    </div>
-    <!-- Script para a tabela com o numero de vagas ofertadas por regional -->
-    <script type="text/javascript">
-    // Faz a consulta dos dados no banco e insere na tabela vagasRegional
-    function insereTabelaVagasRegional() {
-
-        var tamanhoTabela = document.getElementById("myTable0").rows.length;
-        var vetorDados = [
-            <?php
-                /* Faz pesquisa e retorna um array com ano e qtd de vagas. */
-                $sql = "SELECT COUNT(Estudante) AS count FROM `$anoSelecionadoPOST` WHERE ano_ingresso = " . $anoSelecionadoPOST . " and municipio=";
-                echo "'$anoSelecionadoPOST',";
-                chartData($arrayUnidades, $sql);
-            ?>
-        ];
-
-        for (var i = 0; i < tamanhoTabela; i++) {
-            // inserir o html na tabela.
-            if (i === 0) {
-                // se for a primeira posição, então insere um th (será o ano)
-                document.getElementById("myTable0").rows[i].insertAdjacentHTML('beforeend', "<th>" + vetorDados[i] + "</th>");
-            } else {
-                // senão, insere um td normal.
-                document.getElementById("myTable0").rows[i].insertAdjacentHTML('beforeend', "<td>" + vetorDados[i] + "</td>");
-            }
-
-        }
-    }
-    </script>
-
-    <!-- Número de vagas por Regional gráfico de linhas múltiplas -->
+    <!-- Numero de vagas por regional -->
     <div class="row">
-        <h3 class="text-left">Número de Vagas Ofertadas de 2005 a <?php
-            echo $anoSelecionadoPOST;
-            ?> por Regional</h3>
-        <canvas id="graficoNumVagasRegional" style="width: 1100px; height: 500px; display: none;"></canvas>
+        <h3>Número de vagas por Regional de 2005 a <?php echo $anoSelecionadoPOST; ?></h3>
+        <canvas id="graficoNumeroDeVagas" style="width: 1100px; height: 500px; display: none;"></canvas>
+        <table id="tabelaNumeroDeVagas" class="table table-responsive table-bordered"><tr class="rowAnos"><th><br></th><th>2005</th><th>2006</th><th>2007</th><th>2008</th><th>2009</th><th>2010</th><th>2011</th><th>2012</th><th>2013</th><th>2014</th><th>2015</th></tr><tr class="rowGoiânia"><td>Goiânia</td><td>2318</td><td>2508</td><td>2548</td><td>2523</td><td>3786</td><td>4046</td><td>4065</td><td>4045</td><td>4135</td><td>4325</td><td>4265</td></tr><tr class="rowJataí"><td>Jataí</td><td>360</td><td>550</td><td>610</td><td>705</td><td>880</td><td>980</td><td>980</td><td>1020</td><td>1020</td><td>1050</td><td>1080</td></tr><tr class="rowCatalão"><td>Catalão</td><td>300</td><td>500</td><td>590</td><td>710</td><td>950</td><td>970</td><td>980</td><td>980</td><td>990</td><td>1110</td><td>1110</td></tr> <tr class="rowGoiás"> <td>Goiás</td> <td>60</td> <td>60</td> <td>60</td> <td>160</td> <td>160</td> <td>160</td> <td>160</td><td>160</td><td>210</td><td>380</td><td>470</td></tr><tr class="rowTotal"><td>Total</td><td>3038</td><td>3618</td><td>3808</td><td>3998</td><td>5776</td><td>6156</td><td>6185</td><td>6205</td><td>6355</td><td>6865</td><td>6925</td></tr></table>
+        <!-- Script para a tabela com o numero de vagas ofertadas por regional -->
+        <script>
+            // Faz a consulta dos dados no banco e insere na tabela vagasRegional
+            function insereTabelaVagasRegional() {
+                <?php for ($anoBase = 2016; $anoBase <= $anoSelecionadoPOST; $anoBase++): ?>
+                    // inserindo o th do ano
+                    $('#tabelaNumeroDeVagas .rowAnos').find('th').last().after('<th><?php echo $anoBase;?></th>');
+                    // para deixar mais dinamico, utilizar um loop para todas as unidades
+                    <?php foreach ($arrayUnidades as $unidade => $value) : ?>
+                        // definindo consulta
+                        <?php $sql = "SELECT COUNT(*) AS count FROM `$anoBase` WHERE `ano_ingresso` = '$anoBase' and `Regional` = '$unidade'"; ?>
+
+                        $('#tabelaNumeroDeVagas .row<?php echo $unidade;?>').find('td').last().after('<td><?php echo consultaSimplesRetornaUmValor($sql);?></td>');
+                    <?php endforeach; ?>
+
+                    // query da linha total
+                    <?php $sql = "SELECT COUNT(*) AS count FROM `$anoBase` WHERE `ano_ingresso` = '$anoBase' and `Regional` ="; ?>
+
+                    // inserindo o valor da query total na td
+                    $('#tabelaNumeroDeVagas .rowTotal').find('td').last().after('<td><?php echo consultaSimplesRetornaSomaAsString($arrayUnidades, $sql);?></td>');
+                <?php endfor; ?>
+            }
+        </script>
     </div>
+
+    <!-- ESSA ESTRUTURA ABAIXO NÃO PODE SER APAGADA!!! MESMO A DIV ESTANDO HIDDEN, ALGUM BUG (NÃO ENCONTRADO) NÃO ESTÁ
+        DEIXANDO COM QUE A PÁGINA FUNCIONE SEM ESSA DIV. -->
+    <div class="row" style="display: none;">
+        <h3 class="text-left">Número de Vagas Ofertadas de 2005 a <?php echo $anoSelecionadoPOST; ?> por Regional</h3>
+        <!-- <canvas id="graficoNumVagasRegional" style="width: 1100px; height: 500px; display: none;"></canvas> -->
+    </div>
+    <!-- script do gráfico -->
     <script>
-        var ctx = document.getElementById("graficoNumVagasRegional");
+        var ctx = document.getElementById("graficoNumeroDeVagas");
         var myChart = new Chart(ctx, {
             type: 'line',
             data: {
@@ -445,7 +357,7 @@ $arrayBackgroundColor = array(
             }
         });    
     </script>
-
+        
     <!-- Gráfico com o ano de ingresso dos estudantes matriculados -->
     <div class='row'>
             <h3 class="text-left">Ano De Ingresso Dos Estudantes Matriculados em <?php echo $anoSelecionadoPOST; ?> 

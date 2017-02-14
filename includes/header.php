@@ -80,6 +80,7 @@
 		    	});
 		    });
 
+		    // escondendo loading button
 		    $(document).ready(function() {
 		    	$.LoadingOverlay("hide");
 		    })
