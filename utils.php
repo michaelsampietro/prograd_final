@@ -147,12 +147,9 @@ function consultaSimplesRetornaString($sql)
     $aux++;
   }
 
-  // String a ser retornada pelo programa
-
+  //String a ser retornada pelo programa
   $str = "";
   foreach($array as $key => $value) {
-
-    // $value = preg_replace('/\./', ',', $value);
 
     $value = round($value, 2);
     $str.= "$value ,";

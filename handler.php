@@ -43,7 +43,7 @@ $arrayBackgroundColor = array(
 <script>
     $.LoadingOverlay("show", {
         color: "rgba(250,250,250,0.9)",
-        fade        : "fast",
+        fade: "fast"
     });
 </script>
 
@@ -179,60 +179,85 @@ $arrayBackgroundColor = array(
 
     <!-- Numero de cursos/habilitacoes por Regional --> 
     <div class="row">
-        <h3>Numero de Cursos/Habilitações por Regional - de 2005 a <?php
-            echo $anoSelecionadoPOST;
-            ?></h3>
-        <div id="myChart3" style="width: 100%; height: 500px;"></div>
+        <h3>Numero de Cursos/Habilitações por Regional - de 2005 a <?php echo $anoSelecionadoPOST; ?></h3>
+        <canvas id="myChartHabilitacoes" style="width: 100%; height: 500px;"></canvas>
+        <!-- auto generated -->
+        <table id="tabelaNumeroDeCursos" class="table table-responsive table-bordered"><tr id="rowAnos"><th></th><th>2005</th><th>2006</th><th>2007</th><th>2008</th><th>2009</th><th>2010</th><th>2011</th><th>2012</th><th>2013</th><th>2014</th><th>2015</th></tr><tr id="rowGoiânia"><td>Goiânia</td><td>58</td><td>63</td><td>66</td><td>66</td><td>81</td><td>85</td><td>86</td><td>86</td><td>89</td><td>90</td><td>90</td></tr><tr id="rowJataí"><td>Jataí</td><td>11</td><td>15</td><td>18</td><td>20</td><td>21</td><td>23</td><td>23</td><td>24</td><td>24</td><td>25</td><td>25</td></tr><tr id="rowCatalão"><td>Catalão</td><td>9</td><td>14</td><td>16</td><td>19</td><td>24</td><td>25</td><td>25</td><td>25</td><td>25</td><td>26</td><td>26</td></tr><tr id="rowGoiás"><td>Goiás</td><td>1</td><td>1</td><td>1</td><td>1</td><td>3</td><td>3</td><td>3</td><td>3</td><td>5</td><td>6</td><td>7</td></tr><tr id="rowTotal"><td>Total</td><td>79</td><td>93</td><td>101</td><td>106</td><td>129</td><td>136</td><td>137</td><td>138</td><td>143</td><td>147</td><td>148</td></tr></table>
+        <script type="text/javascript">
+            // Faz a consulta dos dados no banco e insere na tabela de numero de cursos/habilitacoes
+            function insereTabelaNumeroDeCursos() {
+                // loop por todos os anos que estão no banco de dados até que seja menor ou igual ao ano selecionado pelo usuario
+                <?php for ($anoBase = 2016; $anoBase <= $anoSelecionadoPOST; $anoBase++): ?>
+                    // inserindo o th do ano
+                    $('#rowAnos').find('th').last().after('<th><?php echo $anoBase;?></th>');
+                    // para deixar mais dinamico, utilizar um loop para todas as unidades
+                    <?php foreach ($arrayUnidades as $unidade => $value) : ?>
+                        <?php 
+                            /* Faz pesquisa e retorna um array com ano e qtd de cursos. */
+                            $sql = "SELECT COUNT(distinct curso) AS count FROM `$anoBase` WHERE `ano_ingresso` = '$anoBase' and `Regional` = '$unidade'";
+                        ?>
+
+                        $('#row<?php echo $unidade;?>').find('td').last().after('<td><?php echo consultaSimplesRetornaUmValor($sql);?></td>');
+                    <?php endforeach; ?>
+
+                    // inserindo o td da linha Total
+                    <?php $sql = "SELECT COUNT(distinct curso) AS count FROM `$anoBase` WHERE `ano_ingresso` = '$anoBase' and `Regional` ="; ?>
+
+                    $('#rowTotal').find('td').last().after('<td><?php echo consultaSimplesRetornaSomaAsString($arrayUnidades, $sql);?></td>');
+                <?php endfor; ?>
+            }
+        </script>
     </div>
-    <!-- Script para o gráfico de linhas múltiplas --> 
     <script>
-        google.charts.load('current', {'packages':['corechart']});
-        google.charts.setOnLoadCallback(drawChart);
-        
-        function drawChart() {
-            // Desenha o gráfico de linhas múltiplas correspondente ao número de cursos por regional.
-            var data = google.visualization.arrayToDataTable([
-            ["Anos", 'Goiânia', 'Jataí ', 'Catalão', 'Goiás', 'Total'],
-            ["2005",  58,   11,        9,        1,      79  ],
-            ["2006",  63,   15,        14,       1,      93  ],
-            ["2007",  66,   18,        16,       1,      101 ],
-            ['2008',  66,   20,        19,       1,      106 ],
-            ['2009',  81,   21,        24,       3,      129 ],
-            ['2010',  85,   23,        25,       3,      136 ],
-            ['2011',  86,   23,        25,       3,      137 ],
-            ['2012',  86,   24,        25,       3,      138 ],
-            ['2013',  89,   24,        25,       5,      143 ],
-            ['2014',  90,   25,        26,       6,      147 ],
-            ['2015',  90,   25,        26,       7,      148 ],
-            
-            <?php
-            $sql = "SHOW TABLES";
-            $arrayAnos = consultaSimplesRetornaArray ($sql);
-
-            foreach ($arrayAnos as $key => $ano) {
-                if ($ano <= $anoSelecionadoPOST) { 
-                $sql = "SELECT COUNT(distinct curso) AS count FROM `$ano` WHERE regional=";
-                echo "['$ano',";
-                chartData($arrayUnidades, $sql);
-                    echo "],\n";
-                }
-            } 
-            ?> ]);
-
-          var options = {
-            legend: { position: 'bottom' }
-          };
-        
-          var chart = new google.visualization.LineChart(document.getElementById('myChart3'));
-        
-          chart.draw(data, options);  
-      }
+        var ctx = document.getElementById("myChartHabilitacoes");
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [
+                    <?php for ($i=2005; $i <= $anoSelecionadoPOST; $i++) { 
+                        echo "'$i',";
+                    }?>
+                ],
+                datasets: [
+                    <?php foreach ($arrayUnidades as $unidade => $value): ?>
+                        {
+                            label: <?php echo "'$unidade'"; ?>,
+                            type: 'line',
+                            fill: false,
+                            borderColor: <?php echo "'$arrayBackgroundColor[$unidade]'"; ?>,
+                            backgroundColor: <?php echo "'$arrayBackgroundColor[$unidade]'"; ?>,
+                            data: [
+                            <?php 
+                                $dadosEstaticos = '';
+                                if ($unidade == 'Goiânia') {
+                                    $dadosEstaticos = "58, 63, 66, 66, 81, 85, 86, 86, 89, 90, 90,";
+                                } elseif ($unidade == 'Jataí') {
+                                    $dadosEstaticos = "11, 15, 18, 20, 21, 23, 23, 24, 24, 25, 25,";
+                                } elseif ($unidade == 'Catalão') {
+                                    $dadosEstaticos = "9, 14, 16, 19, 24, 25, 25, 25, 25, 26, 26,";
+                                } elseif ($unidade == 'Goiás') {
+                                    $dadosEstaticos = "1, 1, 1, 1, 3, 3, 3, 3, 5, 6, 7,";
+                                }
+                                echo $dadosEstaticos;
+                                $anoBase = 2016;
+                                while($anoBase <= $anoSelecionadoPOST) {
+                                    $sql = "SELECT COUNT(distinct curso) AS count FROM `$anoBase` WHERE `ano_ingresso`= '$anoBase' and `Regional` = '$unidade'";
+                                    echo consultaSimplesRetornaString($sql);
+                                    $anoBase++;
+                                }
+                            ?>
+                            ]
+                        },
+                    <?php endforeach; ?>
+                ]
+            }
+        });    
     </script>
 
     <!-- Tabela com o número de vagas ofertadas por regional -->
-    <div class="row table-responsive"">
-        <h3 class="text-left" id="tituloMyTable0">Número de Vagas Ofertadas por Regional</h3>
-        <table id="myTable0" class="table" style="width: 900px; display: none;">
+    <div class="row"">
+        <h3 class="text-left">Número de Vagas Ofertadas por Regional</h3>
+        <table id="myTable0" class="table table-responsive" style="width: 900px; display: none;">
             <tr>
                 <th><br></th>
                 <th>2005</th>
@@ -331,7 +356,8 @@ $arrayBackgroundColor = array(
                 $sql = "SELECT COUNT(Estudante) AS count FROM `$anoSelecionadoPOST` WHERE ano_ingresso = " . $anoSelecionadoPOST . " and municipio=";
                 echo "'$anoSelecionadoPOST',";
                 chartData($arrayUnidades, $sql);
-                ?>];
+            ?>
+        ];
 
         for (var i = 0; i < tamanhoTabela; i++) {
             // inserir o html na tabela.
@@ -352,53 +378,73 @@ $arrayBackgroundColor = array(
         <h3 class="text-left">Número de Vagas Ofertadas de 2005 a <?php
             echo $anoSelecionadoPOST;
             ?> por Regional</h3>
-        <div id="numVagasRegional" style="width: 1100px; height: 500px; display: none;"></div>
+        <canvas id="graficoNumVagasRegional" style="width: 1100px; height: 500px; display: none;"></canvas>
     </div>
-    <!-- Script para o gráfico de linhas múltiplas --> 
     <script>
-        google.charts.load('current', {'packages':['corechart']});
-        google.charts.setOnLoadCallback(drawChart);
-        
-        function drawChart() {
-            // Desenha o gráfico de linhas múltiplas correspondente ao número de cursos por regional.
-            var data = google.visualization.arrayToDataTable([
-            ["Anos", 'Goiânia', 'Jataí ', 'Catalão', 'Goiás', 'Total'],
-            ["2005",  2318,   360,        300,       60,      3038  ],
-            ["2006",  2508,   550,        500,       60,      3618  ],
-            ["2007",  2548,   610,        590,       60,      3808 ],
-            ['2008',  2523,   705,        710,       60,      3998 ],
-            ['2009',  3786,   880,        950,       160,     5776 ],
-            ['2010',  4046,   980,        970,       160,     6156 ],
-            ['2011',  4065,   980,        980,       160,     6185 ],
-            ['2012',  4045,   1020,       980,       160,     6205 ],
-            ['2013',  4135,   1020,       990,       210,     6355 ],
-            ['2014',  4325,   1050,       1110,      380,     6865 ],
-            ['2015',  4264,   1080,       1110,      470,     6925 ],
-            
-            <?php
-            $sql = "SHOW TABLES";
-            $arrayAnos = consultaSimplesRetornaArray ($sql);
-
-            foreach ($arrayAnos as $key => $ano) {
-                if ($ano <= $anoSelecionadoPOST) {
-                $sql = "SELECT COUNT(Estudante) AS count FROM `$ano` WHERE ano_ingresso = $ano and regional=";
-                echo "['$ano',";
-                chartData($arrayUnidades, $sql);
-                    echo "],\n";
-                }
+        var ctx = document.getElementById("graficoNumVagasRegional");
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [
+                    <?php for ($i=2005; $i <= $anoSelecionadoPOST; $i++) { 
+                        echo "'$i',";
+                    }?>
+                ],
+                datasets: [
+                    <?php foreach ($arrayUnidades as $unidade => $value): ?>
+                        {
+                            label: <?php echo "'$unidade'"; ?>,
+                            type: 'line',
+                            fill: false,
+                            borderColor: <?php echo "'$arrayBackgroundColor[$unidade]'"; ?>,
+                            backgroundColor: <?php echo "'$arrayBackgroundColor[$unidade]'"; ?>,
+                            data: [
+                            <?php
+                                // dadosEstaticos armazena os dados que não podem ser recebidos através do banco de dados
+                                $dadosEstaticos = '';
+                                if ($unidade == 'Goiânia') {
+                                    $dadosEstaticos = "2318, 2508, 2548, 2523, 3786, 4046, 4065, 4045, 4135, 4325, 4265, ";
+                                } elseif ($unidade == 'Jataí') {
+                                    $dadosEstaticos = "360, 550, 610, 705, 880, 980, 980, 1020, 1020, 1050, 1080, ";
+                                } elseif ($unidade == 'Catalão') {
+                                    $dadosEstaticos = "300, 500, 590, 710, 950, 970, 980, 980, 990, 1110, 1110, ";
+                                } elseif ($unidade == 'Goiás') {
+                                    $dadosEstaticos = "60, 60, 60, 60, 160, 160, 160, 160, 210, 380, 470, ";
+                                }
+                                echo $dadosEstaticos;
+                                $anoBase = 2016;
+                                while($anoBase <= $anoSelecionadoPOST) {
+                                    $sql = "SELECT COUNT(Estudante) AS count FROM `$anoBase` WHERE `ano_ingresso` = '$anoBase' and `Regional`= '$unidade'";
+                                    echo consultaSimplesRetornaString($sql);
+                                    $anoBase++;
+                                }
+                            ?>
+                            ]
+                        },
+                    <?php endforeach; ?>
+                    {
+                        label: "Total",
+                        type: "line",
+                        fill: false,
+                        borderColor: "#a9a9a9",
+                        backgroundColor: "gray",
+                        data: [
+                            <?php 
+                                $dadosEstaticos = "3038,3618,3808,3998,5776,6156,6185,6205,6355,6865,6925,";
+                                echo $dadosEstaticos;
+                                $anoBase = 2016;
+                                while ($anoBase <= $anoSelecionadoPOST) {
+                                    $sql = "SELECT COUNT(*) AS count FROM `$anoBase` WHERE `ano_ingresso` = '$anoBase' and `Regional` = ";
+                                    echo consultaSimplesRetornaSomaAsString($arrayUnidades, $sql);
+                                    $anoBase++;
+                                }
+                            ?>
+                        ]
+                    }
+                ]
             }
-            ?> ]);
-
-          var options = {
-            legend: { position: 'bottom' }
-          };
-        
-          var chart = new google.visualization.LineChart(document.getElementById('numVagasRegional'));
-        
-          chart.draw(data, options);
-      }
+        });    
     </script>
-
 
     <!-- Gráfico com o ano de ingresso dos estudantes matriculados -->
     <div class='row'>
@@ -2117,8 +2163,8 @@ $arrayBackgroundColor = array(
 <script type="text/javascript">
     
     function onPageLoad() {
-        drawChart();
         insereTabelaVagasRegional();
+        insereTabelaNumeroDeCursos();
     }
 
 

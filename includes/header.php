@@ -9,7 +9,8 @@
 	  	<link rel="stylesheet" type="text/css" href="style.css">
 
 	  	<!-- Google Visualization API -->
- 		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	  	<!-- Não utilizando mais na versao final! -->
+ 		<!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
 
 	  	<!-- Chart.js -->
 	  	<script src="charts/Chart.js"></script>
@@ -28,7 +29,7 @@
 
   		<script type="text/javascript">
   			//create trigger to resizeEnd event     
-			$(window).resize(function() {
+			/*$(window).resize(function() {
 			    if(this.resizeTO) clearTimeout(this.resizeTO);
 			    this.resizeTO = setTimeout(function() {
 			        $(this).trigger('resizeEnd');
@@ -38,30 +39,44 @@
 			//redraw graph when window resize is completed  
 			$(window).on('resizeEnd', function() {
 			    drawChart();
-			});
+			});*/
 
 			// abrindo/fechando quando tem canvas
 		    $(document).ready(function() {
 		    	$(".row").each(function() {
+		    		$("h3").each(function(){
+    					$(this).siblings("canvas").hide();
+		    		});
 		    		$("h3").click(function(){
-    					$(this).siblings("canvas").toggle();
+		    			// se tiver escondido, quando clicar no h3 é pra ir pro centro
+		    			// se não tiver escondido, quando clicar é pro h3 ir pra esquerda..
+		    			if($(this).siblings("canvas").is(":hidden")){
+		    				$(this).addClass("text-center");
+		    				$(this).siblings("canvas").show();
+		    			} else {
+		    				$(this).removeClass("text-center");
+		    				$(this).siblings("canvas").hide();
+		    			}
 		    		});
 		    	});
 		    });
 
 		    $(document).ready(function() {
 		    	$(".row").each(function() {
-		    		$("h3").click(function(){
-    					$(this).siblings("div").toggle();
+		    		$("h3").each(function(){
+    					$(this).siblings("div").hide();
 		    		});
 		    	});
 		    });
 
 		    $(document).ready(function() {
 		    	$(".row").each(function() {
-		    		$("h3").click(function(){
-    					$(this).siblings("table").toggle();
+		    		$("h3").each(function(){
+    					$(this).siblings("table").hide();
 		    		});
+		    		$("h3").click(function(){
+		    			$(this).siblings("table").toggle();
+		    		})
 		    	});
 		    });
 
