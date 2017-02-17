@@ -159,7 +159,7 @@ function consultaSimplesRetornaString($sql)
   echo ($str);
 }
 
-function consultaSimplesRetornaSomaAsString($array, $sql)
+function consultaSimplesRetornaAsString($array, $sql)
 {
   $conn = connect();
   $ano = htmlspecialchars($_POST['anos']);
