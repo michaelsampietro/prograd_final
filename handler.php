@@ -867,6 +867,59 @@ $arrayBackgroundColor = array(
     <!-- ************************************************ -->
 
     <!-- FALTA UMA TABELA AQUI!!, TABELA DA PAG. 29 -->
+    <div>
+        <h3>Tabela Pagina 29</h3>
+        <table class="table table-bordered table-responsive text-center">
+            <tr>
+                <th rowspan="2" class="text-center" style="vertical-align: middle;">Regional</th>
+                <th rowspan="2" class="text-center" style="vertical-align: middle;">AC</th>
+                <th colspan="5" class="text-center" style="vertical-align: middle;">Programa UFGInclui</th>
+            </tr>
+            <tr>
+                <td>Reserva de 10% das vagas- Escola Pública</td>
+                <td>Reserva de 10% das vagas - Negro Escola Pública</td>
+                <td>Vaga Extra para Indígena</td>
+                <td>Vaga Extra para Negro Quilombola</td>
+                <td>15 vagas Surdos</td>
+            </tr>
+            <?php foreach ($arrayUnidades as $unidade => $value) {
+            echo "<tr>";
+                echo "<th class='text-center'>$unidade</td>";
+                // consulta ampla concorrencia
+                $sqlAC = "SELECT count(`Estudante`) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` <> ('UFGInclui - Negro Escola Pública') and `acao_afirmativa` <> 'UFGInclui - Indígena' and `acao_afirmativa` <> ('UFGInclui - Escola Pública') and `acao_afirmativa` <> ('UFGInclui - Quilombola') and `acao_afirmativa` <> ('UFGInclui - Surdo') and `ano_ingresso` <= 2012 and  `Regional` = '$unidade'";
+                echo "<td>";
+                consultaSimplesRetornaUmValor($sqlAC); 
+                echo "</td>";
+                foreach ($arrayAcaoAfirmativa as $acao => $value) {
+                    $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` = '$acao' and `ano_ingresso` <= 2012 and  `Regional` = '$unidade'";
+                    echo "<td>";
+                    consultaSimplesRetornaUmValor($sql);
+                    echo "</td>";
+                }
+            echo "</tr>";
+            }
+
+            // Linha total
+            echo "<tr>";
+            echo "<td>Total</td>";
+            $sql = "SELECT count(`Estudante`) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` <> ('UFGInclui - Negro Escola Pública') and `acao_afirmativa` <> 'UFGInclui - Indígena' and `acao_afirmativa` <> ('UFGInclui - Escola Pública') and `acao_afirmativa` <> ('UFGInclui - Quilombola') and `acao_afirmativa` <> ('UFGInclui - Surdo') and `ano_ingresso` <= 2012 and  `Regional` =";
+            
+            echo "<td>";
+                consultaSimplesRetornaSomaAsString($arrayUnidades, $sql);
+            echo "</td>";
+
+            foreach ($arrayAcaoAfirmativa as $acao => $value) {
+                $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` = '$acao' and `ano_ingresso` <= 2012 and  `Regional` =";
+                echo "<td>";
+                    consultaSimplesRetornaSomaAsString($arrayUnidades, $sql);
+                echo "</td>";
+            }
+            echo "</tr>";
+
+            ?>
+        </table>
+    </div>
+
 
     <!-- Gráfico do número de estudantes c/ ação afirmativa , que ingressaram até 2012 -->
     <div class="row">
