@@ -868,8 +868,8 @@ $arrayBackgroundColor = array(
 
     <!-- FALTA UMA TABELA AQUI!!, TABELA DA PAG. 29 -->
     <div>
-        <h3>Tabela Pagina 29</h3>
-        <table class="table table-bordered table-responsive text-center">
+        <h3>Número de Estudantes Matriculados em <?php echo $anoSelecionadoPOST; ?> por Ação Afirmativa Por Regional com Ingresso até 2012 (Anterior à Lei de Cotas)</h3>
+        <table class="table table-bordered table-responsive text-center" style="display: none;">
             <tr>
                 <th rowspan="2" class="text-center" style="vertical-align: middle;">Regional</th>
                 <th rowspan="2" class="text-center" style="vertical-align: middle;">AC</th>
