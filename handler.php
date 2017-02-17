@@ -284,7 +284,6 @@ $arrayBackgroundColor = array(
             }
         </script>
     </div>
-
     <!-- ESSA ESTRUTURA ABAIXO NÃO PODE SER APAGADA!!! MESMO A DIV ESTANDO HIDDEN, ALGUM BUG (NÃO ENCONTRADO) NÃO ESTÁ
         DEIXANDO COM QUE A PÁGINA FUNCIONE SEM ESSA DIV. -->
     <div class="row" style="display: none;">
@@ -360,9 +359,45 @@ $arrayBackgroundColor = array(
         
     <!-- Gráfico com o ano de ingresso dos estudantes matriculados -->
     <div class='row'>
-            <h3 class="text-left">Ano De Ingresso Dos Estudantes Matriculados em <?php echo $anoSelecionadoPOST; ?> 
-            </h3>
+            <h3 class="text-left">Quantidade de Estudantes Matriculados em <?php echo $anoSelecionadoPOST; ?> por Ano de Ingresso </h3>
             <canvas id="myChart7" style="width: 1100px; height: 500px; display: none;"></canvas>
+            <!-- auto-generated code -->
+            <table class="table table-responsive table-bordered">
+                <tr>
+                    <th></th>
+                    <th>2004 a 2010</th>
+                    <!-- inserindo os anos na tabela -->
+                    <?php
+                        // Para esse gráfico, o ano base é 2011.
+                        $anoBase = 2011;
+                        while ($anoBase <= $anoSelecionadoPOST) {
+                            echo "<th>$anoBase</td>";
+                            $anoBase++;
+                        }
+                    ?>
+                </tr>
+                <!-- inserindo os dados -->
+                <?php foreach ($arrayUnidades as $unidade => $value) {
+                echo "<tr>";
+                    echo "<td>$unidade</td>";
+                    // ano de 2004 a 2010
+                    $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` >= 2004 and `ano_ingresso` <= 2010 and `Regional` = '$unidade'";
+                    echo "<td>";
+                        echo consultaSimplesRetornaUmValor($sql);
+                    echo "</td>";
+
+                    $anoBase = 2011;
+                    while($anoBase <= $anoSelecionadoPOST) {
+                        $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` = '$anoBase' and `Regional` = '$unidade'";
+                        echo "<td>";
+                            echo consultaSimplesRetornaUmValor($sql);
+                        echo "</td>";
+                        $anoBase++;
+                    }
+                echo "</tr>";
+                }
+                ?>
+            </table>
     </div>
     <script type="text/javascript">
         var ctx = document.getElementById("myChart7");
@@ -418,6 +453,41 @@ $arrayBackgroundColor = array(
             <h3 class="text-left">Gráfico número de estudantes por sexo e regional
             </h3>
             <canvas id="myChart8" style="width: 1100px; height: 500px; display: none;"></canvas>
+            <!-- auto-generated code -->
+            <table class="table table-bordered table-responsive">
+                <tr>
+                    <th></th>
+                    <th>Masculino</th>
+                    <th>Feminino</th>
+                </tr>
+                <?php 
+                // foreach para cada unidade
+                foreach ($arrayUnidades as $unidade => $value) {
+                    echo "<tr>";
+                        echo "<td>$unidade</td>";
+                    //consulta banco
+                    $arraySexos = array ("Masculino", "Feminino");
+                    foreach ($arraySexos as $sexo) {
+                        echo "<td>";
+                        $sql = "SELECT count(sexo) * 100.0 / (select count(*) from `$anoSelecionadoPOST` where Regional = '$unidade') as count FROM `$anoSelecionadoPOST` where Regional = '$unidade' and `sexo` = '$sexo'";
+                        echo consultaSimplesRetornaUmValor($sql);
+                        echo "%</td>";
+                    }
+                    echo "</tr>";
+                }
+
+                // linha TOTAL
+                echo "<tr>";
+                    echo "<td>Total</td>";
+                foreach ($arraySexos as $sexo) {
+                    echo "<td>";
+                    $sql = "SELECT count(*) * 100.0 / ( SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` ) AS count FROM `$anoSelecionadoPOST` WHERE sexo = '$sexo'";
+                    echo consultaSimplesRetornaUmValor($sql);
+                    echo "%</td>";
+                }
+                echo "</tr>";
+                ?>
+            </table>
     </div>
     <script type="text/javascript">
         var ctx = document.getElementById("myChart8");
@@ -484,6 +554,44 @@ $arrayBackgroundColor = array(
             <h3 class="text-left">Porcentagem de estudantes por faixa etária matriculados em abril de <?php echo $anoSelecionadoPOST; ?>
             </h3>
             <canvas id="myChart9" style="width: 1100px; height: 500px; display: none;"></canvas>
+            <!-- utilizarei esse array para armazenar os intervalos de idades para duas coisas:
+            1-> imprimir na tabela
+            2-> modificar para deixar a consulta ao banco dinâmica. (tirarei os caracteres A e trocarei por AND para utilizar em um BETWEEN) -->
+            <?php $arrayIntervaloIdades = array ("< 18",  "18 a 20", "21 a 23", "24 a 26", "27 a 29", "30 a 35", "36 a 40", "41 a 45", "> 45"); ?>
+            <!-- auto generated code -->
+            <table class="table-responsive table-bordered table">
+                <tr>
+                    <th></th>
+                    <?php 
+                    for ($i=0; $i < sizeof($arrayIntervaloIdades); $i++)
+                        echo "<th>$arrayIntervaloIdades[$i]</th>"; 
+                    ?>
+                </tr>
+                <?php 
+                //replacing a com and para usar no banco
+                for ($i=0; $i < sizeof($arrayIntervaloIdades); $i++)
+                    $arrayIntervaloIdades[$i] = preg_replace("/a/", "and", $arrayIntervaloIdades[$i]);
+                
+
+                foreach ($arrayUnidades as $unidade => $value) {
+                    echo "<tr>";
+                    echo "<td>$unidade</td>";
+                    foreach ($arrayIntervaloIdades as $intervalo) {
+                        echo "<td>";
+                        if(preg_match('/and/i', $intervalo)) {
+                            $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(*) FROM `$anoSelecionadoPOST`) AS count FROM `$anoSelecionadoPOST` WHERE FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN $intervalo";
+                            consultaSimplesRetornaUmValor($sql);
+                        } else {
+                            $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(*) FROM `$anoSelecionadoPOST`) AS count FROM `$anoSelecionadoPOST` WHERE FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) $intervalo";
+                            consultaSimplesRetornaUmValor($sql);
+                        }
+                        echo "%</td>";
+                    }
+                    echo "</tr>";
+                }
+
+                ?>
+            </table>
     </div>
     <script type="text/javascript">
         var ctx = document.getElementById("myChart9");
@@ -571,6 +679,34 @@ $arrayBackgroundColor = array(
             <h3 class="text-left">Porcentagem de estudantes por faixa etária matriculados em abril de <?php echo $anoSelecionadoPOST; ?> na regional <?php echo $unidade; ?>
             </h3>
             <canvas id="chartAnosRegional<?php echo $unidade; ?>" style="width: 1100px; height: 500px; display: none;"></canvas>
+            <table class="table-responsive table-bordered table">
+            <tr>
+                <th>Faixa Etária</th>
+                <th>Porcentagem de Estudantes</th>
+            </tr>
+                <?php 
+                // reiniciando o array
+                $arrayIntervaloIdades = array ("< 18",  "18 a 20", "21 a 23", "24 a 26", "27 a 29", "30 a 35", "36 a 40", "41 a 45", "> 45");
+
+                foreach ($arrayIntervaloIdades as $intervalo) {
+                    echo "<tr>";
+                    echo "<td>$intervalo</td>";
+                    //trocando a com and para usar no banco
+                    $intervalo = preg_replace("/a/", "and", $intervalo);
+                    
+                    echo "<td>";
+                    if(preg_match('/and/i', $intervalo)) {
+                        $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` where `Regional` = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade' and FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN $intervalo";
+                        consultaSimplesRetornaUmValor($sql);
+                    } else {
+                        $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` where `Regional` = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade' and FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) $intervalo";
+                        consultaSimplesRetornaUmValor($sql);
+                    }
+                    echo "%</td>";
+                    echo "</tr>";
+                }
+                ?>
+            </table>
     </div>
     <script type="text/javascript">
         var ctx = document.getElementById("chartAnosRegional<?php echo $unidade; ?>");
@@ -625,7 +761,6 @@ $arrayBackgroundColor = array(
                                     break;
                                 default:
                                     break;
-                            
                             }
                         }
                     ?>]
@@ -650,91 +785,6 @@ $arrayBackgroundColor = array(
             });
     </script>
     <?php $aux++; endforeach; ?>
-
-    <!-- Gráfico com porcentagem da media global dos alunos GERAL-->
-    <div class='row'>
-            <h3 class="text-left">Gráfico com porcentagem da media global dos alunos por intervalo <?php echo $anoSelecionadoPOST; ?>
-            </h3>
-            <canvas id="chartPorcentagemMediaGlobalGeral" style="width: 1100px; height: 500px; display: none;"></canvas>
-    </div>
-    <script type="text/javascript">
-        var ctx = document.getElementById("chartPorcentagemMediaGlobalGeral");
-
-        var data = {
-            // Intervalos de idades que devem ser calculadas. O intervalo foi definido de acordo com o documento PDF
-            labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
-            datasets: [
-                {
-                    label: "Porcentagem de alunos",
-                    backgroundColor: 'rgba(54, 162, 235, .7)',
-                    data: [
-                    // Faz um loop com 9 iterações, onde cada iteração representa um intervalo (especificados nas labels acima) e, para cada iteração faz uma consulta em um intervalo de idade diferente
-                    <?php
-                        for ($i=0; $i <= 10; $i++) {
-                            switch ($i) {
-                                case 1:
-                                    $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST`) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `media_global` > 0 and `media_global` <= 1";
-                                    echo $res = consultaSimplesRetornaString($sql);
-                                    break;
-                                case 2:
-                                    $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST`) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `media_global` > 1 and `media_global` <= 2";
-                                    echo $res = consultaSimplesRetornaString($sql);
-                                    break;
-                                case 3:
-                                    $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST`) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `media_global` > 2 and `media_global` <= 3";
-                                    echo $res = consultaSimplesRetornaString($sql);
-                                    break;
-                                case 4:
-                                    $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST`) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `media_global` > 3 and `media_global` <= 4";
-                                    echo $res = consultaSimplesRetornaString($sql);
-                                    break;
-                                case 5:
-                                    $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST`) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `media_global` > 4 and `media_global` <= 5";
-                                    echo $res = consultaSimplesRetornaString($sql);
-                                    break;
-                                case 6:
-                                    $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST`) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `media_global` > 5 and `media_global` <= 6";
-                                    echo $res = consultaSimplesRetornaString($sql);
-                                    break;
-                                case 7:
-                                    $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST`) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `media_global` > 6 and `media_global` <= 7";
-                                    echo $res = consultaSimplesRetornaString($sql);
-                                    break;
-                                case 8:
-                                    $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST`) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `media_global` > 7 and `media_global` <= 8";
-                                    echo $res = consultaSimplesRetornaString($sql);
-                                    break;
-                                case 9:
-                                    $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST`) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `media_global` > 8 and `media_global` <= 9";
-                                    echo $res = consultaSimplesRetornaString($sql);
-                                    break;
-                                case 10:
-                                    $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST`) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `media_global` > 9 and `media_global` <= 10";
-                                    echo $res = consultaSimplesRetornaString($sql);
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                    ?>]
-        }]};
-
-        var myBarChart = new Chart(ctx, {
-                type: 'bar',
-                data: data,
-                options: {
-                    barValueSpacing: 20,
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                min: 0,
-                                beginAtZero:true
-                            }
-                        }]
-                    } 
-                }
-            });
-    </script>
 
     <!-- Tabela com a faixa das médias globais usadas nos gráficos -->
     <div>
@@ -771,6 +821,72 @@ $arrayBackgroundColor = array(
         </table>
     </div>
 
+    <!-- Gráfico com porcentagem da media global dos alunos GERAL-->
+    <div class='row'>
+            <h3 class="text-left">Gráfico com porcentagem da media global dos alunos por intervalo <?php echo $anoSelecionadoPOST; ?>
+            </h3>
+            <canvas id="chartPorcentagemMediaGlobalGeral" style="width: 1100px; height: 500px; display: none;"></canvas>
+            <!-- auto-generated code -->
+            <table class="table table-responsive table-bordered">
+                <tr>
+                    <th>Faixas das Médias</th>
+                    <th>Porcentagem de Estudantes</th>
+                </tr>
+                    <?php
+                    for ($index = 0; $index < 10; $index++) {
+                        
+                        $aux = $index + 1;
+                        $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` WHERE `media_global` <> 0) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `media_global` > $index and `media_global` <= $aux";
+
+                        echo "<tr>";
+                        echo "<td>$aux</td>";
+                        echo "<td>";
+                        consultaSimplesRetornaUmValor($sql);
+                        echo "%</td></tr>";
+                    }
+                    ?>
+            </table>
+    </div>
+    <script type="text/javascript">
+        var ctx = document.getElementById("chartPorcentagemMediaGlobalGeral");
+
+        var data = {
+            // Intervalos de medias que devem ser calculadas. O intervalo foi definido de acordo com o documento PDF
+            labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+            datasets: [
+                {
+                    label: "Porcentagem de alunos",
+                    backgroundColor: 'rgba(54, 162, 235, .7)',
+                    data: [
+                    // Faz um loop com 9 iterações, onde cada iteração representa um intervalo (especificados nas labels acima) e, para cada iteração faz uma consulta em um intervalo de idade diferente
+                    <?php
+                        for ($index = 0; $index < 10; $index++) {
+                        $aux = $index + 1;
+                        $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` WHERE `media_global` <> 0) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `media_global` > $index and `media_global` <= $aux";
+                        consultaSimplesRetornaString($sql);
+                    }
+                    ?>]
+                }
+            ]
+        };
+
+        var myBarChart = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: {
+                    barValueSpacing: 20,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                min: 0,
+                                beginAtZero:true
+                            }
+                        }]
+                    } 
+                }
+            });
+    </script>
+
  <!-- Gráfico com porcentagem da media global dos alunos POR REGIONAL-->
     <?php
         foreach ($arrayUnidades as $unidade => $value): ?>
@@ -778,6 +894,25 @@ $arrayBackgroundColor = array(
                 <h3 class="text-left">Gráfico com porcentagem da media global dos alunos por intervalo <?php echo $anoSelecionadoPOST; ?> na regional <?php echo $unidade; ?>
                 </h3>
                 <canvas id="chartPorcentagemMediaGlobalUnidade<?php echo $unidade; ?>" style="width: 1100px; height: 500px; display: none;"></canvas>
+                <table class="table table-responsive table-bordered">
+                <tr>
+                    <th>Faixas das Médias</th>
+                    <th>Porcentagem de Estudantes</th>
+                </tr>
+                    <?php
+                    for ($index = 0; $index < 10; $index++) {
+                        
+                        $aux = $index + 1;
+                        $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade' and `media_global` <> 0) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade' and `media_global` > $index and `media_global` <= $aux";
+
+                        echo "<tr>";
+                        echo "<td>$aux</td>";
+                        echo "<td>";
+                        consultaSimplesRetornaUmValor($sql);
+                        echo "%</td></tr>";
+                    }
+                    ?>
+            </table>
         </div>
         <script type="text/javascript">
         var ctx = document.getElementById("chartPorcentagemMediaGlobalUnidade<?php echo $unidade; ?>");
@@ -792,51 +927,10 @@ $arrayBackgroundColor = array(
                     data: [
                     // Faz um loop com 9 iterações, onde cada iteração representa um intervalo (especificados nas labels acima) e, para cada iteração faz uma consulta em um intervalo de idade diferente
                     <?php
-                        for ($i=0; $i <= 10; $i++) {
-                            switch ($i) {
-                                case 1:
-                                    $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` where `Regional` = '$unidade') * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade' AND `media_global` > 0 and `media_global` <= 1";
-                                    echo $res = consultaSimplesRetornaString($sql);
-                                    break;
-                                case 2:
-                                    $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` where `Regional` = '$unidade') * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade' AND `media_global` > 1 and `media_global` <= 2";
-                                    echo $res = consultaSimplesRetornaString($sql);
-                                    break;
-                                case 3:
-                                    $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` where `Regional` = '$unidade') * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade' AND `media_global` > 2 and `media_global` <= 3";
-                                    echo $res = consultaSimplesRetornaString($sql);
-                                    break;
-                                case 4:
-                                    $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` where `Regional` = '$unidade') * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade' AND `media_global` > 3 and `media_global` <= 4";
-                                    echo $res = consultaSimplesRetornaString($sql);
-                                    break;
-                                case 5:
-                                    $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` where `Regional` = '$unidade') * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade' AND `media_global` > 4 and `media_global` <= 5";
-                                    echo $res = consultaSimplesRetornaString($sql);
-                                    break;
-                                case 6:
-                                    $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` where `Regional` = '$unidade') * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade' AND `media_global` > 5 and `media_global` <= 6";
-                                    echo $res = consultaSimplesRetornaString($sql);
-                                    break;
-                                case 7:
-                                    $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` where `Regional` = '$unidade') * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade' AND `media_global` > 6 and `media_global` <= 7";
-                                    echo $res = consultaSimplesRetornaString($sql);
-                                    break;
-                                case 8:
-                                    $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` where `Regional` = '$unidade') * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade' AND `media_global` > 7 and `media_global` <= 8";
-                                    echo $res = consultaSimplesRetornaString($sql);
-                                    break;
-                                case 9:
-                                    $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` where `Regional` = '$unidade') * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade' AND `media_global` > 8 and `media_global` <= 9";
-                                    echo $res = consultaSimplesRetornaString($sql);
-                                    break;
-                                case 10:
-                                    $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` where `Regional` = '$unidade') * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade' AND `media_global` > 9 and `media_global` <= 10";
-                                    echo $res = consultaSimplesRetornaString($sql);
-                                    break;
-                                default:
-                                    break;
-                            }
+                        for ($index =0; $index <= 10; $index++) {
+                            $aux = $index + 1;
+                            $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade' and `media_global` <> 0) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade' and `media_global` > $index and `media_global` <= $aux";
+                            consultaSimplesRetornaString($sql);
                         }
                      ?>
             ]
