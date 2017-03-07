@@ -8,10 +8,6 @@
 	  	<!-- Arquivo CSS -->
 	  	<link rel="stylesheet" type="text/css" href="style.css">
 
-	  	<!-- Google Visualization API -->
-	  	<!-- Não utilizando mais na versao final! -->
- 		<!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
-
 	  	<!-- Chart.js -->
 	  	<script src="charts/Chart.js"></script>
 
@@ -28,24 +24,13 @@
   		<script src="https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay_progress.min.js"></script>
 
   		<script type="text/javascript">
-  			//create trigger to resizeEnd event     
-			/*$(window).resize(function() {
-			    if(this.resizeTO) clearTimeout(this.resizeTO);
-			    this.resizeTO = setTimeout(function() {
-			        $(this).trigger('resizeEnd');
-			    }, 500);
-			});
-
-			//redraw graph when window resize is completed  
-			$(window).on('resizeEnd', function() {
-			    drawChart();
-			});*/
-
 			// abrindo/fechando quando tem canvas
 		    $(document).ready(function() {
 		    	$(".row").each(function() {
 		    		$("h3").each(function(){
     					$(this).siblings("canvas").hide();
+    					$(this).siblings("h7").hide();
+    					$(this).siblings("table").hide();
 		    		});
 		    		$("h3").click(function(){
 		    			// se tiver escondido, quando clicar no h3 é pra ir pro centro
@@ -53,9 +38,11 @@
 		    			if($(this).siblings("canvas").is(":hidden")){
 		    				$(this).addClass("text-center");
 		    				$(this).siblings("canvas").show();
+		    				$(this).siblings("h7").show();
 		    			} else {
 		    				$(this).removeClass("text-center");
 		    				$(this).siblings("canvas").hide();
+		    				$(this).siblings("h7").hide();
 		    			}
 		    		});
 		    	});
@@ -68,7 +55,6 @@
 		    		});
 		    	});
 		    });
-
 		    $(document).ready(function() {
 		    	$(".row").each(function() {
 		    		$("h3").each(function(){
