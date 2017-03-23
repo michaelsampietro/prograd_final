@@ -2,6 +2,10 @@
 	height: 250%;
 }
 
+* {
+  border-radius: 0 !important;
+}
+
 #relatorios {
 	font-size: 2.0em;
 	padding-top: 30px;
@@ -11,12 +15,22 @@
 	height: 80px;
 }
 
+/*
 footer {
 	clear: both;
 	bottom: 0;
+	position: absolute;
+	background-color: black;
+}*/
+
+footer {
+  width:100%;
+  bottom:0;
+  left:0;
+  background-color:blue;
 }
 
-.panel { 
+.panel {
 	text-align: justify;
  }
 
@@ -49,6 +63,12 @@ td.tabela-negrito {
 
 h3 {
 	text-align: left;
+	cursor: pointer;
+}
+
+.h3-normal {
+	text-align: left;
+	cursor: auto !important;
 }
 
 .modal {
@@ -59,16 +79,16 @@ h3 {
     left:       0;
     height:     100%;
     width:      100%;
-    background: rgba( 255, 255, 255, .8 ) 
-                url('http://i.stack.imgur.com/FhHRx.gif') 
-                50% 50% 
+    background: rgba( 255, 255, 255, .8 )
+                url('http://i.stack.imgur.com/FhHRx.gif')
+                50% 50%
                 no-repeat;
 }
 
 /* When the body has the loading class, we turn
    the scrollbar off with overflow:hidden */
 body.loading {
-    overflow: hidden;   
+    overflow: hidden;
 }
 
 /* Anytime the body has the loading class, our
@@ -76,22 +96,3 @@ body.loading {
 body.loading .modal {
     display: block;
 }
-
-/*
-.googleVisualizationApiChartDivExterna {
-	min-height:500px;
-	height: 100%;
-	width: 100%;
-	margin:auto;
-	background:#fff;
-	text-align:center;
-}
-
-.googleVisualizationApiChartDivInterna {
-	min-height:500px;
-	height: 100%;
-	width: 100%;
-	margin:auto;
-	background:#fff;
-	text-align:center;
-}*/

@@ -57,7 +57,7 @@ $arrayBackgroundColor = array(
                 <?php foreach ($arrayUnidades as $unidade => $value) : ?>
                 <tr>
                     <td><?php echo ucwords($unidade); ?></td>
-                    <td><?php 
+                    <td><?php
                     $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `municipio` = '$unidade'";
                     consultaSimplesRetornaUmValor($sql);
                     ?>
@@ -66,13 +66,13 @@ $arrayBackgroundColor = array(
                 <?php endforeach; ?>
                 <tr>
                     <td>Total</td>
-                    <td><?php 
+                    <td><?php
                     $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `municipio` =";
                     consultaSimplesRetornaSomaAsString($arrayUnidades, $sql);
                     ?></td>
                 </tr>
             </table>
-            
+
             <script>
                 var ctx = document.getElementById("myChart1");
                 var myChart = new Chart(ctx, {
@@ -99,7 +99,7 @@ $arrayBackgroundColor = array(
                 <?php foreach ($arrayGrauAcademico as $grauAcademico => $value) : ?>
                 <tr>
                     <td><?php echo ucwords(strtolower($grauAcademico)); ?></td>
-                    <td><?php 
+                    <td><?php
                     $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `grau_academico` = '$grauAcademico'";
                     consultaSimplesRetornaUmValor($sql);
                     ?>
@@ -108,7 +108,7 @@ $arrayBackgroundColor = array(
                 <?php endforeach; ?>
                 <tr>
                     <td>Total</td>
-                    <td><?php 
+                    <td><?php
                     $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `grau_academico` =";
                     consultaSimplesRetornaSomaAsString($arrayGrauAcademico, $sql);
                     ?></td>
@@ -133,7 +133,7 @@ $arrayBackgroundColor = array(
     </div>
 
     <!-- Grafico com o Número de estudantes matriculados em abril de 2016 por grau acadêmico na regional Catalão-->
-    <?php  
+    <?php
     $aux = 0;
     foreach ($arrayUnidades as $unidade => $value): ?>
     <div class='row'>
@@ -143,7 +143,7 @@ $arrayBackgroundColor = array(
                 <?php foreach ($arrayGrauAcademico as $grauAcademico => $value) : ?>
                 <tr>
                     <td><?php echo ucwords(strtolower($grauAcademico)); ?></td>
-                    <td><?php 
+                    <td><?php
                     $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade' and `grau_academico` = '$grauAcademico'";
                     consultaSimplesRetornaUmValor($sql);
                     ?>
@@ -152,7 +152,7 @@ $arrayBackgroundColor = array(
                 <?php endforeach; ?>
                 <tr>
                     <td>Total</td>
-                    <td><?php 
+                    <td><?php
                     $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade' and `grau_academico` = ";
                     consultaSimplesRetornaSomaAsString($arrayGrauAcademico, $sql);
                     ?></td>
@@ -177,7 +177,7 @@ $arrayBackgroundColor = array(
     </div>
     <?php $aux++; endforeach; ?>
 
-    <!-- Numero de cursos/habilitacoes por Regional --> 
+    <!-- Numero de cursos/habilitacoes por Regional -->
     <div class="row">
         <h3>Numero de Cursos/Habilitações por Regional - de 2005 a <?php echo $anoSelecionadoPOST; ?></h3>
         <canvas id="myChartHabilitacoes" style="width: 100%; height: 500px; display: none;"></canvas>
@@ -193,7 +193,7 @@ $arrayBackgroundColor = array(
                     $('#rowAnos').find('th').last().after('<th><?php echo $anoBase;?></th>');
                     // para deixar mais dinamico, utilizar um loop para todas as unidades
                     <?php foreach ($arrayUnidades as $unidade => $value) : ?>
-                        <?php 
+                        <?php
                             // setando a variavel que vai fazer a query
                             $sql = "SELECT COUNT(distinct curso) AS count FROM `$anoBase` WHERE `ano_ingresso` = '$anoBase' and `Regional` = '$unidade'";
                         ?>
@@ -215,7 +215,7 @@ $arrayBackgroundColor = array(
             type: 'line',
             data: {
                 labels: [
-                    <?php for ($i=2005; $i <= $anoSelecionadoPOST; $i++) { 
+                    <?php for ($i=2005; $i <= $anoSelecionadoPOST; $i++) {
                         echo "'$i',";
                     }?>
                 ],
@@ -228,7 +228,7 @@ $arrayBackgroundColor = array(
                             borderColor: <?php echo "'$arrayBackgroundColor[$unidade]'"; ?>,
                             backgroundColor: <?php echo "'$arrayBackgroundColor[$unidade]'"; ?>,
                             data: [
-                            <?php 
+                            <?php
                                 $dadosEstaticos = '';
                                 if ($unidade == 'Goiânia') {
                                     $dadosEstaticos = "58, 63, 66, 66, 81, 85, 86, 86, 89, 90, 90,";
@@ -252,7 +252,7 @@ $arrayBackgroundColor = array(
                     <?php endforeach; ?>
                 ]
             }
-        });    
+        });
     </script>
 
     <!-- Numero de vagas por regional -->
@@ -297,7 +297,7 @@ $arrayBackgroundColor = array(
             type: 'line',
             data: {
                 labels: [
-                    <?php for ($i=2005; $i <= $anoSelecionadoPOST; $i++) { 
+                    <?php for ($i=2005; $i <= $anoSelecionadoPOST; $i++) {
                         echo "'$i',";
                     }?>
                 ],
@@ -340,7 +340,7 @@ $arrayBackgroundColor = array(
                         borderColor: "#a9a9a9",
                         backgroundColor: "gray",
                         data: [
-                            <?php 
+                            <?php
                                 $dadosEstaticos = "3038,3618,3808,3998,5776,6156,6185,6205,6355,6865,6925,";
                                 echo $dadosEstaticos;
                                 $anoBase = 2016;
@@ -354,9 +354,9 @@ $arrayBackgroundColor = array(
                     }
                 ]
             }
-        });    
+        });
     </script>
-        
+
     <!-- Gráfico com o ano de ingresso dos estudantes matriculados -->
     <div class='row'>
             <h3 class="text-left">Quantidade de Estudantes Matriculados em <?php echo $anoSelecionadoPOST; ?> por Ano de Ingresso </h3>
@@ -402,13 +402,13 @@ $arrayBackgroundColor = array(
     <script type="text/javascript">
         var ctx = document.getElementById("myChart7");
 
-        <?php 
-            $sql = "SELECT distinct ano_ingresso FROM `$anoSelecionadoPOST` where ano_ingresso >= 2011 order by ano_ingresso asc";  
+        <?php
+            $sql = "SELECT distinct ano_ingresso FROM `$anoSelecionadoPOST` where ano_ingresso >= 2011 order by ano_ingresso asc";
             $arrayAnos = consultaSimplesRetornaArray($sql);
-        ?> 
+        ?>
 
         var data = {
-            labels: ["2004 a 2010", <?php 
+            labels: ["2004 a 2010", <?php
                     foreach ($arrayAnos as $key => $ano) {
                         echo "'" . $ano . "',";
                     }
@@ -418,17 +418,17 @@ $arrayBackgroundColor = array(
                     {
                         label: <?php echo "'$unidade'"; ?>,
                         backgroundColor: <?php echo "'$arrayBackgroundColor[$unidade]'"; ?>,
-                        data: [<?php 
+                        data: [<?php
                             $sql = "SELECT COUNT(Estudante) AS count FROM `$anoSelecionadoPOST` WHERE ano_ingresso > 2004 and ano_ingresso < 2011 and Regional = '$unidade'";
                             echo $res = consultaSimplesRetornaString($sql);
                             foreach ($arrayAnos as $key => $ano) {
                                 $sql = "SELECT COUNT(Estudante) AS count FROM `$anoSelecionadoPOST` WHERE ano_ingresso = " . $ano . " and Regional = '$unidade' ";
-                        
+
                             echo $res = consultaSimplesRetornaString($sql);
                         }
                         ?>]
                     },
-                <?php endforeach;?>] 
+                <?php endforeach;?>]
             };
 
         var myBarChart = new Chart(ctx, {
@@ -443,7 +443,7 @@ $arrayBackgroundColor = array(
                             beginAtZero:true
                         }
                     }]
-                } 
+                }
             }
         });
     </script>
@@ -460,7 +460,7 @@ $arrayBackgroundColor = array(
                     <th>Masculino</th>
                     <th>Feminino</th>
                 </tr>
-                <?php 
+                <?php
                 // foreach para cada unidade
                 foreach ($arrayUnidades as $unidade => $value) {
                     echo "<tr>";
@@ -493,7 +493,7 @@ $arrayBackgroundColor = array(
         var ctx = document.getElementById("myChart8");
 
         var data = {
-            labels: [<?php 
+            labels: [<?php
                     // Imprime as labels do gráfico, com base no array de unidades
                     foreach ($arrayUnidades as $unidade => $value) {
                         echo "'" . $unidade . "',";
@@ -504,11 +504,11 @@ $arrayBackgroundColor = array(
                 {
                     label: "Feminino",
                     backgroundColor: 'rgba(184, 18, 0, 0.7)',
-                    data: [<?php 
+                    data: [<?php
                     // Faz a consulta para cada unidade do sexo feminino e imprime a variável
                     foreach ($arrayUnidades as $unidade => $value) {
                         $sql = "SELECT count(sexo) * 100.0 / (select count(*) from `$anoSelecionadoPOST` where Regional = '$unidade') as count FROM `$anoSelecionadoPOST` where Regional = '$unidade' and sexo = 'feminino'";
-                        
+
                         echo $res = consultaSimplesRetornaString($sql);
                     }
                     // Faz a consulta que retorna a porcentagem de estudantes femininos em todas as regionais (TOTAL)
@@ -519,10 +519,10 @@ $arrayBackgroundColor = array(
                 {
                     label: "Masculino",
                     backgroundColor: "rgba(54, 162, 235, .7)",
-                    data: [<?php 
+                    data: [<?php
                     foreach ($arrayUnidades as $unidade => $value) {
                         $sql = "SELECT count(sexo) * 100.0 / (select count(*) from `$anoSelecionadoPOST` where Regional = '$unidade') as count FROM `$anoSelecionadoPOST` where Regional = '$unidade' and sexo = 'masculino'";
-                        
+
                         echo $res = consultaSimplesRetornaString($sql);
                     }
                     $sql = "SELECT count(*) * 100.0 / ( SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` ) AS count FROM `$anoSelecionadoPOST` WHERE sexo = 'masculino'";
@@ -544,7 +544,7 @@ $arrayBackgroundColor = array(
                                 beginAtZero:true
                             }
                         }]
-                    } 
+                    }
                 }
             });
     </script>
@@ -562,16 +562,16 @@ $arrayBackgroundColor = array(
             <table class="table-responsive table-bordered table">
                 <tr>
                     <th></th>
-                    <?php 
+                    <?php
                     for ($i=0; $i < sizeof($arrayIntervaloIdades); $i++)
-                        echo "<th>$arrayIntervaloIdades[$i]</th>"; 
+                        echo "<th>$arrayIntervaloIdades[$i]</th>";
                     ?>
                 </tr>
-                <?php 
+                <?php
                 //replacing a com and para usar no banco
                 for ($i=0; $i < sizeof($arrayIntervaloIdades); $i++)
                     $arrayIntervaloIdades[$i] = preg_replace("/a/", "and", $arrayIntervaloIdades[$i]);
-                
+
 
                 foreach ($arrayUnidades as $unidade => $value) {
                     echo "<tr>";
@@ -605,8 +605,8 @@ $arrayBackgroundColor = array(
                     backgroundColor: 'rgba(54, 162, 235, .7)',
                     data: [
                     // Faz um loop com 9 iterações, onde cada iteração representa um intervalo (especificados nas labels acima) e, para cada iteração faz uma consulta em um intervalo de idade diferente
-                    <?php 
-                        for ($i=0; $i < 9; $i++) { 
+                    <?php
+                        for ($i=0; $i < 9; $i++) {
                             switch ($i) {
                                 case 0:
                                     $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST`) AS count FROM `$anoSelecionadoPOST` WHERE FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) < 18";
@@ -646,7 +646,7 @@ $arrayBackgroundColor = array(
                                     break;
                                 default:
                                     break;
-                            
+
                             }
                         }
                     ?>]
@@ -666,13 +666,13 @@ $arrayBackgroundColor = array(
                                 beginAtZero:true
                             }
                         }]
-                    } 
+                    }
                 }
             });
     </script>
 
     <!-- Gráfico com porcentagem de alunos matriculados nas regionais por faixa etária-->
-    <?php 
+    <?php
     $aux = 0;
     foreach ($arrayUnidades as $unidade => $value): ?>
         <div class='row'>
@@ -684,7 +684,7 @@ $arrayBackgroundColor = array(
                 <th>Faixa Etária</th>
                 <th>Porcentagem de Estudantes</th>
             </tr>
-                <?php 
+                <?php
                 // reiniciando o array
                 $arrayIntervaloIdades = array ("< 18",  "18 a 20", "21 a 23", "24 a 26", "27 a 29", "30 a 35", "36 a 40", "41 a 45", "> 45");
 
@@ -693,7 +693,7 @@ $arrayBackgroundColor = array(
                     echo "<td>$intervalo</td>";
                     //trocando a com and para usar no banco
                     $intervalo = preg_replace("/a/", "and", $intervalo);
-                    
+
                     echo "<td>";
                     if(preg_match('/and/i', $intervalo)) {
                         $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` where `Regional` = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade' and FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN $intervalo";
@@ -720,8 +720,8 @@ $arrayBackgroundColor = array(
                     backgroundColor: 'rgba(54, 162, 235, .7)',
                     data: [
                     // Faz um loop com 9 iterações, onde cada iteração representa um intervalo (especificados nas labels acima) e, para cada iteração faz uma consulta em um intervalo de idade diferente
-                    <?php 
-                        for ($i=0; $i < 9; $i++) { 
+                    <?php
+                        for ($i=0; $i < 9; $i++) {
                             switch ($i) {
                                 case 0:
                                     $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(Estudante) FROM `$anoSelecionadoPOST` where Regional = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE Regional = '$unidade' AND FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) < 18 ";
@@ -780,7 +780,7 @@ $arrayBackgroundColor = array(
                                 beginAtZero:true
                             }
                         }]
-                    } 
+                    }
                 }
             });
     </script>
@@ -834,7 +834,7 @@ $arrayBackgroundColor = array(
                 </tr>
                     <?php
                     for ($index = 0; $index < 10; $index++) {
-                        
+
                         $aux = $index + 1;
                         $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` WHERE `media_global` <> 0) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `media_global` > $index and `media_global` <= $aux";
 
@@ -882,7 +882,7 @@ $arrayBackgroundColor = array(
                                 beginAtZero:true
                             }
                         }]
-                    } 
+                    }
                 }
             });
     </script>
@@ -901,7 +901,7 @@ $arrayBackgroundColor = array(
                 </tr>
                     <?php
                     for ($index = 0; $index < 10; $index++) {
-                        
+
                         $aux = $index + 1;
                         $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade' and `media_global` <> 0) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade' and `media_global` > $index and `media_global` <= $aux";
 
@@ -948,7 +948,7 @@ $arrayBackgroundColor = array(
                                 beginAtZero:true
                             }
                         }]
-                    } 
+                    }
                 }
             });
 
@@ -982,7 +982,7 @@ $arrayBackgroundColor = array(
                 // consulta ampla concorrencia
                 $sqlAC = "SELECT count(`Estudante`) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` <> ('UFGInclui - Negro Escola Pública') and `acao_afirmativa` <> 'UFGInclui - Indígena' and `acao_afirmativa` <> ('UFGInclui - Escola Pública') and `acao_afirmativa` <> ('UFGInclui - Quilombola') and `acao_afirmativa` <> ('UFGInclui - Surdo') and `ano_ingresso` <= 2012 and  `Regional` = '$unidade'";
                 echo "<td>";
-                consultaSimplesRetornaUmValor($sqlAC); 
+                consultaSimplesRetornaUmValor($sqlAC);
                 echo "</td>";
                 foreach ($arrayAcaoAfirmativa as $acao => $value) {
                     $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` = '$acao' and `ano_ingresso` <= 2012 and  `Regional` = '$unidade'";
@@ -997,7 +997,7 @@ $arrayBackgroundColor = array(
             echo "<tr>";
             echo "<td>Total</td>";
             $sql = "SELECT count(`Estudante`) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` <> ('UFGInclui - Negro Escola Pública') and `acao_afirmativa` <> 'UFGInclui - Indígena' and `acao_afirmativa` <> ('UFGInclui - Escola Pública') and `acao_afirmativa` <> ('UFGInclui - Quilombola') and `acao_afirmativa` <> ('UFGInclui - Surdo') and `ano_ingresso` <= 2012 and  `Regional` =";
-            
+
             echo "<td>";
                 consultaSimplesRetornaSomaAsString($arrayUnidades, $sql);
             echo "</td>";
@@ -1024,7 +1024,7 @@ $arrayBackgroundColor = array(
             <tr>
                 <td>Ampla Concorrência (AC)</td>
                 <td>
-                <?php 
+                <?php
                     $sql = "SELECT count(`Estudante`) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` <> ('UFGInclui - Negro Escola Pública') and `acao_afirmativa` <> 'UFGInclui - Indígena' and `acao_afirmativa` <> ('UFGInclui - Escola Pública') and `acao_afirmativa` <> ('UFGInclui - Quilombola') and `acao_afirmativa` <> ('UFGInclui - Surdo') and `ano_ingresso` <= 2012";
                         consultaSimplesRetornaUmValor($sql);
                 ?>
@@ -1071,7 +1071,7 @@ $arrayBackgroundColor = array(
                                 beginAtZero:true
                             }
                         }]
-                    } 
+                    }
                 }
                 });
             </script>
@@ -1085,7 +1085,7 @@ $arrayBackgroundColor = array(
             <tr>
                 <td>Ampla Concorrência (AC)</td>
                 <td>
-                <?php 
+                <?php
                     $sql = "SELECT count(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` <= 2012) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` <> ('UFGInclui - Negro Escola Pública') and `acao_afirmativa` <> 'UFGInclui - Indígena' and `acao_afirmativa` <> ('UFGInclui - Escola Pública') and `acao_afirmativa` <> ('UFGInclui - Quilombola') and `acao_afirmativa` <> ('UFGInclui - Surdo') and `ano_ingresso` <= 2012";
                     consultaSimplesRetornaUmValor($sql);
                 ?>
@@ -1094,7 +1094,7 @@ $arrayBackgroundColor = array(
             <tr>
                 <td>UFGInclui</td>
                 <td>
-                    <?php 
+                    <?php
                     $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` <= 2012) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` <= 2012 and `acao_afirmativa` =";
                     consultaSimplesRetornaSomaAsString($arrayAcaoAfirmativa, $sql);
                 ?>
@@ -1108,7 +1108,7 @@ $arrayBackgroundColor = array(
 
                 var data = {
                     labels: [
-                        "UFGInclui", 
+                        "UFGInclui",
                         "AC"
                     ],
                     datasets: [
@@ -1119,13 +1119,13 @@ $arrayBackgroundColor = array(
                                 "#FFCE56"
                             ],
                             data: [
-                                <?php 
+                                <?php
                                 $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` <= 2012) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` <= 2012 and `acao_afirmativa` =";
                                 echo consultaSimplesRetornaSomaAsString($arrayAcaoAfirmativa, $sql);
                                 echo " ,";
                                 $sql = "SELECT count(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` <= 2012) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` <> ('UFGInclui - Negro Escola Pública') and `acao_afirmativa` <> 'UFGInclui - Indígena' and `acao_afirmativa` <> ('UFGInclui - Escola Pública') and `acao_afirmativa` <> ('UFGInclui - Quilombola') and `acao_afirmativa` <> ('UFGInclui - Surdo') and `ano_ingresso` <= 2012";
                                 echo consultaSimplesRetornaString($sql);
-                                
+
                                 ?>
                             ]
                         }
@@ -1146,7 +1146,7 @@ $arrayBackgroundColor = array(
                                     }
                                 }
                             ]
-                        } 
+                        }
                     }
                 });
             </script>
@@ -1208,7 +1208,7 @@ $arrayBackgroundColor = array(
                 A estrutura é basicamente a mesma da inserção das estruturas, mas decidi separar para deixar o código um pouco mais legível. As queries continuam basicamente a mesma, a diferença é que é passado um vetor contendo todas as regionais para uma função que retorna a soma da consulta realizada em todas as regionais, obtendo assim o valor total desejado. -->
                 <tr>
                     <th class="text-center" style="vertical-align: middle;">Total</th>
-                    <?php 
+                    <?php
                     echo "<td>";
                     $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` <> '(PPI Renda Superior)' and `acao_afirmativa` <> '(PPI Renda Inferior)' and `acao_afirmativa` <> '(DC Renda Superior)' and `acao_afirmativa` <> '(DC Renda Inferior)' and `ano_ingresso` >= 2013 and Regional = ";
                     echo consultaSimplesRetornaSomaAsString($arrayUnidades, $sql);
@@ -1279,7 +1279,7 @@ $arrayBackgroundColor = array(
 
                 var data = {
                     labels: [
-                        "AC", 
+                        "AC",
                         "L1",
                         "L2",
                         "L3",
@@ -1332,7 +1332,7 @@ $arrayBackgroundColor = array(
                                     }
                                 }
                             ]
-                        } 
+                        }
                     }
                 });
             </script>
@@ -1345,13 +1345,13 @@ $arrayBackgroundColor = array(
             <table class="table-responsive table table-bordered">
                 <tr>
                     <td>UFGInclui e Lei de Cotas</td>
-                    <td><?php $sql = "SELECT Count(*) / 
-                                               ( 
-                                                      SELECT Count(*) 
-                                                      FROM   `$anoSelecionadoPOST` 
-                                                      WHERE  `ano_ingresso` >= 2013) * 100.0 AS count 
-                                        FROM   `$anoSelecionadoPOST` 
-                                        WHERE  `ano_ingresso` >= 2013 
+                    <td><?php $sql = "SELECT Count(*) /
+                                               (
+                                                      SELECT Count(*)
+                                                      FROM   `$anoSelecionadoPOST`
+                                                      WHERE  `ano_ingresso` >= 2013) * 100.0 AS count
+                                        FROM   `$anoSelecionadoPOST`
+                                        WHERE  `ano_ingresso` >= 2013
                                         AND    `acao_afirmativa` =";
                         echo consultaSimplesRetornaSomaAsString($arrayRendas, $sql);?>
                     %</td>
@@ -1359,14 +1359,14 @@ $arrayBackgroundColor = array(
                 <tr>
                     <td>Ampla Concorrencia (AC)</td>
                     <td>
-                        <?php $sql = "SELECT count(*) / (SELECT COUNT(*) 
-                                                           FROM   `$anoSelecionadoPOST` 
-                                                           WHERE  `ano_ingresso` >= 2013) * 100.0 AS count 
-                                        FROM   `$anoSelecionadoPOST` 
-                                        WHERE  `acao_afirmativa` <> '(DC Renda Inferior)' 
-                                               and `acao_afirmativa` <> '(DC Renda Superior)' 
-                                               and `acao_afirmativa` <> '(PPI Renda Inferior)' 
-                                               and `acao_afirmativa` <> '(PPI Renda Superior)' 
+                        <?php $sql = "SELECT count(*) / (SELECT COUNT(*)
+                                                           FROM   `$anoSelecionadoPOST`
+                                                           WHERE  `ano_ingresso` >= 2013) * 100.0 AS count
+                                        FROM   `$anoSelecionadoPOST`
+                                        WHERE  `acao_afirmativa` <> '(DC Renda Inferior)'
+                                               and `acao_afirmativa` <> '(DC Renda Superior)'
+                                               and `acao_afirmativa` <> '(PPI Renda Inferior)'
+                                               and `acao_afirmativa` <> '(PPI Renda Superior)'
                                                and `ano_ingresso` >= 2013 ";
                         echo consultaSimplesRetornaUmValor($sql); ?>
                     %</td>
@@ -1377,7 +1377,7 @@ $arrayBackgroundColor = array(
 
                 var data = {
                     labels: [
-                        "UFGInclui e Lei de Cotas", 
+                        "UFGInclui e Lei de Cotas",
                         "AC"
                     ],
                     datasets: [
@@ -1388,30 +1388,30 @@ $arrayBackgroundColor = array(
                                 "#FFCE56"
                             ],
                             data: [
-                                <?php 
+                                <?php
                                 //acao afirmativa
-                                $sql = "SELECT Count(*) / 
-                                               ( 
-                                                      SELECT Count(*) 
-                                                      FROM   `$anoSelecionadoPOST` 
-                                                      WHERE  `ano_ingresso` >= 2013) * 100.0 AS count 
-                                        FROM   `$anoSelecionadoPOST` 
-                                        WHERE  `ano_ingresso` >= 2013 
+                                $sql = "SELECT Count(*) /
+                                               (
+                                                      SELECT Count(*)
+                                                      FROM   `$anoSelecionadoPOST`
+                                                      WHERE  `ano_ingresso` >= 2013) * 100.0 AS count
+                                        FROM   `$anoSelecionadoPOST`
+                                        WHERE  `ano_ingresso` >= 2013
                                         AND    `acao_afirmativa` =";
                                 echo consultaSimplesRetornaSomaAsString($arrayRendas, $sql);
                                 echo " ,";
                                 //AC
-                                $sql = "SELECT count(*) / (SELECT COUNT(*) 
-                                                           FROM   `$anoSelecionadoPOST` 
-                                                           WHERE  `ano_ingresso` >= 2013) * 100.0 AS count 
-                                        FROM   `$anoSelecionadoPOST` 
-                                        WHERE  `acao_afirmativa` <> '(DC Renda Inferior)' 
-                                               and `acao_afirmativa` <> '(DC Renda Superior)' 
-                                               and `acao_afirmativa` <> '(PPI Renda Inferior)' 
-                                               and `acao_afirmativa` <> '(PPI Renda Superior)' 
+                                $sql = "SELECT count(*) / (SELECT COUNT(*)
+                                                           FROM   `$anoSelecionadoPOST`
+                                                           WHERE  `ano_ingresso` >= 2013) * 100.0 AS count
+                                        FROM   `$anoSelecionadoPOST`
+                                        WHERE  `acao_afirmativa` <> '(DC Renda Inferior)'
+                                               and `acao_afirmativa` <> '(DC Renda Superior)'
+                                               and `acao_afirmativa` <> '(PPI Renda Inferior)'
+                                               and `acao_afirmativa` <> '(PPI Renda Superior)'
                                                and `ano_ingresso` >= 2013 ";
                                 echo consultaSimplesRetornaString($sql);
-                                
+
                                 ?>
                             ]
                         }
@@ -1432,7 +1432,7 @@ $arrayBackgroundColor = array(
                                     }
                                 }
                             ]
-                        } 
+                        }
                     }
                 });
             </script>
@@ -1445,17 +1445,17 @@ $arrayBackgroundColor = array(
             <table class="table-responsive table table-bordered">
                 <tr>
                     <td>UFGInclui e Lei de Cotas</td>
-                    <td><?php $sql = "SELECT Count(*) / (SELECT Count(*) 
-                                                           FROM   `$anoSelecionadoPOST`) * 100.0 AS count 
-                                        FROM   `$anoSelecionadoPOST` 
-                                        WHERE  `acao_afirmativa` <> '(DC Renda Inferior)' 
-                                               AND `acao_afirmativa` <> '(DC Renda Superior)' 
-                                               AND `acao_afirmativa` <> '(PPI Renda Inferior)' 
-                                               AND `acao_afirmativa` <> '(PPI Renda Superior)' 
-                                               AND `acao_afirmativa` <> ( 'UFGInclui - Negro Escola Pública' ) 
-                                               AND `acao_afirmativa` <> 'UFGInclui - Indígena' 
-                                               AND `acao_afirmativa` <> ( 'UFGInclui - Escola Pública' ) 
-                                               AND `acao_afirmativa` <> ( 'UFGInclui - Quilombola' ) 
+                    <td><?php $sql = "SELECT Count(*) / (SELECT Count(*)
+                                                           FROM   `$anoSelecionadoPOST`) * 100.0 AS count
+                                        FROM   `$anoSelecionadoPOST`
+                                        WHERE  `acao_afirmativa` <> '(DC Renda Inferior)'
+                                               AND `acao_afirmativa` <> '(DC Renda Superior)'
+                                               AND `acao_afirmativa` <> '(PPI Renda Inferior)'
+                                               AND `acao_afirmativa` <> '(PPI Renda Superior)'
+                                               AND `acao_afirmativa` <> ( 'UFGInclui - Negro Escola Pública' )
+                                               AND `acao_afirmativa` <> 'UFGInclui - Indígena'
+                                               AND `acao_afirmativa` <> ( 'UFGInclui - Escola Pública' )
+                                               AND `acao_afirmativa` <> ( 'UFGInclui - Quilombola' )
                                                AND `acao_afirmativa` <> ( 'UFGInclui - Surdo' ) ";
                                 $amplaConcorrencia = consultaSimplesRetornaArray($sql);
                                 $acaoAfirmativa = 100 - $amplaConcorrencia[0];
@@ -1473,7 +1473,7 @@ $arrayBackgroundColor = array(
 
                 var data = {
                     labels: [
-                        "Ação Afirmativa", 
+                        "Ação Afirmativa",
                         "AC"
                     ],
                     datasets: [
@@ -1485,17 +1485,17 @@ $arrayBackgroundColor = array(
                             ],
                             data: [
                                 <?php
-                                $sql = "SELECT Count(*) / (SELECT Count(*) 
-                                                           FROM   `$anoSelecionadoPOST`) * 100.0 AS count 
-                                        FROM   `$anoSelecionadoPOST` 
-                                        WHERE  `acao_afirmativa` <> '(DC Renda Inferior)' 
-                                               AND `acao_afirmativa` <> '(DC Renda Superior)' 
-                                               AND `acao_afirmativa` <> '(PPI Renda Inferior)' 
-                                               AND `acao_afirmativa` <> '(PPI Renda Superior)' 
-                                               AND `acao_afirmativa` <> ( 'UFGInclui - Negro Escola Pública' ) 
-                                               AND `acao_afirmativa` <> 'UFGInclui - Indígena' 
-                                               AND `acao_afirmativa` <> ( 'UFGInclui - Escola Pública' ) 
-                                               AND `acao_afirmativa` <> ( 'UFGInclui - Quilombola' ) 
+                                $sql = "SELECT Count(*) / (SELECT Count(*)
+                                                           FROM   `$anoSelecionadoPOST`) * 100.0 AS count
+                                        FROM   `$anoSelecionadoPOST`
+                                        WHERE  `acao_afirmativa` <> '(DC Renda Inferior)'
+                                               AND `acao_afirmativa` <> '(DC Renda Superior)'
+                                               AND `acao_afirmativa` <> '(PPI Renda Inferior)'
+                                               AND `acao_afirmativa` <> '(PPI Renda Superior)'
+                                               AND `acao_afirmativa` <> ( 'UFGInclui - Negro Escola Pública' )
+                                               AND `acao_afirmativa` <> 'UFGInclui - Indígena'
+                                               AND `acao_afirmativa` <> ( 'UFGInclui - Escola Pública' )
+                                               AND `acao_afirmativa` <> ( 'UFGInclui - Quilombola' )
                                                AND `acao_afirmativa` <> ( 'UFGInclui - Surdo' ) ";
 
                                 // Ao invés de fazer uma nova pesquisa, é mais eficiente simplesmente fazer a diferença (visto que esses são os únicos dois dados no gráfico. Sendo assim, a função retorna um array para um vetor auxiliar. A diferença entre 100 e esse vetor será a outra porcentagem necessária.
@@ -1524,7 +1524,7 @@ $arrayBackgroundColor = array(
                                     }
                                 }
                             ]
-                        } 
+                        }
                     }
                 });
             </script>
@@ -1534,7 +1534,7 @@ $arrayBackgroundColor = array(
     <div class="row">
             <h3 class="text-left">Número De Estudantes Ingressantes SISU Em <?php echo $anoSelecionadoPOST; ?> por Ação Afirmativa e Ampla Concorrência</h3>
             <canvas id="myChart15" style="width: 900px; height: 500px; display: none;"></canvas>
-            <table class="table table-bordered table-responsive">                
+            <table class="table table-bordered table-responsive">
             <tr>
                     <td>Ampla Concorrência (AC)</td>
                     <td>
@@ -1542,7 +1542,7 @@ $arrayBackgroundColor = array(
                             echo consultaSimplesRetornaUmValor($sql); ?>
                     </td>
                 </tr>
-                <?php 
+                <?php
                     foreach ($arrayRendas as $renda => $value) {
                         $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST` WHERE forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU' and `ano_ingresso` = $anoSelecionadoPOST and `acao_afirmativa` = '$renda'";
                         echo "<tr><td>$renda</td><td>";
@@ -1556,10 +1556,10 @@ $arrayBackgroundColor = array(
 
                 var data = {
                     labels: [
-                        "AC", 
-                        "L1", 
-                        "L2", 
-                        "L3", 
+                        "AC",
+                        "L1",
+                        "L2",
+                        "L3",
                         "L4"
                     ],
                     datasets: [
@@ -1593,7 +1593,7 @@ $arrayBackgroundColor = array(
                                 beginAtZero:true
                             }
                         }]
-                    } 
+                    }
                 }
                 });
             </script>
@@ -1604,23 +1604,23 @@ $arrayBackgroundColor = array(
             <h3 class="text-left">Porcentagem de Estudantes Ingressantes SISU em <?php echo $anoSelecionadoPOST; ?> por Ação Afirmativa e Ampla Concorrência</h3>
             <canvas id="graficoIngressantesSISU" style="width: 900px; height: 500px; display: none;"></canvas>
             <table class="table table-bordered table-responsive">
-                <?php 
-                    $sql = "SELECT count(*) / (SELECT COUNT(*) 
-                                                       FROM `$anoSelecionadoPOST` 
-                                                       WHERE ano_ingresso = '$anoSelecionadoPOST' 
+                <?php
+                    $sql = "SELECT count(*) / (SELECT COUNT(*)
+                                                       FROM `$anoSelecionadoPOST`
+                                                       WHERE ano_ingresso = '$anoSelecionadoPOST'
                                                              and forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'
-                                    ) * 100.0 AS count 
-                                    FROM `$anoSelecionadoPOST` 
-                                    WHERE `acao_afirmativa` <> '(DC Renda Inferior)' 
-                                           and `acao_afirmativa` <> '(DC Renda Superior)' 
-                                           and `acao_afirmativa` <> '(PPI Renda Inferior)' 
-                                           and `acao_afirmativa` <> '(PPI Renda Superior)' 
-                                           and `acao_afirmativa` <> 'UFGInclui - Negro Escola Pública' 
-                                           and `acao_afirmativa` <> 'UFGInclui - Indígena' 
-                                           and `acao_afirmativa` <> 'UFGInclui - Escola Pública' 
-                                           and `acao_afirmativa` <> 'UFGInclui - Quilombola' 
-                                           and `acao_afirmativa` <> 'UFGInclui - Surdo' 
-                                           and ano_ingresso = '$anoSelecionadoPOST' 
+                                    ) * 100.0 AS count
+                                    FROM `$anoSelecionadoPOST`
+                                    WHERE `acao_afirmativa` <> '(DC Renda Inferior)'
+                                           and `acao_afirmativa` <> '(DC Renda Superior)'
+                                           and `acao_afirmativa` <> '(PPI Renda Inferior)'
+                                           and `acao_afirmativa` <> '(PPI Renda Superior)'
+                                           and `acao_afirmativa` <> 'UFGInclui - Negro Escola Pública'
+                                           and `acao_afirmativa` <> 'UFGInclui - Indígena'
+                                           and `acao_afirmativa` <> 'UFGInclui - Escola Pública'
+                                           and `acao_afirmativa` <> 'UFGInclui - Quilombola'
+                                           and `acao_afirmativa` <> 'UFGInclui - Surdo'
+                                           and ano_ingresso = '$anoSelecionadoPOST'
                                            and forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'";
 
                     // Ao invés de fazer uma nova pesquisa, é mais eficiente simplesmente fazer a diferença (visto que esses são os únicos dois dados no gráfico. Sendo assim, a função retorna um array para um vetor auxiliar. A diferença entre 100 e esse vetor será a outra porcentagem necessária.
@@ -1634,7 +1634,7 @@ $arrayBackgroundColor = array(
 
                 var data = {
                     labels: [
-                        "Ação Afirmativa", 
+                        "Ação Afirmativa",
                         "AC"
                     ],
                     datasets: [
@@ -1646,22 +1646,22 @@ $arrayBackgroundColor = array(
                             ],
                             data: [
                                 <?php
-                                $sql = "SELECT count(*) / (SELECT COUNT(*) 
-                                                           FROM `$anoSelecionadoPOST` 
-                                                           WHERE ano_ingresso = '$anoSelecionadoPOST' 
+                                $sql = "SELECT count(*) / (SELECT COUNT(*)
+                                                           FROM `$anoSelecionadoPOST`
+                                                           WHERE ano_ingresso = '$anoSelecionadoPOST'
                                                                  and forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'
-                                        ) * 100.0 AS count 
-                                        FROM `$anoSelecionadoPOST` 
-                                        WHERE `acao_afirmativa` <> '(DC Renda Inferior)' 
-                                               and `acao_afirmativa` <> '(DC Renda Superior)' 
-                                               and `acao_afirmativa` <> '(PPI Renda Inferior)' 
-                                               and `acao_afirmativa` <> '(PPI Renda Superior)' 
-                                               and `acao_afirmativa` <> 'UFGInclui - Negro Escola Pública' 
-                                               and `acao_afirmativa` <> 'UFGInclui - Indígena' 
-                                               and `acao_afirmativa` <> 'UFGInclui - Escola Pública' 
-                                               and `acao_afirmativa` <> 'UFGInclui - Quilombola' 
-                                               and `acao_afirmativa` <> 'UFGInclui - Surdo' 
-                                               and ano_ingresso = '$anoSelecionadoPOST' 
+                                        ) * 100.0 AS count
+                                        FROM `$anoSelecionadoPOST`
+                                        WHERE `acao_afirmativa` <> '(DC Renda Inferior)'
+                                               and `acao_afirmativa` <> '(DC Renda Superior)'
+                                               and `acao_afirmativa` <> '(PPI Renda Inferior)'
+                                               and `acao_afirmativa` <> '(PPI Renda Superior)'
+                                               and `acao_afirmativa` <> 'UFGInclui - Negro Escola Pública'
+                                               and `acao_afirmativa` <> 'UFGInclui - Indígena'
+                                               and `acao_afirmativa` <> 'UFGInclui - Escola Pública'
+                                               and `acao_afirmativa` <> 'UFGInclui - Quilombola'
+                                               and `acao_afirmativa` <> 'UFGInclui - Surdo'
+                                               and ano_ingresso = '$anoSelecionadoPOST'
                                                and forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'";
 
                                 // Ao invés de fazer uma nova pesquisa, é mais eficiente simplesmente fazer a diferença (visto que esses são os únicos dois dados no gráfico. Sendo assim, a função retorna um array para um vetor auxiliar. A diferença entre 100 e esse vetor será a outra porcentagem necessária.
@@ -1690,7 +1690,7 @@ $arrayBackgroundColor = array(
                                     }
                                 }
                             ]
-                        } 
+                        }
                     }
                 });
             </script>
@@ -1706,32 +1706,32 @@ $arrayBackgroundColor = array(
                     <tr>
                         <td>Ampla Concorrência (AC)</td>
                         <td>
-                            <?php 
-                            $sql = "SELECT Count(*) AS count 
-                                    FROM   `$anoSelecionadoPOST` 
-                                    WHERE  `acao_afirmativa` <> '(DC Renda Inferior)' 
-                                           AND `acao_afirmativa` <> '(DC Renda Superior)' 
-                                           AND `acao_afirmativa` <> '(PPI Renda Inferior)' 
-                                           AND `acao_afirmativa` <> '(PPI Renda Superior)' 
-                                           AND `acao_afirmativa` <> 'UFGInclui - Negro Escola Pública' 
-                                           AND `acao_afirmativa` <> 'UFGInclui - Indígena' 
+                            <?php
+                            $sql = "SELECT Count(*) AS count
+                                    FROM   `$anoSelecionadoPOST`
+                                    WHERE  `acao_afirmativa` <> '(DC Renda Inferior)'
+                                           AND `acao_afirmativa` <> '(DC Renda Superior)'
+                                           AND `acao_afirmativa` <> '(PPI Renda Inferior)'
+                                           AND `acao_afirmativa` <> '(PPI Renda Superior)'
+                                           AND `acao_afirmativa` <> 'UFGInclui - Negro Escola Pública'
+                                           AND `acao_afirmativa` <> 'UFGInclui - Indígena'
                                            AND `acao_afirmativa` <> 'UFGInclui - Escola Pública'
                                            AND `acao_afirmativa` <> 'UFGInclui - Quilombola'
                                            AND `acao_afirmativa` <> 'UFGInclui - Surdo'
-                                           AND `ano_ingresso` = 2016 
+                                           AND `ano_ingresso` = 2016
                                            AND `forma_ingresso` = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'
                                            AND `Regional` = '$unidade'";
                             echo consultaSimplesRetornaUmValor($sql);
                             ?>
                         </td>
                     </tr>
-                    <?php 
+                    <?php
                     foreach ($arrayRendas as $renda => $value) {
-                            $sql = "SELECT Count(*) AS count 
-                                    FROM   `$anoSelecionadoPOST` 
-                                    WHERE  forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU' 
-                                           AND `ano_ingresso` = $anoSelecionadoPOST 
-                                           AND `acao_afirmativa` = '$renda' 
+                            $sql = "SELECT Count(*) AS count
+                                    FROM   `$anoSelecionadoPOST`
+                                    WHERE  forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'
+                                           AND `ano_ingresso` = $anoSelecionadoPOST
+                                           AND `acao_afirmativa` = '$renda'
                                            AND `Regional` = '$unidade'";
                             echo "<tr><td>$renda</td><td>";
                             echo consultaSimplesRetornaUmValor($sql);
@@ -1744,10 +1744,10 @@ $arrayBackgroundColor = array(
 
                     var data = {
                         labels: [
-                            "AC", 
-                            "L1", 
-                            "L2", 
-                            "L3", 
+                            "AC",
+                            "L1",
+                            "L2",
+                            "L3",
                             "L4"
                         ],
                         datasets: [
@@ -1756,28 +1756,28 @@ $arrayBackgroundColor = array(
                                 backgroundColor: 'rgba(54, 162, 235, .7)',
                                 data: [
                                     <?php
-                                    $sql = "SELECT Count(*) AS count 
-                                            FROM   `$anoSelecionadoPOST` 
-                                            WHERE  `acao_afirmativa` <> '(DC Renda Inferior)' 
-                                                   AND `acao_afirmativa` <> '(DC Renda Superior)' 
-                                                   AND `acao_afirmativa` <> '(PPI Renda Inferior)' 
-                                                   AND `acao_afirmativa` <> '(PPI Renda Superior)' 
-                                                   AND `acao_afirmativa` <> 'UFGInclui - Negro Escola Pública' 
-                                                   AND `acao_afirmativa` <> 'UFGInclui - Indígena' 
+                                    $sql = "SELECT Count(*) AS count
+                                            FROM   `$anoSelecionadoPOST`
+                                            WHERE  `acao_afirmativa` <> '(DC Renda Inferior)'
+                                                   AND `acao_afirmativa` <> '(DC Renda Superior)'
+                                                   AND `acao_afirmativa` <> '(PPI Renda Inferior)'
+                                                   AND `acao_afirmativa` <> '(PPI Renda Superior)'
+                                                   AND `acao_afirmativa` <> 'UFGInclui - Negro Escola Pública'
+                                                   AND `acao_afirmativa` <> 'UFGInclui - Indígena'
                                                    AND `acao_afirmativa` <> 'UFGInclui - Escola Pública'
                                                    AND `acao_afirmativa` <> 'UFGInclui - Quilombola'
                                                    AND `acao_afirmativa` <> 'UFGInclui - Surdo'
-                                                   AND `ano_ingresso` = 2016 
+                                                   AND `ano_ingresso` = 2016
                                                    AND `forma_ingresso` = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'
                                                    AND `Regional` = '$unidade'";
                                     echo consultaSimplesRetornaString($sql);
 
                                     foreach ($arrayRendas as $renda => $value) {
-                                        $sql = "SELECT Count(*) AS count 
-                                                FROM   `$anoSelecionadoPOST` 
-                                                WHERE  forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU' 
-                                                       AND `ano_ingresso` = $anoSelecionadoPOST 
-                                                       AND `acao_afirmativa` = '$renda' 
+                                        $sql = "SELECT Count(*) AS count
+                                                FROM   `$anoSelecionadoPOST`
+                                                WHERE  forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'
+                                                       AND `ano_ingresso` = $anoSelecionadoPOST
+                                                       AND `acao_afirmativa` = '$renda'
                                                        AND `Regional` = '$unidade'";
                                         echo consultaSimplesRetornaString($sql);
                                     }
@@ -1799,7 +1799,7 @@ $arrayBackgroundColor = array(
                                     beginAtZero:true
                                 }
                             }]
-                        } 
+                        }
                     }
                     });
                 </script>
@@ -1811,23 +1811,23 @@ $arrayBackgroundColor = array(
                 <canvas id="graficoPizzaIngressantesSISURegional<?php echo $unidade;?>" style="width: 900px; height: 500px; display: none;"></canvas>
                 <table class="table table-responsive table-bordered">
                     <?php
-                        $sql = "SELECT count(*) / (SELECT COUNT(*) 
-                                                   FROM `$anoSelecionadoPOST` 
-                                                   WHERE ano_ingresso = '$anoSelecionadoPOST' 
+                        $sql = "SELECT count(*) / (SELECT COUNT(*)
+                                                   FROM `$anoSelecionadoPOST`
+                                                   WHERE ano_ingresso = '$anoSelecionadoPOST'
                                                          and forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'
                                                          and `Regional` = '$unidade'
-                                ) * 100.0 AS count 
-                                FROM `$anoSelecionadoPOST` 
-                                WHERE `acao_afirmativa` <> '(DC Renda Inferior)' 
-                                       and `acao_afirmativa` <> '(DC Renda Superior)' 
-                                       and `acao_afirmativa` <> '(PPI Renda Inferior)' 
-                                       and `acao_afirmativa` <> '(PPI Renda Superior)' 
-                                       and `acao_afirmativa` <> 'UFGInclui - Negro Escola Pública' 
-                                       and `acao_afirmativa` <> 'UFGInclui - Indígena' 
-                                       and `acao_afirmativa` <> 'UFGInclui - Escola Pública' 
-                                       and `acao_afirmativa` <> 'UFGInclui - Quilombola' 
-                                       and `acao_afirmativa` <> 'UFGInclui - Surdo' 
-                                       and ano_ingresso = '$anoSelecionadoPOST' 
+                                ) * 100.0 AS count
+                                FROM `$anoSelecionadoPOST`
+                                WHERE `acao_afirmativa` <> '(DC Renda Inferior)'
+                                       and `acao_afirmativa` <> '(DC Renda Superior)'
+                                       and `acao_afirmativa` <> '(PPI Renda Inferior)'
+                                       and `acao_afirmativa` <> '(PPI Renda Superior)'
+                                       and `acao_afirmativa` <> 'UFGInclui - Negro Escola Pública'
+                                       and `acao_afirmativa` <> 'UFGInclui - Indígena'
+                                       and `acao_afirmativa` <> 'UFGInclui - Escola Pública'
+                                       and `acao_afirmativa` <> 'UFGInclui - Quilombola'
+                                       and `acao_afirmativa` <> 'UFGInclui - Surdo'
+                                       and ano_ingresso = '$anoSelecionadoPOST'
                                        and forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'
                                        and `Regional` = '$unidade'";
 
@@ -1843,7 +1843,7 @@ $arrayBackgroundColor = array(
 
                     var data = {
                         labels: [
-                            "Ação Afirmativa", 
+                            "Ação Afirmativa",
                             "AC"
                         ],
                         datasets: [
@@ -1855,23 +1855,23 @@ $arrayBackgroundColor = array(
                                 ],
                                 data: [
                                     <?php
-                                    $sql = "SELECT count(*) / (SELECT COUNT(*) 
-                                                               FROM `$anoSelecionadoPOST` 
-                                                               WHERE ano_ingresso = '$anoSelecionadoPOST' 
+                                    $sql = "SELECT count(*) / (SELECT COUNT(*)
+                                                               FROM `$anoSelecionadoPOST`
+                                                               WHERE ano_ingresso = '$anoSelecionadoPOST'
                                                                      and forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'
                                                                      and `Regional` = '$unidade'
-                                            ) * 100.0 AS count 
-                                            FROM `$anoSelecionadoPOST` 
-                                            WHERE `acao_afirmativa` <> '(DC Renda Inferior)' 
-                                                   and `acao_afirmativa` <> '(DC Renda Superior)' 
-                                                   and `acao_afirmativa` <> '(PPI Renda Inferior)' 
-                                                   and `acao_afirmativa` <> '(PPI Renda Superior)' 
-                                                   and `acao_afirmativa` <> 'UFGInclui - Negro Escola Pública' 
-                                                   and `acao_afirmativa` <> 'UFGInclui - Indígena' 
-                                                   and `acao_afirmativa` <> 'UFGInclui - Escola Pública' 
-                                                   and `acao_afirmativa` <> 'UFGInclui - Quilombola' 
-                                                   and `acao_afirmativa` <> 'UFGInclui - Surdo' 
-                                                   and ano_ingresso = '$anoSelecionadoPOST' 
+                                            ) * 100.0 AS count
+                                            FROM `$anoSelecionadoPOST`
+                                            WHERE `acao_afirmativa` <> '(DC Renda Inferior)'
+                                                   and `acao_afirmativa` <> '(DC Renda Superior)'
+                                                   and `acao_afirmativa` <> '(PPI Renda Inferior)'
+                                                   and `acao_afirmativa` <> '(PPI Renda Superior)'
+                                                   and `acao_afirmativa` <> 'UFGInclui - Negro Escola Pública'
+                                                   and `acao_afirmativa` <> 'UFGInclui - Indígena'
+                                                   and `acao_afirmativa` <> 'UFGInclui - Escola Pública'
+                                                   and `acao_afirmativa` <> 'UFGInclui - Quilombola'
+                                                   and `acao_afirmativa` <> 'UFGInclui - Surdo'
+                                                   and ano_ingresso = '$anoSelecionadoPOST'
                                                    and forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'
                                                    and `Regional` = '$unidade'";
 
@@ -1901,7 +1901,7 @@ $arrayBackgroundColor = array(
                                         }
                                     }
                                 ]
-                            } 
+                            }
                         }
                     });
                 </script>
@@ -1932,17 +1932,17 @@ $arrayBackgroundColor = array(
 
                     <!-- Dados ampla concorrência -->
                     <td class="mediaAmplaConcorrencia">
-                        <?php 
+                        <?php
                         $sql = "SELECT AVG(`media_global`) AS count
                                 FROM `$anoSelecionadoPOST`
-                                WHERE  `acao_afirmativa` <> '(DC Renda Inferior)' 
-                                        AND `acao_afirmativa` <> '(DC Renda Superior)' 
-                                        AND `acao_afirmativa` <> '(PPI Renda Inferior)' 
-                                        AND `acao_afirmativa` <> '(PPI Renda Superior)' 
-                                        AND `acao_afirmativa` <> ( 'UFGInclui - Negro Escola Pública' ) 
-                                        AND `acao_afirmativa` <> 'UFGInclui - Indígena' 
-                                        AND `acao_afirmativa` <> ( 'UFGInclui - Escola Pública' ) 
-                                        AND `acao_afirmativa` <> ( 'UFGInclui - Quilombola' ) 
+                                WHERE  `acao_afirmativa` <> '(DC Renda Inferior)'
+                                        AND `acao_afirmativa` <> '(DC Renda Superior)'
+                                        AND `acao_afirmativa` <> '(PPI Renda Inferior)'
+                                        AND `acao_afirmativa` <> '(PPI Renda Superior)'
+                                        AND `acao_afirmativa` <> ( 'UFGInclui - Negro Escola Pública' )
+                                        AND `acao_afirmativa` <> 'UFGInclui - Indígena'
+                                        AND `acao_afirmativa` <> ( 'UFGInclui - Escola Pública' )
+                                        AND `acao_afirmativa` <> ( 'UFGInclui - Quilombola' )
                                         AND `acao_afirmativa` <> ( 'UFGInclui - Surdo' )
                                         AND `ano_ingresso` <= 2012
                                         AND `Regional` = '$unidade'";
@@ -1953,8 +1953,8 @@ $arrayBackgroundColor = array(
 
                     <!-- Loop por acao afirmativa (UFG Inclui apenas!) -->
                     <?php foreach ($arrayAcaoAfirmativa as $acao => $value) : ?>
-                        <?php 
-                            $aux = array("esc-pub", "negro-esc-pub", "indigena", "quilombola", "surdo"); 
+                        <?php
+                            $aux = array("esc-pub", "negro-esc-pub", "indigena", "quilombola", "surdo");
                             $index = 0;
                         ?>
                         <td class="media-<?php echo $aux[$index]; ?>">
@@ -1964,7 +1964,7 @@ $arrayBackgroundColor = array(
                                            AND `ano_ingresso` <= 2012
                                            AND `Regional` = '$unidade'";
 
-                            echo consultaSimplesRetornaUmValor($sql); 
+                            echo consultaSimplesRetornaUmValor($sql);
                             ?>
                         </td>
                     <?php $index++; endforeach; ?>
@@ -1977,17 +1977,17 @@ $arrayBackgroundColor = array(
                 <tr>
                     <th class="text-center" style="vertical-align: middle;">Total</th>
                     <td>
-                    <?php 
+                    <?php
                     $sql = "SELECT AVG(`media_global`) AS count
                             FROM `$anoSelecionadoPOST`
-                            WHERE  `acao_afirmativa` <> '(DC Renda Inferior)' 
-                                    AND `acao_afirmativa` <> '(DC Renda Superior)' 
-                                    AND `acao_afirmativa` <> '(PPI Renda Inferior)' 
-                                    AND `acao_afirmativa` <> '(PPI Renda Superior)' 
-                                    AND `acao_afirmativa` <> ( 'UFGInclui - Negro Escola Pública' ) 
-                                    AND `acao_afirmativa` <> 'UFGInclui - Indígena' 
-                                    AND `acao_afirmativa` <> ( 'UFGInclui - Escola Pública' ) 
-                                    AND `acao_afirmativa` <> ( 'UFGInclui - Quilombola' ) 
+                            WHERE  `acao_afirmativa` <> '(DC Renda Inferior)'
+                                    AND `acao_afirmativa` <> '(DC Renda Superior)'
+                                    AND `acao_afirmativa` <> '(PPI Renda Inferior)'
+                                    AND `acao_afirmativa` <> '(PPI Renda Superior)'
+                                    AND `acao_afirmativa` <> ( 'UFGInclui - Negro Escola Pública' )
+                                    AND `acao_afirmativa` <> 'UFGInclui - Indígena'
+                                    AND `acao_afirmativa` <> ( 'UFGInclui - Escola Pública' )
+                                    AND `acao_afirmativa` <> ( 'UFGInclui - Quilombola' )
                                     AND `acao_afirmativa` <> ( 'UFGInclui - Surdo' )
                                     AND `ano_ingresso` <= 2012
                                     AND `Regional` = ";
@@ -1999,11 +1999,11 @@ $arrayBackgroundColor = array(
                     <!-- Média geral do UFGInclui -->
                     <?php foreach ($arrayAcaoAfirmativa as $acao => $value) : ?>
                         <td>
-                            <?php 
-                            $sql = "SELECT AVG(`media_global`) AS count 
-                                    FROM `$anoSelecionadoPOST` 
-                                    WHERE `acao_afirmativa` = '$acao' 
-                                           AND `ano_ingresso` <= 2012 
+                            <?php
+                            $sql = "SELECT AVG(`media_global`) AS count
+                                    FROM `$anoSelecionadoPOST`
+                                    WHERE `acao_afirmativa` = '$acao'
+                                           AND `ano_ingresso` <= 2012
                                            AND Regional = ";
                             echo consultaSimplesRetornaMediaAsString($arrayUnidades, $sql);
                             ?>
@@ -2023,29 +2023,29 @@ $arrayBackgroundColor = array(
         var ctx = document.getElementById("myChartMediaGlobalBarraMultipla");
 
         var data = {
-            labels: ["AC", <?php 
+            labels: ["AC", <?php
                     // Imprime as labels do gráfico, com base no array de unidades
                     foreach ($arrayAcaoAfirmativa as $acao => $value) {
                         echo "'" . $acao . "',";
                     }
                 ?>],
-            datasets: [ 
+            datasets: [
                     // loop para cada label das acoes afirmativas
                     <?php foreach ($arrayUnidades as $unidade => $value): ?>
                     {
                         label: <?php echo "\"$unidade\""?>,
                         backgroundColor: <?php echo "\"$arrayBackgroundColor[$unidade]\""; ?>,
-                        data: [ <?php 
+                        data: [ <?php
                             $sql = "SELECT AVG(`media_global`) AS count
                                     FROM `$anoSelecionadoPOST`
-                                    WHERE  `acao_afirmativa` <> '(DC Renda Inferior)' 
-                                            AND `acao_afirmativa` <> '(DC Renda Superior)' 
-                                            AND `acao_afirmativa` <> '(PPI Renda Inferior)' 
-                                            AND `acao_afirmativa` <> '(PPI Renda Superior)' 
-                                            AND `acao_afirmativa` <> ( 'UFGInclui - Negro Escola Pública' ) 
-                                            AND `acao_afirmativa` <> 'UFGInclui - Indígena' 
-                                            AND `acao_afirmativa` <> ( 'UFGInclui - Escola Pública' ) 
-                                            AND `acao_afirmativa` <> ( 'UFGInclui - Quilombola' ) 
+                                    WHERE  `acao_afirmativa` <> '(DC Renda Inferior)'
+                                            AND `acao_afirmativa` <> '(DC Renda Superior)'
+                                            AND `acao_afirmativa` <> '(PPI Renda Inferior)'
+                                            AND `acao_afirmativa` <> '(PPI Renda Superior)'
+                                            AND `acao_afirmativa` <> ( 'UFGInclui - Negro Escola Pública' )
+                                            AND `acao_afirmativa` <> 'UFGInclui - Indígena'
+                                            AND `acao_afirmativa` <> ( 'UFGInclui - Escola Pública' )
+                                            AND `acao_afirmativa` <> ( 'UFGInclui - Quilombola' )
                                             AND `acao_afirmativa` <> ( 'UFGInclui - Surdo' )
                                             AND `ano_ingresso` <= 2012
                                             AND `Regional` = '$unidade'";
@@ -2064,7 +2064,7 @@ $arrayBackgroundColor = array(
                         ?>]
                     },
                     <?php endforeach; ?>
-                
+
             ]
         };
 
@@ -2080,7 +2080,7 @@ $arrayBackgroundColor = array(
                                 beginAtZero:true
                             }
                         }]
-                    } 
+                    }
                 }
             });
     </script>
@@ -2113,14 +2113,14 @@ $arrayBackgroundColor = array(
                     // Consulta de Ampla Concorrencia
                     $sql = "SELECT AVG(`media_global`) AS count
                                 FROM `$anoSelecionadoPOST`
-                                WHERE  `acao_afirmativa` <> '(DC Renda Inferior)' 
-                                        AND `acao_afirmativa` <> '(DC Renda Superior)' 
-                                        AND `acao_afirmativa` <> '(PPI Renda Inferior)' 
-                                        AND `acao_afirmativa` <> '(PPI Renda Superior)' 
-                                        AND `acao_afirmativa` <> ( 'UFGInclui - Negro Escola Pública' ) 
-                                        AND `acao_afirmativa` <> 'UFGInclui - Indígena' 
-                                        AND `acao_afirmativa` <> ( 'UFGInclui - Escola Pública' ) 
-                                        AND `acao_afirmativa` <> ( 'UFGInclui - Quilombola' ) 
+                                WHERE  `acao_afirmativa` <> '(DC Renda Inferior)'
+                                        AND `acao_afirmativa` <> '(DC Renda Superior)'
+                                        AND `acao_afirmativa` <> '(PPI Renda Inferior)'
+                                        AND `acao_afirmativa` <> '(PPI Renda Superior)'
+                                        AND `acao_afirmativa` <> ( 'UFGInclui - Negro Escola Pública' )
+                                        AND `acao_afirmativa` <> 'UFGInclui - Indígena'
+                                        AND `acao_afirmativa` <> ( 'UFGInclui - Escola Pública' )
+                                        AND `acao_afirmativa` <> ( 'UFGInclui - Quilombola' )
                                         AND `acao_afirmativa` <> ( 'UFGInclui - Surdo' )
                                         AND `ano_ingresso` >= 2013
                                         AND `ano_ingresso` <= 2015
@@ -2157,7 +2157,7 @@ $arrayBackgroundColor = array(
                     <th class="text-center" style="vertical-align: middle;">Total</th>
 
                     <!-- MEDIA AMPLA CONCORRENCIA -->
-                    <?php 
+                    <?php
                     echo "<td>";
                     $sql = "SELECT AVG(`media_global`) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` <> '(PPI Renda Superior)' and `acao_afirmativa` <> '(PPI Renda Inferior)' and `acao_afirmativa` <> '(DC Renda Superior)' and `acao_afirmativa` <> '(DC Renda Inferior)' and `ano_ingresso` >= 2013 AND `ano_ingresso` <= 2015 and Regional = ";
                     echo consultaSimplesRetornaMediaAsString($arrayUnidades, $sql);
@@ -2195,30 +2195,30 @@ $arrayBackgroundColor = array(
         var ctx = document.getElementById("myChartMediaGlobalBarraMultipla2");
 
         var data = {
-            labels: ["AC", "L1", "L2", "L3", "L4", <?php 
+            labels: ["AC", "L1", "L2", "L3", "L4", <?php
                 foreach ($arrayAcaoAfirmativa as $acao => $value) {
                     if ($acao !== 'UFGInclui - Escola Pública' and $acao !== 'UFGInclui - Negro Escola Pública')
                         echo "'$acao', ";
                 }
                 ?>],
-            datasets: [ 
+            datasets: [
                     // loop para cada label das acoes afirmativas
                     <?php foreach ($arrayUnidades as $unidade => $value): ?>
                     {
                         label: <?php echo "\"$unidade\""?>,
                         backgroundColor: <?php echo "\"$arrayBackgroundColor[$unidade]\""; ?>,
-                        data: [ <?php 
+                        data: [ <?php
                             // AMPLA CONCORRENCIA
                             $sql = "SELECT AVG(`media_global`) AS count
                                     FROM `$anoSelecionadoPOST`
-                                    WHERE  `acao_afirmativa` <> '(DC Renda Inferior)' 
-                                            AND `acao_afirmativa` <> '(DC Renda Superior)' 
-                                            AND `acao_afirmativa` <> '(PPI Renda Inferior)' 
-                                            AND `acao_afirmativa` <> '(PPI Renda Superior)' 
-                                            AND `acao_afirmativa` <> ( 'UFGInclui - Negro Escola Pública' ) 
-                                            AND `acao_afirmativa` <> 'UFGInclui - Indígena' 
-                                            AND `acao_afirmativa` <> ( 'UFGInclui - Escola Pública' ) 
-                                            AND `acao_afirmativa` <> ( 'UFGInclui - Quilombola' ) 
+                                    WHERE  `acao_afirmativa` <> '(DC Renda Inferior)'
+                                            AND `acao_afirmativa` <> '(DC Renda Superior)'
+                                            AND `acao_afirmativa` <> '(PPI Renda Inferior)'
+                                            AND `acao_afirmativa` <> '(PPI Renda Superior)'
+                                            AND `acao_afirmativa` <> ( 'UFGInclui - Negro Escola Pública' )
+                                            AND `acao_afirmativa` <> 'UFGInclui - Indígena'
+                                            AND `acao_afirmativa` <> ( 'UFGInclui - Escola Pública' )
+                                            AND `acao_afirmativa` <> ( 'UFGInclui - Quilombola' )
                                             AND `acao_afirmativa` <> ( 'UFGInclui - Surdo' )
                                             AND `ano_ingresso` >= 2013
                                             AND `ano_ingresso` <= 2015
@@ -2254,7 +2254,7 @@ $arrayBackgroundColor = array(
                         ?>
                         ]
                     },
-                <?php endforeach; ?> 
+                <?php endforeach; ?>
                 ]
             };
 
@@ -2270,7 +2270,7 @@ $arrayBackgroundColor = array(
                                 beginAtZero:true
                             }
                         }]
-                    } 
+                    }
                 }
             });
     </script>
@@ -2301,7 +2301,7 @@ $arrayBackgroundColor = array(
                                and `ano_ingresso` <> '$anoSelecionadoPOST'
                                and `Regional` = '$unidade'";
 
-                echo consultaSimplesRetornaUmValor($sql); 
+                echo consultaSimplesRetornaUmValor($sql);
                 ?>
             </td>
                 <!-- L1 L2 L3 L4 -->
@@ -2344,7 +2344,7 @@ $arrayBackgroundColor = array(
                                and `ano_ingresso` <> '$anoSelecionadoPOST'
                                and `Regional` = ";
 
-                echo consultaSimplesRetornaMediaAsString($arrayUnidades, $sql); 
+                echo consultaSimplesRetornaMediaAsString($arrayUnidades, $sql);
                 ?>
             </td>
             <!-- L1 L2 L3 L4 -->
@@ -2356,12 +2356,12 @@ $arrayBackgroundColor = array(
                                and `Regional` = ";
 
             echo "\n<td>";
-            echo consultaSimplesRetornaMediaAsString($arrayUnidades, $sql); 
+            echo consultaSimplesRetornaMediaAsString($arrayUnidades, $sql);
             echo "</td>";
             }?>
 
             <!-- INDIGENA, QUILOMBO, SURDO -->
-            <?php 
+            <?php
             $sql = "SELECT AVG(`media_global`) AS count
                     FROM `$anoSelecionadoPOST`
                     WHERE `acao_afirmativa` LIKE '%UFGInclui%'
@@ -2369,7 +2369,7 @@ $arrayBackgroundColor = array(
                            and `Regional` = ";
 
             echo "<td>";
-            echo consultaSimplesRetornaMediaAsString($arrayUnidades, $sql); 
+            echo consultaSimplesRetornaMediaAsString($arrayUnidades, $sql);
             echo "</td>";
             ?>
         </tr>
@@ -2387,17 +2387,17 @@ $arrayBackgroundColor = array(
 
         var data = {
             labels: ["AC", "L1", "L2", "L3", "L4", "UFGInclui"],
-            datasets: [ 
+            datasets: [
                     // loop para cada label das acoes afirmativas
                     <?php foreach ($arrayUnidades as $unidade => $value): ?>
                     {
                         label: <?php echo "\"$unidade\""?>,
                         backgroundColor: <?php echo "\"$arrayBackgroundColor[$unidade]\""; ?>,
-                        data: [ <?php 
+                        data: [ <?php
                             // AMPLA CONCORRENCIA
                             $sql = "SELECT AVG(`media_global`) AS count
                                     FROM `$anoSelecionadoPOST`
-                                    WHERE  `acao_afirmativa` NOT LIKE '%Renda%' 
+                                    WHERE  `acao_afirmativa` NOT LIKE '%Renda%'
                                             AND `acao_afirmativa` NOT LIKE '%UFGInclui%'
                                             AND `ano_ingresso` <> '$anoSelecionadoPOST'
                                             AND `Regional` = '$unidade'";
@@ -2427,7 +2427,7 @@ $arrayBackgroundColor = array(
                         ?>
                         ]
                     },
-                    <?php endforeach; ?> 
+                    <?php endforeach; ?>
                 ]
             };
 
@@ -2443,17 +2443,11 @@ $arrayBackgroundColor = array(
                                 beginAtZero:true
                             }
                         }]
-                    } 
+                    }
                 }
             });
     </script>
 
-    
-
-
-    <!-- ************************************************ -->
-            <!-- FIM DADOS ACAO AFIRMATIVA!!! -->
-    <!-- ************************************************ -->
 
 
 
@@ -2461,24 +2455,6 @@ $arrayBackgroundColor = array(
             <!-- FIM DADOS ACAO AFIRMATIVA!!! -->
     <!-- ************************************************ -->
 
-
-
-
-
-
-
-
-<!-- On Page Load script -->
-<script type="text/javascript">
-    
-    function onPageLoad() {
-        insereTabelaVagasRegional();
-        insereTabelaNumeroDeCursos();
-    }
-
-
-
-</script>
 </div>
 <?php
     require_once 'includes/footer.php';
