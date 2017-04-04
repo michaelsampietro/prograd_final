@@ -1,4 +1,4 @@
-<?php 
+<?php
 	require_once 'utils.php';
 	require_once 'includes/header.php';
 
@@ -16,7 +16,7 @@
             $result = $conn->query($sql);
             if(!$result)
                 echo $conn->error;
-            
+
             while($row = $result->fetch_assoc()) {
                 $regionais[$cidade] = $row["count_est"];
             }
@@ -26,7 +26,7 @@
 
         /*$str = "";
         foreach ($regionais as $cidade => $qtdAlunos) {
-            $str = $qtdAlunos 
+            $str = $qtdAlunos
         }*/
 
 	  $conn->close();

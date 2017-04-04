@@ -5,7 +5,8 @@ error_reporting(E_ALL);
 require_once 'utils.php';
 require_once 'includes/header.php';
 
-$anoSelecionadoPOST = htmlspecialchars($_POST['anos']);
+$anoSelecionadoPOST = htmlspecialchars($_GET['anos']);
+
 
 $arrayUnidades      = array(
     'Goiânia' => 0,

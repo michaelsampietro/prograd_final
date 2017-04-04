@@ -17,12 +17,12 @@
         <div class="col-xs-12 col-md-offset-1 col-md-5">
             <div class='panel panel-default'>
                 <div class='panel-body'>
-                    <form action="tipos_graficos.php" method="post">
+                    <form action="tipos_graficos.php" method="get">
                         <div class='form-group'>
                             <label for='sel1'>
                                 <h3 class="h3-normal">Escolha um ano abaixo:</h3>
                             </label>
-                            <select class='form-control' id='sel1' name='anos'>
+                            <select class='form-control' id='sel1' name='ano'>
                                 <!-- Função para gerar um dropdown com anos -->
                                 <?php dropdownAnos(); ?>
                             </select>

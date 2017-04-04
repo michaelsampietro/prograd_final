@@ -2,15 +2,14 @@
 require_once 'utils.php';
 require_once 'includes/header.php';
 
-$anoSelecionadoPOST = htmlspecialchars($_POST['anos']);
+$anoSelecionadoPOST = htmlspecialchars($_GET['ano']);
 ?>
 
 <div class="container text-center">
-  <h1>Gráficos Baseados no Ano de <?php echo $anoSelecionadoPOST; ?></h1>
+  <h1>Gráficos Baseados no Ano de <?php echo $anoSelecionadoPOST ?></h1>
 
-  <h3><a href="#">Gráficos de Contagem</a></h3>
-  <h3><a href="#">Gráficos de Porcentagem</a></h3>
-  <h3><a href="#">Gráficos de Média</a></h3>
+  <a href="handler.php?anos=<?php echo $anoSelecionadoPOST ?>">Teste</a>
+
 </div>
 
 <?php

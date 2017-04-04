@@ -55,11 +55,11 @@ function opcoesGrafico()
                                 borderWidth: 1
                             }]
                         },
-                        options: { 
+                        options: {
                           responsive: true,
                           maintainAspectRatio: true,
                           scales: { yAxes: [{ ticks: { beginAtZero:true} }] } }
-                        
+
                     });";
   echo $str;
 }
@@ -72,7 +72,7 @@ function opcoesGrafico()
 function chartData($array, $sql)
 {
   $conn = connect();
-  $ano = htmlspecialchars($_POST['anos']);
+  $ano = htmlspecialchars($_GET['anos']); // $ano = htmlspecialchars($_POST['anos']);
 
   // Esse for each irá fazer a query que irá contar quantos estudantes cada unidade tem.
   // O resultado será salvo de maneira associativa em um array chamado regionais.
@@ -159,10 +159,10 @@ function consultaSimplesRetornaString($sql)
   echo ($str);
 }
 
-function consultaSimplesRetornaAsString($array, $sql)
+function consultaSimplesRetornaSomaAsString($array, $sql)
 {
   $conn = connect();
-  $ano = htmlspecialchars($_POST['anos']);
+  $ano = htmlspecialchars($_GET['anos']); // $ano = htmlspecialchars($_POST['anos']);
   foreach($array as $key => $value) {
     $result = $conn->query($sql . "'" . $key . "'");
     if (!$result) echo $conn->error;
@@ -180,7 +180,7 @@ function consultaSimplesRetornaAsString($array, $sql)
 function consultaSimplesRetornaMediaAsString($array, $sql)
 {
   $conn = connect();
-  $ano = htmlspecialchars($_POST['anos']);
+  $ano = htmlspecialchars($_GET['anos']); // $ano = htmlspecialchars($_POST['anos']);
   foreach($array as $key => $value) {
     $result = $conn->query($sql . "'" . $key . "'");
     if (!$result) echo $conn->error;
@@ -207,9 +207,9 @@ function consultaSimplesRetornaUmValor ($sql) {
   $conn = connect();
 
   $result = $conn->query($sql);
-  if (!$result) 
+  if (!$result)
     echo $conn->error;
-  
+
   $array;
   while ($row = $result->fetch_assoc()) {
     $array[0] = $row["count"];
