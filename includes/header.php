@@ -5,9 +5,11 @@
 		<title>Bootstrap Example</title>
 	  	<meta charset="utf-8">
 	  	<meta name="viewport" content="width=device-width, initial-scale=1">
-	  	<!-- Arquivo CSS -->
+	  	<!-- Arquivos CSS -->
 	  	<link rel="stylesheet" type="text/css" href="styles/style.css">
-			<link rel="stylesheet" type="text/css" href="styles/tipos_graficos.css">
+		<link rel="stylesheet" type="text/css" href="styles/tipos_graficos.css">
+		<!-- Arquivo CSS de impressão -->
+		<link rel="stylesheet" type="text/css" media="print" href="styles/print.css">
 
 	  	<!-- Chart.js -->
 	  	<script src="charts/Chart.js"></script>
@@ -26,7 +28,7 @@
 	</head>
 
 	<body onload="onPageLoad();">
-		<nav class="navbar navbar-default navbar-collapse">
+		<nav id="header" class="navbar navbar-default navbar-collapse">
 		  <div class="container-fluid">
 		    <div class="navbar-header">
 		      <a class="navbar-brand" href="../prograd_michael/index.php">

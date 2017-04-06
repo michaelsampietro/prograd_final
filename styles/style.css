@@ -24,6 +24,7 @@ footer {
 }*/
 
 footer {
+  clear: both;
   width:100%;
   bottom:0;
   left:0;
@@ -43,6 +44,10 @@ footer {
 
 td.tabela-negrito {
 	font-weight: bold;
+}
+
+#container-geral {
+  padding-bottom: 10px;
 }
 
 #container-geral div canvas {
