@@ -8,6 +8,7 @@
 	  	<!-- Arquivos CSS -->
 	  	<link rel="stylesheet" type="text/css" href="styles/style.css">
 		<link rel="stylesheet" type="text/css" href="styles/tipos_graficos.css">
+		<link rel="stylesheet" type="text/css" href="styles/login_modal.css">
 		<!-- Arquivo CSS de impressão -->
 		<link rel="stylesheet" type="text/css" media="print" href="styles/print.css">
 

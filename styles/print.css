@@ -25,3 +25,7 @@ a:link, a:visited
 {
 color: #781351
 }
+
+div {
+	page-break-after:always;
+}
