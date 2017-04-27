@@ -12,8 +12,8 @@
 				<div class="loginmodal-container">
 					<h1>Login to Your Account</h1><br>
 				  	<form action="login.php" method="post">
-						<input type="text" name="user" placeholder="Username">
-						<input type="password" name="pass" placeholder="Password">
+						<input type="email" name="email" placeholder="E-mail">
+						<input type="password" name="pass" placeholder="Senha">
 						<input type="submit" name="login" class="login loginmodal-submit" value="Login">
 				  	</form>
 						

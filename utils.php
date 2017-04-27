@@ -1,7 +1,39 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
+
+$arrayUnidades      = array(
+    'Goiânia' => 0,
+    'Jataí' => 0,
+    'Catalão' => 0,
+    'Goiás' => 0
+);
+$arrayGrauAcademico = array(
+    'BACHARELADO' => 0,
+    'BACHARELADO E LIC.' => 0,
+    'GRAU NÃO DEFINIDO' => 0,
+    'LICENCIATURA' => 0
+);
+$arrayAcaoAfirmativa = array(
+    'UFGInclui - Escola Pública' => 0,
+    'UFGInclui - Negro Escola Pública' => 0,
+    'UFGInclui - Indígena' => 0,
+    'UFGInclui - Quilombola' => 0,
+    'UFGInclui - Surdo' => 0,
+);
+$arrayRendas = array(
+    '(DC Renda Inferior)' => 0,
+    '(PPI Renda Inferior)' => 0,
+    '(DC Renda Superior)' => 0,
+    '(PPI Renda Superior)' => 0,
+);
+$arrayBackgroundColor = array(
+    'Goiânia' => "rgba(54, 162, 235, .7)",
+    'Jataí' => "rgba(184, 18, 0, 0.7)",
+    'Catalão' => "rgba(0, 66, 10, 0.7)",
+    'Goiás' => "rgba(209, 206, 0, 0.7)",
+);
 
 function connect()
 {
@@ -217,6 +249,22 @@ function consultaSimplesRetornaUmValor ($sql) {
 
   $conn->close();
   echo round(end($array), 2);
+}
+
+function consultaSimplesRetornaUmValor2 ($sql) {
+  $conn = connect();
+
+  $result = $conn->query($sql);
+  if (!$result)
+    echo $conn->error;
+
+  $array;
+  while ($row = $result->fetch_assoc()) {
+    $array[0] = $row["count"];
+  }
+
+  $conn->close();
+  return round(end($array), 2);
 }
 
 ?>

@@ -9,11 +9,13 @@
 	  	<link rel="stylesheet" type="text/css" href="styles/style.css">
 		<link rel="stylesheet" type="text/css" href="styles/tipos_graficos.css">
 		<link rel="stylesheet" type="text/css" href="styles/login_modal.css">
+		<link rel="stylesheet" type="text/css" href="styles/login.css">
 		<!-- Arquivo CSS de impressão -->
 		<link rel="stylesheet" type="text/css" media="print" href="styles/print.css">
 
 	  	<!-- Chart.js -->
 	  	<script src="charts/Chart.js"></script>
+	  	<script src="https://code.highcharts.com/highcharts.src.js"></script>
 
   		<!-- Arquivos Bootstrap -->
 	  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">

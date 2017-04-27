@@ -23,6 +23,10 @@ footer {
 	background-color: black;
 }*/
 
+canvas {
+  display: none;
+}
+
 footer {
   clear: both;
   width:100%;

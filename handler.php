@@ -53,11 +53,12 @@ $arrayBackgroundColor = array(
 
 <div id="container-geral" class="container" style="margin: 0 auto;">
     <h4>Clique no nome do gráfico para mostrá-lo!</h4>
-    <!-- Gráfico com o numero de estudantes matriculados em abril de 2016 por regional -->
+    <!-- Gráfico com o numero de estudantes matriculados em abril de 2016 por regional -->           
+
     <div class="row contagem">
             <h3 id="tituloMyChart1">Número de estudantes matriculados em abril de <?php echo $anoSelecionadoPOST ?> por regional</h3>
-            <canvas id="myChart1" style="width: 900px; height: 500px; display: none;"></canvas>
-            <table class="table table-responsive table-bordered col-md-7 col-xs-12"><tr><th>Regional</th><th>Número de Estudantes</th></tr>
+            <canvas class="col-md-4" id="myChart1" style="width: 500px; height: 300px; display: none;"></canvas>
+            <table class="table table-responsive table-bordered col-md-2"><tr><th>Regional</th><th>Número de Estudantes</th></tr>
                 <?php foreach ($arrayUnidades as $unidade => $value) : ?>
                 <tr>
                     <td><?php echo ucwords($unidade); ?></td>
@@ -75,10 +76,12 @@ $arrayBackgroundColor = array(
                     consultaSimplesRetornaSomaAsString($arrayUnidades, $sql);
                     ?></td>
                 </tr>
-            </table>
+            </table>    
 
             <script>
                 var ctx = document.getElementById("myChart1");
+                // ctx.canvas.width = 300;
+                // ctx.canvas.height = 300;
                 var myChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
