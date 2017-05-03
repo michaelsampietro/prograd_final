@@ -191,6 +191,33 @@ function consultaSimplesRetornaString($sql)
   echo ($str);
 }
 
+function consultaSimplesRetornaString2($sql)
+{
+  // Conectando ao banco
+  $conn = connect();
+
+  $result = $conn->query($sql);
+  if (!$result)
+    echo $conn->error;
+
+  $aux = 0;
+  while ($row = $result->fetch_assoc()) {
+    $array[$aux] = $row["count"];
+    $aux++;
+  }
+
+  //String a ser retornada pelo programa
+  $str = "";
+  foreach($array as $key => $value) {
+
+    $value = round($value, 2);
+    $str.= "$value ,";
+  }
+
+  $conn->close();
+  return $str;
+}
+
 function consultaSimplesRetornaSomaAsString($array, $sql)
 {
   $conn = connect();

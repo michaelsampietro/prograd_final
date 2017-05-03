@@ -7,7 +7,7 @@ require_once 'includes/header.php';
 
 $anoSelecionadoPOST = htmlspecialchars($_GET['anos']);
 
-if (isset($_GET['tipo'])) 
+if (isset($_GET['tipo']))
     $tipo = htmlspecialchars($_GET['tipo']);
 
 
@@ -53,7 +53,7 @@ $arrayBackgroundColor = array(
 
 <div id="container-geral" class="container" style="margin: 0 auto;">
     <h4>Clique no nome do gráfico para mostrá-lo!</h4>
-    <!-- Gráfico com o numero de estudantes matriculados em abril de 2016 por regional -->           
+    <!-- Gráfico com o numero de estudantes matriculados em abril de 2016 por regional -->
 
     <div class="row contagem">
             <h3 id="tituloMyChart1">Número de estudantes matriculados em abril de <?php echo $anoSelecionadoPOST ?> por regional</h3>
@@ -76,7 +76,7 @@ $arrayBackgroundColor = array(
                     consultaSimplesRetornaSomaAsString($arrayUnidades, $sql);
                     ?></td>
                 </tr>
-            </table>    
+            </table>
 
             <script>
                 var ctx = document.getElementById("myChart1");

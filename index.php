@@ -37,12 +37,12 @@
 
 <h1>Aprendendo a mexer</h1>
 
-<div id="myChart1HighCharts" style="width:700px; height:400px;"></div>
+<div id="numero-estudantes-matriculados" style="width:700px; height:400px;"></div>
     
-<div id="numero-de-estudantes-por-grau-academico" style="width:700px; height:400px;"></div>
+<div id="numero-estudantes-por-grau-academico" style="width:700px; height:400px;"></div>
     <script>
         $(function () { 
-            var myChart = Highcharts.chart('numero-de-estudantes-por-grau-academico', {
+            var myChart = Highcharts.chart('numero-estudantes-por-grau-academico', {
                 chart: {
                     type: 'column'
                 },
@@ -84,7 +84,7 @@
 
     <script>
         $(function () { 
-            var myChart = Highcharts.chart('myChart1HighCharts', {
+            var myChart = Highcharts.chart('numero-estudantes-matriculados', {
                 chart: {
                     type: 'column'
                 },
