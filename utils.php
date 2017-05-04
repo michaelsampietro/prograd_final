@@ -294,4 +294,46 @@ function consultaSimplesRetornaUmValor2 ($sql) {
   return round(end($array), 2);
 }
 
+function geraGrafico ($arrayCategories, $tipo, $titulo, $subtitulo, $legendaY) {
+
+  $categories = "";   // String contendo as categorias do gráfico
+  // Loop para obter todas as categorias
+  foreach ($arrayCategories as $categorie) {
+    $categories .= "'$categorie',";
+  }
+
+  $html = "chart: {
+    type: '$tipo'
+  },
+  title: {
+    text: ''
+  },
+  subtitle: {
+    text: ''
+  },
+  xAxis: {
+    categories: [$categories]
+  },
+  yAxis: {
+    title: {
+      text: '$legendaY'
+    }
+  },
+  plotOptions: {
+    line: {
+      dataLabels: {
+        enabled: true
+      }
+    }
+  },
+  exporting: {
+    enabled: true
+  },
+  tooltip: {
+    shared: true
+  },";
+
+  return $html;
+}
+
 ?>

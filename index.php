@@ -35,13 +35,24 @@
     </div>
 </div>
 
+<?php
+
+$arrayCategories = array();   // Categorias do gráfico
+// Inserindo valores no array de categorias
+for ($aux = 2005; $aux <= 2016; $aux++) {
+  $arrayCategories[] = $aux;
+}
+
+print_r($arrayCategories);
+ ?>
+
 <h1>Aprendendo a mexer</h1>
 
 <div id="numero-estudantes-matriculados" style="width:700px; height:400px;"></div>
-    
+
 <div id="numero-estudantes-por-grau-academico" style="width:700px; height:400px;"></div>
     <script>
-        $(function () { 
+        $(function () {
             var myChart = Highcharts.chart('numero-estudantes-por-grau-academico', {
                 chart: {
                     type: 'column'
@@ -64,11 +75,11 @@
                     buttons: {
                         contextButton: {
                             enabled: true
-                        }    
+                        }
                     }
                 },
                 series: [
-                        <?php 
+                        <?php
                         foreach ($arrayUnidades as $unidade => $value) {
                             $aux = "";
                             foreach ($arrayGrauAcademico as $grau => $value) {
@@ -83,7 +94,7 @@
     </script>
 
     <script>
-        $(function () { 
+        $(function () {
             var myChart = Highcharts.chart('numero-estudantes-matriculados', {
                 chart: {
                     type: 'column'
@@ -106,7 +117,7 @@
                     buttons: {
                         contextButton: {
                             enabled: true
-                        }    
+                        }
                     }
                 },
                 series: [
