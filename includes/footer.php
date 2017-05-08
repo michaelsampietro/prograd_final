@@ -16,7 +16,7 @@
 						<input type="password" name="pass" placeholder="Senha">
 						<input type="submit" name="login" class="login loginmodal-submit" value="Login">
 				  	</form>
-						
+
 				  	<div class="login-help">
 						<a href="#">Register</a> - <a href="#">Forgot Password</a>
 				  	</div>
@@ -59,7 +59,7 @@
 		            });
 		        });
 		    });
-				
+
 		    $(document).ready(function() {
 		        $(".row").each(function() {
 		            $("h3").each(function() {
@@ -83,5 +83,6 @@
 		        $.LoadingOverlay("hide");
 		    });
 		</script>
+
 	</body>
 </html>

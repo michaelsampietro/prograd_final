@@ -15,6 +15,11 @@
 	height: 80px;
 }
 
+.texto-informativo {
+	color: #fff;
+	font-size: 8px;
+}
+
 /*
 footer {
 	clear: both;

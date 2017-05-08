@@ -22,7 +22,7 @@ $arrayGrauAcademico = array(
     'GRAU NÃO DEFINIDO' => 0,
     'LICENCIATURA' => 0
 );
-$arrayAcaoAfirmativa = array(
+$arrayLeiDeCotas = array(
     'UFGInclui - Escola Pública' => 0,
     'UFGInclui - Negro Escola Pública' => 0,
     'UFGInclui - Indígena' => 0,
@@ -40,6 +40,18 @@ $arrayBackgroundColor = array(
     'Jataí' => "rgba(184, 18, 0, 0.7)",
     'Catalão' => "rgba(0, 66, 10, 0.7)",
     'Goiás' => "rgba(209, 206, 0, 0.7)",
+);
+// O array abaixo inclui todas as categorias de acao afirmativa
+$arrayAcoesAfirmativas = array(
+  // 'UFGInclui - Escola Pública' => 0,
+  // 'UFGInclui - Negro Escola Pública' => 0,
+  '(DC Renda Inferior)' => 0,
+  '(PPI Renda Inferior)' => 0,
+  '(DC Renda Superior)' => 0,
+  '(PPI Renda Superior)' => 0,
+  'UFGInclui - Indígena' => 0,
+  'UFGInclui - Quilombola' => 0,
+  'UFGInclui - Surdo' => 0,
 );
 
 // Pegando array de anos
@@ -63,17 +75,46 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
       <div class="panel panel-info">
         <div class="panel panel-heading">Número de Estudantes Matriculados em <?php echo $anoSelecionadoPOST; ?></div>
         <div class="panel-body">
-          <h1>Tabela</h1>
+          <table id="tabela-numero-de-estudantes-matriculados" class="table table-responsive table-striped"
+            data-toggle="table"
+            data-show-export="true"
+            data-click-to-select="true">
+            <thead>
+              <th data-field="regional">Regional</th>
+              <th data-field="numestudantes">Número de Estudantes</th>
+            </thead>
+            <tbody>
+              <?php foreach ($arrayUnidades as $unidade => $value) : ?>
+              <tr>
+                  <td><?php echo ucwords($unidade); ?></td>
+                  <td><?php
+                  $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `municipio` = '$unidade'";
+                  consultaSimplesRetornaUmValor($sql);
+                  ?>
+                  </td>
+              </tr>
+              <?php endforeach; ?>
+              <tr>
+                  <td>Total</td>
+                  <td><?php
+                  $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `municipio` =";
+                  consultaSimplesRetornaSomaAsString($arrayUnidades, $sql);
+                  ?></td>
+              </tr>
+            </tbody>
+            </table>
         </div>
       </div>    <!--./panel -->
     </div>      <!--./col-md-6 -->
   </div>        <!--./row -->
   <script>
+    var $table = $('#tabela-numero-de-estudantes-matriculados');
+
     <?php  // Gerar opcoes do gráfico
     $arrayCategories  = array();    // Categorias do gráfico
     // Inserindo valores no array de categorias
-    for ($aux = 2005; $aux <= $anoSelecionadoPOST; $aux++) {
-      $arrayCategories[] = $aux;  // Semelhante a array_push
+    foreach ($arrayUnidades as $unidade => $value) {
+      $arrayCategories[] = $unidade;
     }
 
     $tipo       = 'column';                         // Tipo do gráfico
@@ -109,7 +150,7 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
   <div class="row">
     <div class="col-md-6">
       <div class="panel panel-info">
-        <div class="panel-heading"><h5>Número de Estudantes por Grau Acadêmico e Regional</h5></div>
+        <div class="panel-heading">Número de Estudantes por Grau Acadêmico e Regional</div>
         <div class="panel-body">
           <div id="numero-de-estudantes-por-grau-academico" style="width:100%; height:400px;"></div>
         </div>
@@ -117,9 +158,45 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
     </div>    <!-- ./col-md-6 -->
     <div class="col-md-6">
       <div class="panel panel-info">
-        <div class="panel-heading"><h5>Número de Estudantes por Grau Acadêmico e Regional</h5></div>
+        <div class="panel-heading">Número de Estudantes por Grau Acadêmico e Regional</div>
         <div class="panel-body">
-          <h1>Tabela</h1>
+          <table id="tabela-numero-de-estudantes-por-grau-academico" class="table table-striped"
+            data-toggle="table"
+            data-search="true"
+            data-show-export="true"
+            data-locale="en-US"
+            >
+            <thead>
+              <th data-field="regional">Regional</th>
+              <?php foreach ($arrayGrauAcademico as $grau => $value): ?>
+                <th data-field="<?php echo ucwords(strtolower($grau)) ?>"><?php echo ucwords(strtolower($grau)); ?></th>
+              <?php endforeach; ?>
+            </thead>
+            <tbody>
+              <?php foreach ($arrayUnidades as $unidade => $value): ?>
+                <tr>
+                  <td>
+                    <?php echo $unidade ?>
+                  </td>
+                  <?php foreach ($arrayGrauAcademico as $grau => $value): ?>
+
+                  <td><?php $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `grau_academico` = '$grau' and `Regional` = '$unidade'";
+                  echo consultaSimplesRetornaUmValor($sql);?>
+                  <?php endforeach; ?>
+                </tr>
+              <?php endforeach; ?>
+              <!-- ROW TOTAL -->
+              <tr>
+                <td>Total</td>
+                <?php foreach ($arrayGrauAcademico as $grau => $value): ?>
+                  <td>
+                    <?php $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `grau_academico` = '$grau'";
+                    echo consultaSimplesRetornaUmValor($sql);?>
+                  </td>
+                <?php endforeach; ?>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>  <!-- ./panel -->
     </div>    <!-- ./col-md-6 -->
@@ -352,7 +429,7 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
   <hr>
 
   <!-- Número de Estudantes por Sexo e Regional -->
-  <!-- Gráfico de LINHAS -->
+  <!-- Gráfico de COLUNAS -->
   <div class="row">
     <div class="col-md-6">
       <div class="panel panel-info">
@@ -373,7 +450,7 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
     </div>      <!-- ./row -->
   <script>
     <?php  // Gerar opcoes do gráfico
-    $arrayCategories  = array("2004 a 2010");    // Categorias do gráfico
+    $arrayCategories  = array();    // Categorias do gráfico
     // Inserindo valores no array de categorias
     foreach ($arrayUnidades as $unidade => $value) {
       $arrayCategories[] = $unidade; // semelhante a array_push
@@ -414,55 +491,209 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
         });
     });
   </script>
-  <!-- ./Número de Vagas por Regional -->
+  <!-- ./Número de Estudantes por Sexo e Regional -->
 
   <hr>
 
+  <!-- Estudantes com ingresso até 2012, anterior a lei de cotas -->
+  <!-- Gráfico de COLUNAS -->
   <div class="row">
     <div class="col-md-6">
-      <div class="panel panel-heading"><h5>Estudantes Matriculados em <?php echo $anoSelecionadoPOST; ?> por Ação Afirmativa na UFG com Ingresso até 2012 (Anterior a Lei de Cotas)</h5></div>
-      <div class="panel-body">
-        <div id="anterior-lei-de-cotas"></div>
-      </div>
-    </div>
-  </div>
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          Estudantes Matriculados em <?php echo $anoSelecionadoPOST; ?> por Ação Afirmativa na UFG com Ingresso até 2012 (Anterior a Lei de Cotas)
+        </div>
+        <div class="panel-body">
+          <div id="anterior-lei-de-cotas"></div>
+        </div>
+      </div>  <!-- ./panel -->
+    </div>    <!-- ./col-md-6 -->
+    <div class="col-md-6">
+      <div class="panel panel-info">
+        <div class="panel-heading">Estudantes Matriculados em <?php echo $anoSelecionadoPOST; ?> por Ação Afirmativa na UFG com Ingresso até 2012 (Anterior a Lei de Cotas)</div>
+        <div class="panel-body">
+          <h1>Tabela</h1>
+        </div>
+      </div>  <!-- ./panel -->
+    </div>    <!-- ./col-md-6 -->
+  </div>      <!-- ./row -->
   <script>
-  <?php  // Gerar opcoes do gráfico
-  $arrayCategories  = array("AC", "Escola Pública", "Negro Escola Pública", "Indígena", "Negro Quilombola", "Surdos");    // Categorias do gráfico
+    <?php  // Gerar opcoes do gráfico
+    $arrayCategories  = array("AC", "Escola Pública", "Negro Escola Pública", "Indígena", "Negro Quilombola", "Surdos");    // Categorias do gráfico
 
-  $tipo       = 'column';                // Tipo do gráfico
-  $titulo     = '';  // Título Gráfico
-  $subtitulo  = '';   // Subtítulo do Gráfico
-  $legendaY   = 'Número de Estudantes';       // Legenda eixo Y
+    $tipo       = 'column';                // Tipo do gráfico
+    $titulo     = '';  // Título Gráfico
+    $subtitulo  = '';   // Subtítulo do Gráfico
+    $legendaY   = 'Número de Estudantes';       // Legenda eixo Y
 
-  $opcoes = geraGrafico($arrayCategories, $tipo, $titulo, $subtitulo, $legendaY);
-  ?>
-  $(function () {
-      var myChart = Highcharts.chart('anterior-lei-de-cotas', {
-        // auto-generated code
-        <?php echo $opcoes; ?>
-        // Sobrepondo as opções gerais do gráfico
-        
-        series: [
-          <?php
-          // CONSULTA PARA AMPLA CONCORENCIA
+    $opcoes = geraGrafico($arrayCategories, $tipo, $titulo, $subtitulo, $legendaY);
+    ?>
+    $(function () {
+        var myChart = Highcharts.chart('anterior-lei-de-cotas', {
+          // auto-generated code
+          <?php echo $opcoes; ?>
+
+          series: [
+            <?php
+            // CONSULTA PARA AMPLA CONCORENCIA
+            $aux = "";
+            $sql = "SELECT count(`Estudante`) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` <> ('UFGInclui - Negro Escola Pública') and `acao_afirmativa` <> 'UFGInclui - Indígena' and `acao_afirmativa` <> ('UFGInclui - Escola Pública') and `acao_afirmativa` <> ('UFGInclui - Quilombola') and `acao_afirmativa` <> ('UFGInclui - Surdo') and `ano_ingresso` <= 2012";
+            $aux .= consultaSimplesRetornaString2($sql);
+
+            // utilizando array categorias
+            foreach ($arrayLeiDeCotas as $cota => $value) {
+              $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` = '$cota' and `ano_ingresso` <= 2012";
+              $aux .= consultaSimplesRetornaString2($sql);
+            }
+
+            echo "{name: 'Ação Afirmativa', data:[$aux]}";
+
+            ?>
+          ]
+        });
+    });
+  </script>
+  <!-- ./Estudantes com ingresso até 2012, anterior a lei de cotas -->
+
+  <!-- Estudantes após 2013, lei de cotas e UFGInclui -->
+  <!-- Gráfico BARRA -->
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          Estudantes Matriculados em <?php echo $anoSelecionadoPOST ?> Por Ação Afirmativa Por Regional Com Ingresso a Partir De 2013 (Lei De Cotas E Programa UFGInclui)
+        </div>
+        <div class="panel-body">
+          <div id="lei-de-cotas-e-ufg-inclui"></div>
+        </div>
+      </div>  <!-- ./panel -->
+    </div>    <!-- ./col-md-6 -->
+    <div class="col-md-6">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          Estudantes Matriculados em <?php echo $anoSelecionadoPOST ?> Por Ação Afirmativa Por Regional Com Ingresso a Partir De 2013 (Lei De Cotas E Programa UFGInclui)
+        </div>
+        <div class="panel-body">
+          <div>Tabela</div>
+        </div>
+      </div>  <!-- ./panel -->
+    </div>    <!-- ./col-md-6 -->
+  </div>      <!-- ./row -->
+  <script>
+    <?php  // Gerar opcoes do gráfico
+    $arrayCategories = array("AC", "L1", "L2", "L3", "L4", "Indígenas", "Quilombola", "Surdo");
+
+    $tipo       = 'column';                // Tipo do gráfico
+    $titulo     = '';  // Título Gráfico
+    $subtitulo  = '';   // Subtítulo do Gráfico
+    $legendaY   = 'Número de Estudantes';       // Legenda eixo Y
+
+    $opcoes = geraGrafico($arrayCategories, $tipo, $titulo, $subtitulo, $legendaY);
+    ?>
+
+    var myChart = Highcharts.chart('lei-de-cotas-e-ufg-inclui', {
+      <?php echo $opcoes; ?>
+      series: [
+        <?php
+        $aux = "";
+        // Ampla Concorrencia (AC)
+        $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` <> '(PPI Renda Superior)' and `acao_afirmativa` <> '(PPI Renda Inferior)' and `acao_afirmativa` <> '(DC Renda Superior)' and `acao_afirmativa` <> '(DC Renda Inferior)' and `ano_ingresso` >= 2013";
+        $aux .= consultaSimplesRetornaString2($sql);
+
+        // Todos as outras acoes
+        foreach ($arrayAcoesAfirmativas as $acao => $value) {
+          $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` = '$acao' and `ano_ingresso` >= 2013";
+          $aux .= consultaSimplesRetornaString2($sql);
+        }
+        echo "{name: 'Ação Afirmativa', data:[$aux]}";
+        ?>
+      ]
+    })
+  </script>
+  <!-- ./Estudantes após 2013, lei de cotas e UFGInclui -->
+
+  <!-- Estudantes SISU 2016 -->
+  <!-- Gráfico BARRA -->
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          Ingressantes SISU em <?php echo $anoSelecionadoPOST ?> por Ação Afirmativa e Ampla Concorrêcia por Regional
+        </div>
+        <div class="panel-body">
+          <div id="ingressantes-sisu-todos"></div>
+          <h6><small>Dados computados após a segunda etapa da chamada pública.</small></h6>
+        </div>
+      </div>  <!-- ./panel -->
+    </div>    <!-- ./col-md-6 -->
+    <div class="col-md-6">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          Ingressantes SISU em <?php echo $anoSelecionadoPOST ?> por Ação Afirmativa e Ampla Concorrêcia por Regional
+        </div>
+        <div class="panel-body">
+          <div>Tabela</div>
+        </div>
+      </div>  <!-- ./panel -->
+    </div>    <!-- ./col-md-6 -->
+  </div>      <!-- ./row -->
+  <script>
+    <?php  // Gerar opcoes do gráfico
+    $arrayCategories = array("AC", "L1", "L2", "L3", "L4");
+
+    $tipo       = 'column';                // Tipo do gráfico
+    $titulo     = '';  // Título Gráfico
+    $subtitulo  = '';   // Subtítulo do Gráfico
+    $legendaY   = 'Número de Estudantes';       // Legenda eixo Y
+
+    $opcoes = geraGrafico($arrayCategories, $tipo, $titulo, $subtitulo, $legendaY);
+    ?>
+
+    var myChart = Highcharts.chart('ingressantes-sisu-todos', {
+      <?php echo $opcoes; ?>
+      series: [
+        <?php
+        // Para cada unidade
+        foreach ($arrayUnidades as $unidade => $value) {
           $aux = "";
-          $sql = "SELECT count(`Estudante`) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` <> ('UFGInclui - Negro Escola Pública') and `acao_afirmativa` <> 'UFGInclui - Indígena' and `acao_afirmativa` <> ('UFGInclui - Escola Pública') and `acao_afirmativa` <> ('UFGInclui - Quilombola') and `acao_afirmativa` <> ('UFGInclui - Surdo') and `ano_ingresso` <= 2012";
+          // Ampla concorrencia
+          $sql = "SELECT Count(*) AS count
+                  FROM   `$anoSelecionadoPOST`
+                  WHERE  `acao_afirmativa` <> '(DC Renda Inferior)'
+                         AND `acao_afirmativa` <> '(DC Renda Superior)'
+                         AND `acao_afirmativa` <> '(PPI Renda Inferior)'
+                         AND `acao_afirmativa` <> '(PPI Renda Superior)'
+                         AND `acao_afirmativa` <> 'UFGInclui - Negro Escola Pública'
+                         AND `acao_afirmativa` <> 'UFGInclui - Indígena'
+                         AND `acao_afirmativa` <> 'UFGInclui - Escola Pública'
+                         AND `acao_afirmativa` <> 'UFGInclui - Quilombola'
+                         AND `acao_afirmativa` <> 'UFGInclui - Surdo'
+                         AND `ano_ingresso` = $anoSelecionadoPOST
+                         AND `forma_ingresso` = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'
+                         AND `Regional` = '$unidade'";
           $aux .= consultaSimplesRetornaString2($sql);
 
-          // utilizando array categorias
-          foreach ($arrayAcaoAfirmativa as $acao => $value) {
-            $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` = '$acao' and `ano_ingresso` <= 2012";
+          // Todos as outras acoes
+          foreach ($arrayRendas as $renda => $value) {
+            $sql = "SELECT Count(*) AS count
+                    FROM   `$anoSelecionadoPOST`
+                    WHERE  forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'
+                           AND `ano_ingresso` = $anoSelecionadoPOST
+                           AND `acao_afirmativa` = '$renda'
+                           AND `Regional` = '$unidade'";
             $aux .= consultaSimplesRetornaString2($sql);
           }
+          echo "{name: '$unidade', data:[$aux]},";
+        }
 
-          echo "{name: 'Ação Afirmativa', data:[$aux]}";
-
-          ?>
-        ]
-      });
-  });
+        ?>
+      ]
+    })
   </script>
+
+
+
+
 
 
 
