@@ -306,10 +306,10 @@ function geraGrafico ($arrayCategories, $tipo, $titulo, $subtitulo, $legendaY) {
     type: '$tipo'
   },
   title: {
-    text: ''
+    text: '' // não mostra título. para mostrar inserir variavel titulo
   },
   subtitle: {
-    text: ''
+    text: '' // nao mostra subtitulo. para mostrar, inserir variavel subtitulo
   },
   xAxis: {
     categories: [$categories]
@@ -319,8 +319,12 @@ function geraGrafico ($arrayCategories, $tipo, $titulo, $subtitulo, $legendaY) {
       text: '$legendaY'
     }
   },
+  tooltip: {
+    enabled: false,
+    crosshairs: true
+  },
   plotOptions: {
-    line: {
+    series: {
       dataLabels: {
         enabled: true
       }

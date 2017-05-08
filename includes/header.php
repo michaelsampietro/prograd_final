@@ -3,10 +3,10 @@
 <html>
 	<head>
 		<title>Bootstrap Example</title>
-	  	<meta charset="utf-8">
-	  	<meta name="viewport" content="width=device-width, initial-scale=1">
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
 	  	<!-- Arquivos CSS -->
-	  	<link rel="stylesheet" type="text/css" href="styles/style.css">
+	  <link rel="stylesheet" type="text/css" href="styles/style.css">
 		<link rel="stylesheet" type="text/css" href="styles/tipos_graficos.css">
 		<link rel="stylesheet" type="text/css" href="styles/login_modal.css">
 		<link rel="stylesheet" type="text/css" href="styles/login.css">
