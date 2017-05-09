@@ -810,7 +810,42 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
           Estudantes Matriculados em <?php echo $anoSelecionadoPOST ?> Por Ação Afirmativa Por Regional Com Ingresso a Partir De 2013 (Lei De Cotas E Programa UFGInclui)
         </div>
         <div class="panel-body">
-          <div>Tabela</div>
+          <table id="tabela-lei-de-cotas-e-ufg-inclui"
+          class="table"
+          data-toggle="table">
+            <thead>
+              <th>Ação Afirmativa</th>
+              <th>Número de Estudantes</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ampla Concorrência</td>
+                <td>
+                  <?php $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST`
+                                  WHERE `acao_afirmativa` <> '(PPI Renda Superior)'
+                                  and `acao_afirmativa` <> '(PPI Renda Inferior)'
+                                  and `acao_afirmativa` <> '(DC Renda Superior)'
+                                  and `acao_afirmativa` <> '(DC Renda Inferior)'
+                                  and `ano_ingresso` >= 2013";
+                  echo consultaSimplesRetornaUmValor($sql); ?>
+                </td>
+              </tr>
+              <?php foreach ($arrayAcoesAfirmativas as $acao => $value): ?>
+                <tr>
+                  <td><?php echo $acao ?></td>
+                  <td>
+                      <?php $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST`
+                                      WHERE `acao_afirmativa` = '$acao'
+                                      and `ano_ingresso` >= 2013";
+                      echo consultaSimplesRetornaUmValor($sql); ?>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+              <tr>
+                <td>Total</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>  <!-- ./panel -->
     </div>    <!-- ./col-md-6 -->
