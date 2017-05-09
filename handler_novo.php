@@ -61,7 +61,7 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
 ?>
 
   <!-- Número de Estudantes matriculados -->
-  <!-- Gráfico de BARRAS -->
+  <!-- Gráfico de BARRA -->
   <div class="row">
     <div class="col-md-6">
       <div class="panel panel-info">
@@ -75,7 +75,7 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
       <div class="panel panel-info">
         <div class="panel panel-heading">Número de Estudantes Matriculados em <?php echo $anoSelecionadoPOST; ?></div>
         <div class="panel-body">
-          <table id="tabela-numero-de-estudantes-matriculados" class="table table-responsive table-striped"
+          <table id="tabela-numero-de-estudantes-matriculados" class="table table"
             data-toggle="table"
             data-show-export="true"
             data-click-to-select="true">
@@ -94,13 +94,13 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
                   </td>
               </tr>
               <?php endforeach; ?>
-              <tr>
-                  <td>Total</td>
-                  <td><?php
-                  $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `municipio` =";
-                  consultaSimplesRetornaSomaAsString($arrayUnidades, $sql);
-                  ?></td>
-              </tr>
+            <tr>
+                <td>Total</td>
+                <td><?php
+                $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `municipio` =";
+                consultaSimplesRetornaSomaAsString($arrayUnidades, $sql);
+                ?></td>
+            </tr>
             </tbody>
             </table>
         </div>
@@ -108,8 +108,6 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
     </div>      <!--./col-md-6 -->
   </div>        <!--./row -->
   <script>
-    var $table = $('#tabela-numero-de-estudantes-matriculados');
-
     <?php  // Gerar opcoes do gráfico
     $arrayCategories  = array();    // Categorias do gráfico
     // Inserindo valores no array de categorias
@@ -129,7 +127,7 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
     var myChart = Highcharts.chart('numero-de-estudantes-matriculados', {
       <?php echo $opcoes; ?>
       series: [{
-        name: "Regionais",
+        name: "Regional",
         data: [
           <?php foreach ($arrayUnidades as $unidade => $value) {
             $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `municipio` = '$unidade'";
@@ -146,7 +144,7 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
   <hr>
 
   <!-- Número de estudantes por grau academico -->
-  <!-- Gráfico de BARRAS -->
+  <!-- Gráfico de BARRA -->
   <div class="row">
     <div class="col-md-6">
       <div class="panel panel-info">
@@ -160,9 +158,8 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
       <div class="panel panel-info">
         <div class="panel-heading">Número de Estudantes por Grau Acadêmico e Regional</div>
         <div class="panel-body">
-          <table id="tabela-numero-de-estudantes-por-grau-academico" class="table table-striped"
+          <table id="tabela-numero-de-estudantes-por-grau-academico" class="table"
             data-toggle="table"
-            data-search="true"
             data-show-export="true"
             data-locale="en-US"
             >
@@ -241,18 +238,65 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
   <!-- Gráfico de LINHAS -->
   <div class="row">
     <div class="col-md-6">
-    <div class="panel panel-info">
+      <div class="panel panel-info">
         <div class="panel-heading">Número de Cursos por Regional</div>
         <div class="panel-body">
             <div id="numero-de-cursos-por-regional"></div>
         </div>
       </div>  <!-- ./panel-->
     </div>    <!-- ./col-md-6 -->
-    <div class="col-md-6">
+    <div class="col-md-6"> <!-- TABELA -->
       <div class="panel panel-info">
-        <div class="panel-heading">Testando</div>
+        <div class="panel-heading">Número de Cursos por Regional</div>
         <div class="panel-body">
-          <h1>Tabela</h1>
+          <table id="tabela-numero-cursos"
+          class="table"
+          data-toggle="table"> <!-- chamada para bootstrap-table funcionar -->
+            <thead>
+              <th>Regional</th>
+              <th>2005</th>
+              <th>2006</th>
+              <th>2007</th>
+              <th>2008</th>
+              <th>2009</th>
+              <th>2010</th>
+              <th>2011</th>
+              <th>2012</th>
+              <th>2013</th>
+              <th>2014</th>
+              <th>2015</th>
+            </thead>
+            <tbody>
+              <tr id="row-Goiânia"><td>Goiânia</td><td>58</td><td>63</td><td>66</td><td>66</td><td>81</td><td>85</td><td>86</td><td>86</td><td>89</td><td>90</td><td>90</td></tr>
+              <tr id="row-Jataí"><td>Jataí</td><td>11</td><td>15</td><td>18</td><td>20</td><td>21</td><td>23</td><td>23</td><td>24</td><td>24</td><td>25</td><td>25</td></tr>
+              <tr id="row-Catalão"><td>Catalão</td><td>9</td><td>14</td><td>16</td><td>19</td><td>24</td><td>25</td><td>25</td><td>25</td><td>25</td><td>26</td><td>26</td></tr>
+              <tr id="row-Goiás"><td>Goiás</td><td>1</td><td>1</td><td>1</td><td>1</td><td>3</td><td>3</td><td>3</td><td>3</td><td>5</td><td>6</td><td>7</td></tr>
+              <tr id="row-Total"><td>Total</td><td>79</td><td>93</td><td>101</td><td>106</td><td>129</td><td>136</td><td>137</td><td>138</td><td>143</td><td>147</td><td>148</td></tr>
+            </tbody>
+          </table>
+          <!-- Script da tabela -->
+          <script type="text/javascript">
+            // loop por todos os anos que estão no banco de dados até que seja menor ou igual ao ano selecionado pelo usuario
+            <?php for ($anoBase = 2016; $anoBase <= $anoSelecionadoPOST; $anoBase++): ?>
+              // inserindo o th do ano
+              $('#tabela-numero-cursos').find('thead th').last().after('<th><?php echo $anoBase;?></th>');
+              // loop para todas as unidades
+              <?php foreach ($arrayUnidades as $unidade => $value) : ?>
+                <?php
+                  // setando a variavel que vai fazer a query
+                  $sql = "SELECT COUNT(distinct curso) AS count FROM `$anoBase` WHERE `ano_ingresso` = '$anoBase' and `Regional` = '$unidade'";
+                ?>
+
+                $('#row-<?php echo $unidade;?>').find('td').last().after('<td><?php echo consultaSimplesRetornaUmValor($sql);?></td>');
+
+              <?php endforeach; ?>
+
+                // inserindo o td da linha Total
+                <?php $sql = "SELECT COUNT(distinct curso) AS count FROM `$anoBase` WHERE `ano_ingresso` = '$anoBase' and `Regional` ="; ?>
+
+                $('#row-Total').find('td').last().after('<td><?php echo consultaSimplesRetornaSomaAsString($arrayUnidades, $sql);?></td>');
+              <?php endfor; ?>
+          </script>
         </div>
       </div>  <!-- ./panel -->
     </div>    <!-- ./col-md-6 -->
@@ -318,13 +362,57 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
       <div class="panel panel-info">
         <div class="panel-heading">Número de Vagas por Regional</div>
         <div class="panel-body">
-          <h1>Tabela</h1>
+          <table id="tabela-numero-vagas"
+          class="table"
+          data-toggle="table">
+            <thead>
+              <th>Regional</th>
+              <th>2005</th>
+              <th>2006</th>
+              <th>2007</th>
+              <th>2008</th>
+              <th>2009</th>
+              <th>2010</th>
+              <th>2011</th>
+              <th>2012</th>
+              <th>2013</th>
+              <th>2014</th>
+              <th>2015</th>
+            </thead>
+            <tbody>
+              <tr class="row-Goiânia"><td>Goiânia</td><td>2318</td><td>2508</td><td>2548</td><td>2523</td><td>3786</td><td>4046</td><td>4065</td><td>4045</td><td>4135</td><td>4325</td><td>4265</td></tr>
+              <tr class="row-Jataí"><td>Jataí</td><td>360</td><td>550</td><td>610</td><td>705</td><td>880</td><td>980</td><td>980</td><td>1020</td><td>1020</td><td>1050</td><td>1080</td></tr>
+              <tr class="row-Catalão"><td>Catalão</td><td>300</td><td>500</td><td>590</td><td>710</td><td>950</td><td>970</td><td>980</td><td>980</td><td>990</td><td>1110</td><td>1110</td></tr>
+              <tr class="row-Goiás"> <td>Goiás</td> <td>60</td> <td>60</td> <td>60</td> <td>160</td> <td>160</td> <td>160</td> <td>160</td><td>160</td><td>210</td><td>380</td><td>470</td></tr>
+              <tr class="row-Total"><td>Total</td><td>3038</td><td>3618</td><td>3808</td><td>3998</td><td>5776</td><td>6156</td><td>6185</td><td>6205</td><td>6355</td><td>6865</td><td>6925</td></tr>
+            </tbody>
+          </table>
+          <!-- Script para a tabela com o numero de vagas ofertadas por regional -->
+          <script>
+            <?php for ($anoBase = 2016; $anoBase <= $anoSelecionadoPOST; $anoBase++): ?>
+              // inserindo o th do ano
+              $('#tabela-numero-vagas').find('thead th').last().after('<th><?php echo $anoBase;?></th>');
+              // para deixar mais dinamico, utilizar um loop para todas as unidades
+              <?php foreach ($arrayUnidades as $unidade => $value) : ?>
+                // definindo consulta
+                <?php $sql = "SELECT COUNT(*) AS count FROM `$anoBase` WHERE `ano_ingresso` = '$anoBase' and `Regional` = '$unidade'"; ?>
+
+                $('#tabela-numero-vagas .row-<?php echo $unidade;?>').find('td').last().after('<td><?php echo consultaSimplesRetornaUmValor($sql);?></td>');
+              <?php endforeach; ?>
+
+                  // query da linha total
+              <?php $sql = "SELECT COUNT(*) AS count FROM `$anoBase` WHERE `ano_ingresso` = '$anoBase' and `Regional` ="; ?>
+
+              // inserindo o valor da query total na td
+              $('#tabela-numero-vagas .row-Total').find('td').last().after('<td><?php echo consultaSimplesRetornaSomaAsString($arrayUnidades, $sql);?></td>');
+          <?php endfor; ?>
+          </script>
         </div>
       </div>  <!-- ./panel -->
     </div>    <!-- ./col-md-6 -->
   </div>      <!-- ./row -->
   <script>
-    <?php  // Gerar opcoes do gráfico
+     <?php  // Gerar opcoes do gráfico
     $arrayCategories  = array();    // Categorias do gráfico
     // Inserindo valores no array de categorias
     for ($aux = 2005; $aux <= $anoSelecionadoPOST; $aux++) {
@@ -385,7 +473,62 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
       <div class="panel panel-info">
         <div class="panel-heading">Número de Estudantes por Ano de Ingresso</div>
         <div class="panel-body">
-          <h1>Tabela</h1>
+          <table id="tabela-numero-de-estudantes-por-ano-ingresso"
+          class="table"
+          data-toggle="table"
+          data-locale="en-US">
+            <thead>
+              <th>Regional</th>
+              <th>2004 a 2010</th>
+              <!-- inserindo os anos na tabela -->
+              <?php
+                  // Para esse gráfico, o ano base é 2011.
+                  $anoBase = 2011;
+                  while ($anoBase <= $anoSelecionadoPOST) {
+                      echo "<th>$anoBase</td>";
+                      $anoBase++;
+                  }
+              ?>
+            </thead>
+            <tbody>
+              <!-- inserindo os dados -->
+              <?php foreach ($arrayUnidades as $unidade => $value) {
+              echo "<tr>";
+                  echo "<td>$unidade</td>";
+                  // ano de 2004 a 2010
+                  $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST`
+                            WHERE `ano_ingresso` >= 2004
+                            and `ano_ingresso` <= 2010
+                            and `Regional` = '$unidade'";
+                  echo "<td>";
+                      echo consultaSimplesRetornaUmValor($sql);
+                  echo "</td>";
+
+                  $anoBase = 2011;
+                  while($anoBase <= $anoSelecionadoPOST) {
+                      $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST`
+                                WHERE `ano_ingresso` = '$anoBase'
+                                and `Regional` = '$unidade'";
+                      echo "<td>";
+                          echo consultaSimplesRetornaUmValor($sql);
+                      echo "</td>";
+                      $anoBase++;
+                  }
+              echo "</tr>";
+            } ?>
+            <tr>
+              <td>Total</td>
+              <!-- 2004 a 2010 -->
+              <td><?php $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` >= 2004 and `ano_ingresso` <= 2010"; echo consultaSimplesRetornaUmValor($sql); ?></td>
+              <?php for ($ano=2011; $ano <= $anoSelecionadoPOST; $ano++):?>
+                <td>
+                  <?php $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` = $ano";
+                  echo consultaSimplesRetornaUmValor($sql); ?>
+                </td>
+              <?php endfor; ?>
+            </tr>
+            </tbody>
+          </table>
         </div>
       </div>  <!-- ./panel -->
     </div>    <!-- ./col-md-6 -->
@@ -413,9 +556,15 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
             <?php
             foreach ($arrayUnidades as $unidade => $value) {
               $aux = "";
-              foreach ($arrayGrauAcademico as $grau => $value) {
-                $sql = "SELECT COUNT(Estudante) AS count FROM `$anoSelecionadoPOST` WHERE ano_ingresso > 2004 and ano_ingresso < 2011 and Regional = '$unidade'";
-                $aux .= consultaSimplesRetornaUmValor2($sql).",";
+              // ano de 2004 a 2010 (anos posteriores são calculados separadamente)
+              $sql = "SELECT COUNT(Estudante) AS count FROM `$anoSelecionadoPOST` WHERE ano_ingresso > 2004 and ano_ingresso < 2011 and Regional = '$unidade'";
+              $aux .= consultaSimplesRetornaUmValor2($sql).",";
+
+              // inicio a partir de 2011
+              for ($ano = 2011; $ano <= $anoSelecionadoPOST; $ano++) {
+                $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE ano_ingresso = $ano and Regional = '$unidade'";
+                $aux .=                consultaSimplesRetornaUmValor2($sql).",";
+
               }
               echo "{name: '$unidade', data:[$aux]},";
             }
@@ -428,8 +577,8 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
 
   <hr>
 
-  <!-- Número de Estudantes por Sexo e Regional -->
-  <!-- Gráfico de COLUNAS -->
+  <!-- Porcentagem de Estudantes por Sexo e Regional -->
+  <!-- Gráfico de BARRA -->
   <div class="row">
     <div class="col-md-6">
       <div class="panel panel-info">
@@ -443,7 +592,51 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
         <div class="panel panel-info">
           <div class="panel-heading">Porcentagem de Estudantes por Sexo e Regional</div>
           <div class="panel-body">
-            <h1>Tabela</h1>
+            <table
+            id="porcentagem-estudantes-sexo-e-regional"
+            class="table"
+            data-toggle="table"
+            >
+              <thead>
+                <th>Regional</th>
+                <th>Masculino</th>
+                <th>Feminino</th>
+              </thead>
+              <tbody>
+                <?php
+                // foreach para cada unidade
+                $arraySexos = array ("Masculino", "Feminino");
+                foreach ($arrayUnidades as $unidade => $value) {
+                  echo "<tr>";
+                    echo "<td>$unidade</td>";
+                    //consulta banco
+                    foreach ($arraySexos as $sexo) {
+                      echo "<td>";
+                      $sql = "SELECT count(sexo) * 100.0 / (select count(*) from `$anoSelecionadoPOST` where Regional = '$unidade') as count FROM `$anoSelecionadoPOST` where Regional = '$unidade' and `sexo` = '$sexo'";
+                      echo consultaSimplesRetornaUmValor($sql);
+                      echo "%</td>";
+                    }
+                    echo "</tr>";
+                  }
+
+                  // linha TOTAL
+                  echo "<tr>";
+                      echo "<td>Total</td>";
+                  foreach ($arraySexos as $sexo) {
+                      echo "<td>";
+                      $sql = "SELECT count(*) * 100.0 / (
+                                SELECT COUNT(Estudante)
+                                  FROM `$anoSelecionadoPOST` )
+                                AS count
+                                FROM `$anoSelecionadoPOST`
+                                WHERE sexo = '$sexo'";
+                      echo consultaSimplesRetornaUmValor($sql);
+                      echo "%</td>";
+                  }
+                  echo "</tr>";
+                  ?>
+              </tbody>
+            </table>
           </div>
         </div>  <!-- ./panel -->
       </div>    <!-- ./col-md-6 -->
@@ -496,7 +689,7 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
   <hr>
 
   <!-- Estudantes com ingresso até 2012, anterior a lei de cotas -->
-  <!-- Gráfico de COLUNAS -->
+  <!-- Gráfico de BARRA -->
   <div class="row">
     <div class="col-md-6">
       <div class="panel panel-info">
@@ -512,7 +705,50 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
       <div class="panel panel-info">
         <div class="panel-heading">Estudantes Matriculados em <?php echo $anoSelecionadoPOST; ?> por Ação Afirmativa na UFG com Ingresso até 2012 (Anterior a Lei de Cotas)</div>
         <div class="panel-body">
-          <h1>Tabela</h1>
+          <table id="tabela-anterior-lei-de-cotas"
+          data-toggle="table"
+          data-locale="en-US"
+          class="table">
+            <thead>
+              <th>Ação Afirmativa</th>
+              <th>Número de Estudantes</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ampla Concorrência</td>
+                <td>
+                <?php
+                  // query Ampla concorrencia
+                  $sql = "SELECT count(`Estudante`) AS count FROM `$anoSelecionadoPOST`
+                            WHERE `acao_afirmativa` <> ('UFGInclui - Negro Escola Pública')
+                            and `acao_afirmativa` <> 'UFGInclui - Indígena'
+                            and `acao_afirmativa` <> ('UFGInclui - Escola Pública')
+                            and `acao_afirmativa` <> ('UFGInclui - Quilombola')
+                            and `acao_afirmativa` <> ('UFGInclui - Surdo')
+                            and `ano_ingresso` <= 2012";
+                  consultaSimplesRetornaUmValor($sql);
+                ?>
+                </td>
+                <!-- ações -->
+                <?php foreach ($arrayAcaoAfirmativa as $acao => $value) {
+                    echo "<tr>";
+                    echo "<td>$acao</td>";
+                    $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST`
+                    WHERE `acao_afirmativa` = '$acao'
+                    and `ano_ingresso` <= 2012";
+                        echo "<td>";
+                        consultaSimplesRetornaUmValor($sql);
+                        echo "</td>";
+                    echo "</tr>";
+                } ?>
+              </tr>
+              <tr>
+
+                <td>Total</td>
+                <td><?php $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` <= 2012"; echo consultaSimplesRetornaUmValor($sql); ?></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>  <!-- ./panel -->
     </div>    <!-- ./col-md-6 -->
