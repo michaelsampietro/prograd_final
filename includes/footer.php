@@ -79,12 +79,12 @@
 		    });
 
 		    // escondendo loading button
-		    $(document).ready(function() {
-		        $.LoadingOverlay("hide");
-		    });
+		    // $(document).ready(function() {
+		    //     $.LoadingOverlay("hide");
+		    // });
 		</script>
 
-		
+
 
 	</body>
 </html>
