@@ -383,8 +383,10 @@
               <tr class="row-Jataí"><td>Jataí</td><td>360</td><td>550</td><td>610</td><td>705</td><td>880</td><td>980</td><td>980</td><td>1020</td><td>1020</td><td>1050</td><td>1080</td></tr>
               <tr class="row-Catalão"><td>Catalão</td><td>300</td><td>500</td><td>590</td><td>710</td><td>950</td><td>970</td><td>980</td><td>980</td><td>990</td><td>1110</td><td>1110</td></tr>
               <tr class="row-Goiás"> <td>Goiás</td> <td>60</td> <td>60</td> <td>60</td> <td>160</td> <td>160</td> <td>160</td> <td>160</td><td>160</td><td>210</td><td>380</td><td>470</td></tr>
-              <tr class="row-Total"><td>Total</td><td>3038</td><td>3618</td><td>3808</td><td>3998</td><td>5776</td><td>6156</td><td>6185</td><td>6205</td><td>6355</td><td>6865</td><td>6925</td></tr>
             </tbody>
+            <tfoot>
+              <tr class="row-Total"><th>Total</th><th>3038</th><th>3618</th><th>3808</th><th>3998</th><th>5776</th><th>6156</th><th>6185</th><th>6205</th><th>6355</th><th>6865</th><th>6925</th></tr>
+            </tfoot>
           </table>
           <!-- Script para a tabela com o numero de vagas ofertadas por regional -->
           <script>
@@ -403,7 +405,7 @@
               <?php $sql = "SELECT COUNT(*) AS count FROM `$anoBase` WHERE `ano_ingresso` = '$anoBase' and `Regional` ="; ?>
 
               // inserindo o valor da query total na td
-              $('#tabela-numero-vagas .row-Total').find('td').last().after('<td><?php echo consultaSimplesRetornaSomaAsString($arrayUnidades, $sql);?></td>');
+              $('#tabela-numero-vagas .row-Total').find('th').last().after('<th><?php echo consultaSimplesRetornaSomaAsString($arrayUnidades, $sql);?></td>');
           <?php endfor; ?>
           </script>
         </div>
@@ -1065,11 +1067,5 @@
       ]
     })
   </script>
-
-
-
-
-
-
 
 <?php require_once('includes/footer.php'); ?>
