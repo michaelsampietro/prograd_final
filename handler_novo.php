@@ -1,63 +1,62 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-require_once 'utils.php';
-require_once 'includes/header.php';
+  ini_set('display_errors', 1);
+  ini_set('display_startup_errors', 1);
+  error_reporting(E_ALL);
+  require_once 'utils.php';
+  require_once 'includes/header.php';
 
-$anoSelecionadoPOST = htmlspecialchars($_GET['anos']);
+  $anoSelecionadoPOST = htmlspecialchars($_GET['anos']);
 
-if (isset($_GET['tipo']))
-    $tipo = htmlspecialchars($_GET['tipo']);
+  if (isset($_GET['tipo']))
+      $tipo = htmlspecialchars($_GET['tipo']);
 
-$arrayUnidades      = array(
-    'Goiânia' => 0,
-    'Jataí' => 0,
-    'Catalão' => 0,
-    'Goiás' => 0
-);
-$arrayGrauAcademico = array(
-    'BACHARELADO' => 0,
-    'BACHARELADO E LIC.' => 0,
-    'GRAU NÃO DEFINIDO' => 0,
-    'LICENCIATURA' => 0
-);
-$arrayLeiDeCotas = array(
-    'UFGInclui - Escola Pública' => 0,
-    'UFGInclui - Negro Escola Pública' => 0,
-    'UFGInclui - Indígena' => 0,
-    'UFGInclui - Quilombola' => 0,
-    'UFGInclui - Surdo' => 0,
-);
-$arrayRendas = array(
+  $arrayUnidades      = array(
+      'Goiânia' => 0,
+      'Jataí' => 0,
+      'Catalão' => 0,
+      'Goiás' => 0
+  );
+  $arrayGrauAcademico = array(
+      'BACHARELADO' => 0,
+      'BACHARELADO E LIC.' => 0,
+      'GRAU NÃO DEFINIDO' => 0,
+      'LICENCIATURA' => 0
+  );
+  $arrayLeiDeCotas = array(
+      'UFGInclui - Escola Pública' => 0,
+      'UFGInclui - Negro Escola Pública' => 0,
+      'UFGInclui - Indígena' => 0,
+      'UFGInclui - Quilombola' => 0,
+      'UFGInclui - Surdo' => 0,
+  );
+  $arrayRendas = array(
+      '(DC Renda Inferior)' => 0,
+      '(PPI Renda Inferior)' => 0,
+      '(DC Renda Superior)' => 0,
+      '(PPI Renda Superior)' => 0,
+  );
+  $arrayBackgroundColor = array(
+      'Goiânia' => "rgba(54, 162, 235, .7)",
+      'Jataí' => "rgba(184, 18, 0, 0.7)",
+      'Catalão' => "rgba(0, 66, 10, 0.7)",
+      'Goiás' => "rgba(209, 206, 0, 0.7)",
+  );
+  // O array abaixo inclui todas as categorias de acao afirmativa
+  $arrayAcoesAfirmativas = array(
+    // 'UFGInclui - Escola Pública' => 0,
+    // 'UFGInclui - Negro Escola Pública' => 0,
     '(DC Renda Inferior)' => 0,
     '(PPI Renda Inferior)' => 0,
     '(DC Renda Superior)' => 0,
     '(PPI Renda Superior)' => 0,
-);
-$arrayBackgroundColor = array(
-    'Goiânia' => "rgba(54, 162, 235, .7)",
-    'Jataí' => "rgba(184, 18, 0, 0.7)",
-    'Catalão' => "rgba(0, 66, 10, 0.7)",
-    'Goiás' => "rgba(209, 206, 0, 0.7)",
-);
-// O array abaixo inclui todas as categorias de acao afirmativa
-$arrayAcoesAfirmativas = array(
-  // 'UFGInclui - Escola Pública' => 0,
-  // 'UFGInclui - Negro Escola Pública' => 0,
-  '(DC Renda Inferior)' => 0,
-  '(PPI Renda Inferior)' => 0,
-  '(DC Renda Superior)' => 0,
-  '(PPI Renda Superior)' => 0,
-  'UFGInclui - Indígena' => 0,
-  'UFGInclui - Quilombola' => 0,
-  'UFGInclui - Surdo' => 0,
-);
+    'UFGInclui - Indígena' => 0,
+    'UFGInclui - Quilombola' => 0,
+    'UFGInclui - Surdo' => 0,
+  );
 
-// Pegando array de anos
-$sql = "SELECT distinct ano_ingresso FROM `$anoSelecionadoPOST` where ano_ingresso >= 2011 order by ano_ingresso asc";
-$arrayAnos = consultaSimplesRetornaArray($sql);
-
+  // Pegando array de anos
+  $sql = "SELECT distinct ano_ingresso FROM `$anoSelecionadoPOST` where ano_ingresso >= 2011 order by ano_ingresso asc";
+  $arrayAnos = consultaSimplesRetornaArray($sql);
 ?>
 
   <!-- Número de Estudantes matriculados -->
@@ -77,11 +76,10 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
         <div class="panel-body">
           <table id="tabela-numero-de-estudantes-matriculados" class="table table"
             data-toggle="table"
-            data-show-export="true"
             data-click-to-select="true">
             <thead>
-              <th data-field="regional">Regional</th>
-              <th data-field="numestudantes">Número de Estudantes</th>
+              <th data-sortable="true" data-field="regional">Regional</th>
+              <th data-sortable="true" data-field="numestudantes">Número de Estudantes</th>
             </thead>
             <tbody>
               <?php foreach ($arrayUnidades as $unidade => $value) : ?>
@@ -94,15 +92,15 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
                   </td>
               </tr>
               <?php endforeach; ?>
-            <tr>
-                <td>Total</td>
-                <td><?php
-                $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `municipio` =";
-                consultaSimplesRetornaSomaAsString($arrayUnidades, $sql);
-                ?></td>
-            </tr>
             </tbody>
-            </table>
+            <tfoot>
+              <th>Total</th>
+              <th><?php
+              $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `municipio` =";
+              consultaSimplesRetornaSomaAsString($arrayUnidades, $sql);
+              ?></th>
+            </tfoot>
+          </table>
         </div>
       </div>    <!--./panel -->
     </div>      <!--./col-md-6 -->
@@ -160,13 +158,13 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
         <div class="panel-body">
           <table id="tabela-numero-de-estudantes-por-grau-academico" class="table"
             data-toggle="table"
-            data-show-export="true"
+
             data-locale="en-US"
             >
             <thead>
-              <th data-field="regional">Regional</th>
+              <th data-sortable="true" data-field="regional">Regional</th>
               <?php foreach ($arrayGrauAcademico as $grau => $value): ?>
-                <th data-field="<?php echo ucwords(strtolower($grau)) ?>"><?php echo ucwords(strtolower($grau)); ?></th>
+                <th data-sortable="true" data-field="<?php echo ucwords(strtolower($grau)) ?>"><?php echo ucwords(strtolower($grau)); ?></th>
               <?php endforeach; ?>
             </thead>
             <tbody>
@@ -182,17 +180,16 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
                   <?php endforeach; ?>
                 </tr>
               <?php endforeach; ?>
-              <!-- ROW TOTAL -->
-              <tr>
-                <td>Total</td>
-                <?php foreach ($arrayGrauAcademico as $grau => $value): ?>
-                  <td>
-                    <?php $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `grau_academico` = '$grau'";
-                    echo consultaSimplesRetornaUmValor($sql);?>
-                  </td>
-                <?php endforeach; ?>
-              </tr>
             </tbody>
+            <tfoot>
+              <th>Total</th>
+              <?php foreach ($arrayGrauAcademico as $grau => $value): ?>
+                <th>
+                  <?php $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `grau_academico` = '$grau'";
+                  echo consultaSimplesRetornaUmValor($sql);?>
+                </th>
+              <?php endforeach; ?>
+            </tfoot>
           </table>
         </div>
       </div>  <!-- ./panel -->
@@ -253,33 +250,35 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
           class="table"
           data-toggle="table"> <!-- chamada para bootstrap-table funcionar -->
             <thead>
-              <th>Regional</th>
-              <th>2005</th>
-              <th>2006</th>
-              <th>2007</th>
-              <th>2008</th>
-              <th>2009</th>
-              <th>2010</th>
-              <th>2011</th>
-              <th>2012</th>
-              <th>2013</th>
-              <th>2014</th>
-              <th>2015</th>
+              <th data-sortable="true">Regional</th>
+              <th data-sortable="true">2005</th>
+              <th data-sortable="true">2006</th>
+              <th data-sortable="true">2007</th>
+              <th data-sortable="true">2008</th>
+              <th data-sortable="true">2009</th>
+              <th data-sortable="true">2010</th>
+              <th data-sortable="true">2011</th>
+              <th data-sortable="true">2012</th>
+              <th data-sortable="true">2013</th>
+              <th data-sortable="true">2014</th>
+              <th data-sortable="true">2015</th>
             </thead>
             <tbody>
               <tr id="row-Goiânia"><td>Goiânia</td><td>58</td><td>63</td><td>66</td><td>66</td><td>81</td><td>85</td><td>86</td><td>86</td><td>89</td><td>90</td><td>90</td></tr>
               <tr id="row-Jataí"><td>Jataí</td><td>11</td><td>15</td><td>18</td><td>20</td><td>21</td><td>23</td><td>23</td><td>24</td><td>24</td><td>25</td><td>25</td></tr>
               <tr id="row-Catalão"><td>Catalão</td><td>9</td><td>14</td><td>16</td><td>19</td><td>24</td><td>25</td><td>25</td><td>25</td><td>25</td><td>26</td><td>26</td></tr>
               <tr id="row-Goiás"><td>Goiás</td><td>1</td><td>1</td><td>1</td><td>1</td><td>3</td><td>3</td><td>3</td><td>3</td><td>5</td><td>6</td><td>7</td></tr>
-              <tr id="row-Total"><td>Total</td><td>79</td><td>93</td><td>101</td><td>106</td><td>129</td><td>136</td><td>137</td><td>138</td><td>143</td><td>147</td><td>148</td></tr>
             </tbody>
+            <tfoot>
+              <tr id="row-Total"><th>Total</th><th>79</th><th>93</th><th>101</th><th>106</th><th>129</th><th>136</th><th>137</th><th>138</td><th>143</th><th>147</th><th>148</th></tr>
+            </tfoot>
           </table>
           <!-- Script da tabela -->
           <script type="text/javascript">
             // loop por todos os anos que estão no banco de dados até que seja menor ou igual ao ano selecionado pelo usuario
             <?php for ($anoBase = 2016; $anoBase <= $anoSelecionadoPOST; $anoBase++): ?>
               // inserindo o th do ano
-              $('#tabela-numero-cursos').find('thead th').last().after('<th><?php echo $anoBase;?></th>');
+              $('#tabela-numero-cursos').find('thead th').last().after('<th data-sortable="true"><?php echo $anoBase;?></th>');
               // loop para todas as unidades
               <?php foreach ($arrayUnidades as $unidade => $value) : ?>
                 <?php
@@ -294,7 +293,7 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
                 // inserindo o td da linha Total
                 <?php $sql = "SELECT COUNT(distinct curso) AS count FROM `$anoBase` WHERE `ano_ingresso` = '$anoBase' and `Regional` ="; ?>
 
-                $('#row-Total').find('td').last().after('<td><?php echo consultaSimplesRetornaSomaAsString($arrayUnidades, $sql);?></td>');
+                $('#row-Total').find('th').last().after('<th><?php echo consultaSimplesRetornaSomaAsString($arrayUnidades, $sql);?></th>');
               <?php endfor; ?>
           </script>
         </div>
@@ -366,18 +365,18 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
           class="table"
           data-toggle="table">
             <thead>
-              <th>Regional</th>
-              <th>2005</th>
-              <th>2006</th>
-              <th>2007</th>
-              <th>2008</th>
-              <th>2009</th>
-              <th>2010</th>
-              <th>2011</th>
-              <th>2012</th>
-              <th>2013</th>
-              <th>2014</th>
-              <th>2015</th>
+              <th data-sortable="true">Regional</th>
+              <th data-sortable="true">2005</th>
+              <th data-sortable="true">2006</th>
+              <th data-sortable="true">2007</th>
+              <th data-sortable="true">2008</th>
+              <th data-sortable="true">2009</th>
+              <th data-sortable="true">2010</th>
+              <th data-sortable="true">2011</th>
+              <th data-sortable="true">2012</th>
+              <th data-sortable="true">2013</th>
+              <th data-sortable="true">2014</th>
+              <th data-sortable="true">2015</th>
             </thead>
             <tbody>
               <tr class="row-Goiânia"><td>Goiânia</td><td>2318</td><td>2508</td><td>2548</td><td>2523</td><td>3786</td><td>4046</td><td>4065</td><td>4045</td><td>4135</td><td>4325</td><td>4265</td></tr>
@@ -391,7 +390,7 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
           <script>
             <?php for ($anoBase = 2016; $anoBase <= $anoSelecionadoPOST; $anoBase++): ?>
               // inserindo o th do ano
-              $('#tabela-numero-vagas').find('thead th').last().after('<th><?php echo $anoBase;?></th>');
+              $('#tabela-numero-vagas').find('thead th').last().after('<th data-sortable="true"><?php echo $anoBase;?></th>');
               // para deixar mais dinamico, utilizar um loop para todas as unidades
               <?php foreach ($arrayUnidades as $unidade => $value) : ?>
                 // definindo consulta
@@ -478,14 +477,14 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
           data-toggle="table"
           data-locale="en-US">
             <thead>
-              <th>Regional</th>
-              <th>2004 a 2010</th>
+              <th data-sortable="true">Regional</th>
+              <th data-sortable="true">2004 a 2010</th>
               <!-- inserindo os anos na tabela -->
               <?php
                   // Para esse gráfico, o ano base é 2011.
                   $anoBase = 2011;
                   while ($anoBase <= $anoSelecionadoPOST) {
-                      echo "<th>$anoBase</td>";
+                      echo "<th data-sortable='true'>$anoBase</td>";
                       $anoBase++;
                   }
               ?>
@@ -516,18 +515,18 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
                   }
               echo "</tr>";
             } ?>
-            <tr>
-              <td>Total</td>
+            </tbody>
+            <tfoot>
+              <th>Total</th>
               <!-- 2004 a 2010 -->
-              <td><?php $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` >= 2004 and `ano_ingresso` <= 2010"; echo consultaSimplesRetornaUmValor($sql); ?></td>
+              <th><?php $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` >= 2004 and `ano_ingresso` <= 2010"; echo consultaSimplesRetornaUmValor($sql); ?></th>
               <?php for ($ano=2011; $ano <= $anoSelecionadoPOST; $ano++):?>
-                <td>
+                <th>
                   <?php $sql = "SELECT COUNT(*) AS count FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` = $ano";
                   echo consultaSimplesRetornaUmValor($sql); ?>
-                </td>
+                </th>
               <?php endfor; ?>
-            </tr>
-            </tbody>
+            </tfoot>
           </table>
         </div>
       </div>  <!-- ./panel -->
@@ -598,9 +597,9 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
             data-toggle="table"
             >
               <thead>
-                <th>Regional</th>
-                <th>Masculino</th>
-                <th>Feminino</th>
+                <th data-sortable="true">Regional</th>
+                <th data-sortable="true">Masculino</th>
+                <th data-sortable="true">Feminino</th>
               </thead>
               <tbody>
                 <?php
@@ -618,29 +617,30 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
                     }
                     echo "</tr>";
                   }
-
-                  // linha TOTAL
-                  echo "<tr>";
-                      echo "<td>Total</td>";
-                  foreach ($arraySexos as $sexo) {
-                      echo "<td>";
-                      $sql = "SELECT count(*) * 100.0 / (
-                                SELECT COUNT(Estudante)
-                                  FROM `$anoSelecionadoPOST` )
-                                AS count
-                                FROM `$anoSelecionadoPOST`
-                                WHERE sexo = '$sexo'";
-                      echo consultaSimplesRetornaUmValor($sql);
-                      echo "%</td>";
-                  }
-                  echo "</tr>";
                   ?>
               </tbody>
+              <tfoot>
+                <?php
+                // linha TOTAL
+                    echo "<th>Média Geral</th>";
+                foreach ($arraySexos as $sexo) {
+                    echo "<th>";
+                    $sql = "SELECT count(*) * 100.0 / (
+                              SELECT COUNT(Estudante)
+                                FROM `$anoSelecionadoPOST` )
+                              AS count
+                              FROM `$anoSelecionadoPOST`
+                              WHERE sexo = '$sexo'";
+                    echo consultaSimplesRetornaUmValor($sql);
+                    echo "%</th>";
+                }
+                ?>
+              </tfoot>
             </table>
           </div>
         </div>  <!-- ./panel -->
       </div>    <!-- ./col-md-6 -->
-    </div>      <!-- ./row -->
+  </div>      <!-- ./row -->
   <script>
     <?php  // Gerar opcoes do gráfico
     $arrayCategories  = array();    // Categorias do gráfico
@@ -711,7 +711,7 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
           class="table">
             <thead>
               <th>Ação Afirmativa</th>
-              <th>Número de Estudantes</th>
+              <th data-sortable="true">Número de Estudantes</th>
             </thead>
             <tbody>
               <tr>
@@ -743,11 +743,11 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
                 } ?>
               </tr>
               <tr>
-
-                <td>Total</td>
-                <td><?php $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` <= 2012"; echo consultaSimplesRetornaUmValor($sql); ?></td>
-              </tr>
             </tbody>
+            <tfoot>
+              <th>Total</th>
+                <th><?php $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` <= 2012"; echo consultaSimplesRetornaUmValor($sql); ?></th>
+            </tfoot>
           </table>
         </div>
       </div>  <!-- ./panel -->
@@ -801,6 +801,11 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
         </div>
         <div class="panel-body">
           <div id="lei-de-cotas-e-ufg-inclui"></div>
+          <?php $arrayCategories = array("Ampla Concorrência" => "AC", "DC Renda Inferior" => "L1", "PPI Renda Inferior" => "L2", "DC Renda Superior" => "L3", "PPI Renda Superior" => "L4"); ?>
+          <h6><small>Dados computados após a segunda etapa da chamada pública.<br>
+          <?php foreach ($arrayCategories as $descricao => $categorie): ?>
+            <?php echo "$categorie = $descricao," ?>
+          <?php endforeach; ?></small></h6>
         </div>
       </div>  <!-- ./panel -->
     </div>    <!-- ./col-md-6 -->
@@ -812,11 +817,22 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
         <div class="panel-body">
           <table id="tabela-lei-de-cotas-e-ufg-inclui"
           class="table"
-          data-toggle="table">
+          data-toggle="table"
+          >
             <thead>
               <th>Ação Afirmativa</th>
-              <th>Número de Estudantes</th>
+              <th data-sortable="true">Número de Estudantes</th>
             </thead>
+            <script>
+            $(document).ready(function() {
+              $('#tabela-lei-de-cotas-e-ufg-inclui').DataTable( {
+                  dom: 'Bfrtip',
+                  buttons: [
+                      'print'
+                  ]
+              } );
+            } );
+          </script>
             <tbody>
               <tr>
                 <td>Ampla Concorrência</td>
@@ -826,6 +842,9 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
                                   and `acao_afirmativa` <> '(PPI Renda Inferior)'
                                   and `acao_afirmativa` <> '(DC Renda Superior)'
                                   and `acao_afirmativa` <> '(DC Renda Inferior)'
+                                  and `acao_afirmativa` <> 'UFGInclui - Indígena'
+                                  and `acao_afirmativa` <> 'UFGInclui - Quilombola'
+                                  and `acao_afirmativa` <> 'UFGInclui - Surdo'
                                   and `ano_ingresso` >= 2013";
                   echo consultaSimplesRetornaUmValor($sql); ?>
                 </td>
@@ -841,11 +860,21 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
                   </td>
                 </tr>
               <?php endforeach; ?>
-              <tr>
-                <td>Total</td>
-              </tr>
             </tbody>
+            <tfoot>
+                <th>Total</th>
+                <?php $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST`
+                                WHERE `acao_afirmativa` <> 'UFGInclui - Escola Pública'
+                                and `acao_afirmativa` <> 'UFGInclui - Negro Escola Pública'
+                                and `ano_ingresso` >= 2013"; ?>
+                <th><?php echo (consultaSimplesRetornaUmValor2($sql)+1); ?></th>
+            </tfoot>
           </table>
+          <?php $arrayCategories = array("Ampla Concorrência" => "AC", "DC Renda Inferior" => "L1", "PPI Renda Inferior" => "L2", "DC Renda Superior" => "L3", "PPI Renda Superior" => "L4"); ?>
+          <h6><small>Dados computados após a segunda etapa da chamada pública.<br>
+          <?php foreach ($arrayCategories as $descricao => $categorie): ?>
+            <?php echo "$categorie = $descricao," ?>
+          <?php endforeach; ?></small></h6>
         </div>
       </div>  <!-- ./panel -->
     </div>    <!-- ./col-md-6 -->
@@ -868,7 +897,15 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
         <?php
         $aux = "";
         // Ampla Concorrencia (AC)
-        $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` <> '(PPI Renda Superior)' and `acao_afirmativa` <> '(PPI Renda Inferior)' and `acao_afirmativa` <> '(DC Renda Superior)' and `acao_afirmativa` <> '(DC Renda Inferior)' and `ano_ingresso` >= 2013";
+        $sql = "SELECT count(*) AS count FROM `$anoSelecionadoPOST`
+                        WHERE `acao_afirmativa` <> '(PPI Renda Superior)'
+                        and `acao_afirmativa` <> '(PPI Renda Inferior)'
+                        and `acao_afirmativa` <> '(DC Renda Superior)'
+                        and `acao_afirmativa` <> '(DC Renda Inferior)'
+                        and `acao_afirmativa` <> 'UFGInclui - Indígena'
+                        and `acao_afirmativa` <> 'UFGInclui - Quilombola'
+                        and `acao_afirmativa` <> 'UFGInclui - Surdo'
+                        and `ano_ingresso` >= 2013";
         $aux .= consultaSimplesRetornaString2($sql);
 
         // Todos as outras acoes
@@ -893,7 +930,11 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
         </div>
         <div class="panel-body">
           <div id="ingressantes-sisu-todos"></div>
-          <h6><small>Dados computados após a segunda etapa da chamada pública.</small></h6>
+          <?php $arrayCategories = array("Ampla Concorrência" => "AC", "DC Renda Inferior" => "L1", "PPI Renda Inferior" => "L2", "DC Renda Superior" => "L3", "PPI Renda Superior" => "L4"); ?>
+          <h6><small>Dados computados após a segunda etapa da chamada pública.<br>
+          <?php foreach ($arrayCategories as $descricao => $categorie): ?>
+            <?php echo "$categorie = $descricao," ?>
+          <?php endforeach; ?></small></h6>
         </div>
       </div>  <!-- ./panel -->
     </div>    <!-- ./col-md-6 -->
@@ -903,7 +944,70 @@ $arrayAnos = consultaSimplesRetornaArray($sql);
           Ingressantes SISU em <?php echo $anoSelecionadoPOST ?> por Ação Afirmativa e Ampla Concorrêcia por Regional
         </div>
         <div class="panel-body">
-          <div>Tabela</div>
+          <table id="tabela-ingressantes-sisu-todos"
+          class="table table-responsive"
+          data-toggle="table">
+            <thead>
+              <th data-sortable="true">Regional</th>
+
+              <?php foreach ($arrayCategories as $descricao => $categorie): ?>
+                <th data-sortable="true"><?php echo $categorie ?></th>
+              <?php endforeach; ?>
+            </thead>
+            <tbody>
+              <?php foreach ($arrayUnidades as $unidade => $value): ?>
+                <tr>
+                  <td><?php echo $unidade ?></td>
+                  <td>
+                    <?php
+                    $sql = "SELECT Count(*) AS count
+                            FROM   `$anoSelecionadoPOST`
+                            WHERE  `acao_afirmativa` <> '(DC Renda Inferior)'
+                                   AND `acao_afirmativa` <> '(DC Renda Superior)'
+                                   AND `acao_afirmativa` <> '(PPI Renda Inferior)'
+                                   AND `acao_afirmativa` <> '(PPI Renda Superior)'
+                                   AND `acao_afirmativa` <> 'UFGInclui - Negro Escola Pública'
+                                   AND `acao_afirmativa` <> 'UFGInclui - Indígena'
+                                   AND `acao_afirmativa` <> 'UFGInclui - Escola Pública'
+                                   AND `acao_afirmativa` <> 'UFGInclui - Quilombola'
+                                   AND `acao_afirmativa` <> 'UFGInclui - Surdo'
+                                   AND `ano_ingresso` = $anoSelecionadoPOST
+                                   AND `forma_ingresso` = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'
+                                   AND `Regional` = '$unidade'";
+                    echo consultaSimplesRetornaUmValor($sql);
+                    ?>
+                  </td>
+                  <?php foreach ($arrayRendas as $renda => $value): ?>
+                    <td><?php $sql = "SELECT Count(*) AS count FROM   `$anoSelecionadoPOST` WHERE  forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU' AND `ano_ingresso` = $anoSelecionadoPOST AND `acao_afirmativa` = '$renda' AND `Regional` = '$unidade'"; echo consultaSimplesRetornaUmValor($sql); ?></td>
+                  <?php endforeach; ?>
+              </tr>
+              <?php endforeach; ?>
+            </tbody>
+            <tfoot>
+              <th>Total</th>
+              <th><?php $sql = "SELECT Count(*) AS count
+                      FROM   `$anoSelecionadoPOST`
+                      WHERE  `acao_afirmativa` <> '(DC Renda Inferior)'
+                             AND `acao_afirmativa` <> '(DC Renda Superior)'
+                             AND `acao_afirmativa` <> '(PPI Renda Inferior)'
+                             AND `acao_afirmativa` <> '(PPI Renda Superior)'
+                             AND `acao_afirmativa` <> 'UFGInclui - Negro Escola Pública'
+                             AND `acao_afirmativa` <> 'UFGInclui - Indígena'
+                             AND `acao_afirmativa` <> 'UFGInclui - Escola Pública'
+                             AND `acao_afirmativa` <> 'UFGInclui - Quilombola'
+                             AND `acao_afirmativa` <> 'UFGInclui - Surdo'
+                             AND `ano_ingresso` = $anoSelecionadoPOST
+                             AND `forma_ingresso` = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'";
+              echo consultaSimplesRetornaUmValor($sql); ?></th>
+              <?php foreach ($arrayRendas as $renda => $value): ?>
+                <th><?php $sql = "SELECT Count(*) AS count FROM   `$anoSelecionadoPOST` WHERE  forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU' AND `ano_ingresso` = $anoSelecionadoPOST AND `acao_afirmativa` = '$renda'"; echo consultaSimplesRetornaUmValor($sql); ?></th>
+              <?php endforeach; ?>
+            </tfoot>
+          </table>
+          <h6><small>Dados computados após a segunda etapa da chamada pública.<br>
+          <?php foreach ($arrayCategories as $descricao => $categorie): ?>
+            <?php echo "$categorie = $descricao," ?>
+          <?php endforeach; ?></small></h6>
         </div>
       </div>  <!-- ./panel -->
     </div>    <!-- ./col-md-6 -->
