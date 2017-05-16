@@ -219,14 +219,6 @@
         <div class="panel panel-info">
           <div class="panel panel-heading">Porcentagem da media global dos alunos <?php echo $anoSelecionadoPOST; ?> por Regional</div>
           <div class="panel-body">
-            <!-- auto-generated code -->
-            <div id="toolbar">
-              <select class="form-control">
-                  <option value="">Export Basic</option>
-                  <option value="all">Export All</option>
-                  <option value="selected">Export Selected</option>
-              </select>
-            </div>
             <table id="tabela-porcentagem-media-global"
             class="table"
             data-toggle="table"

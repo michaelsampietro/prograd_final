@@ -29,7 +29,11 @@
 		<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script> <!-- bootstrap-table -->
 		<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/locale/bootstrap-table-pt-BR.min.js"></script> <!-- bootstrap-table -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/extensions/export/bootstrap-table-export.min.js"></script>
+		<script src="./bower_components/jspdf-autotable/examples/libs/jspdf.min.js" charset="utf-8"></script>
 		<script src="./bower_components/tableExport.jquery.plugin/tableExport.min.js" charset="utf-8"></script>
+		<script src="./bower_components/jspdf-autotable/dist/jspdf.plugin.autotable.js" charset="utf-8"></script>
+		<script src="./bower_components/html2canvas/build/html2canvas.min.js" charset="utf-8"></script>
+
 		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.5/js/tableexport.min.js" charset="utf-8"></script> -->
 
 
