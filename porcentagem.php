@@ -91,8 +91,7 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-9 col-lg-10">
-
+  <div class="col-sm-9 col-lg-10"> <!-- Conteudo -->
     <!-- Porcentagem de Estudantes matriculados por regional -->
     <!-- Gráfico de BARRA -->
     <div class="row">
@@ -205,8 +204,129 @@
     </script>
     <!-- ./Porcentagem de Estudantes matriculados por regional -->
 
-    
+    <!-- Porcentagem de Estudantes matriculados por regional -->
+    <!-- Gráfico de BARRA -->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="panel panel-info">
+          <div class="panel panel-heading">Porcentagem da media global dos alunos <?php echo $anoSelecionadoPOST; ?> por Regional</div>
+          <div class="panel-body">
+            <div id="porcentagem-media-global" style="width:100%; height:400px;"></div>
+          </div>
+        </div>    <!--./panel -->
+      </div>      <!--./col-md-6 -->
+      <div class="col-md-6">
+        <div class="panel panel-info">
+          <div class="panel panel-heading">Porcentagem da media global dos alunos <?php echo $anoSelecionadoPOST; ?> por Regional</div>
+          <div class="panel-body">
+            <!-- auto-generated code -->
+            <div id="toolbar">
+              <select class="form-control">
+                  <option value="">Export Basic</option>
+                  <option value="all">Export All</option>
+                  <option value="selected">Export Selected</option>
+              </select>
+            </div>
+            <table id="tabela-porcentagem-media-global"
+            class="table"
+            data-toggle="table"
+            data-single-select="true"
+            data-click-to-select="true"
+            data-show-export="true">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th colspan="10" class="text-center">Faixas das Médias</th>
+                </tr>
+                <tr>
+                  <th data-sortable="true">Regional</th>
+                  <?php
+                  for ($index = 0; $index < 10; $index++) {
+                    $aux = $index + 1;
+                    echo "<th data-sortable='true'>$index e $aux</th>";
+                  }
+                  ?>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                foreach ($arrayUnidades as $unidade => $value) {
+                  echo "<tr>";
+                  echo "<td>$unidade</td>";
+                  for ($index = 0; $index < 10; $index++) {
+
+                      $aux = $index + 1;
+                      $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` WHERE `media_global` <> 0 AND `Regional` = '$unidade') * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `media_global` > $index and `media_global` <= $aux AND `Regional` = '$unidade'";
+
+
+                      echo "<td>";
+                      consultaSimplesRetornaUmValor($sql);
+                      echo "%</td>";
+                  }
+                  echo "</tr>";
+                }
+                ?>
+              </tbody>
+              <tfoot>
+                <?php echo "<th>Total</th>";
+                for ($index = 0; $index < 10; $index++) {
+                  $aux = $index + 1;
+                  $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` WHERE `media_global` <> 0) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `media_global` > $index and `media_global` <= $aux";
+
+                  echo "<th>";
+                  consultaSimplesRetornaUmValor($sql);
+                  echo "%</th>";
+                } ?>
+              </tfoot>
+            </table>
+          </div>
+        </div>    <!--./panel -->
+      </div>      <!--./col-md-6 -->
+    </div>        <!--./row -->
+    <script>
+      <?php  // Gerar opcoes do gráfico
+      $arrayCategories  = array();    // Categorias do gráfico
+      // Inserindo valores no array de categorias
+      foreach ($arrayIntervaloIdades as $intervalo) {
+        $arrayCategories[] = $intervalo;
+      }
+
+      $tipo       = 'column';               // Tipo do gráfico
+      $titulo     = '';                     // Título Gráfico
+      $subtitulo  = '';                     // Subtítulo do Gráfico
+      $legendaY   = 'Porcentagem de Estudantes'; // Legenda eixo Y
+
+      $opcoes = geraGrafico($arrayCategories, $tipo, $titulo, $subtitulo, $legendaY);
+      ?>
+
+      $(function () {
+      var myChart = Highcharts.chart('porcentagem-faixa-etaria', {
+        <?php echo $opcoes; ?>
+        tooltip: {
+          pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}%</b><br/>',
+          shared: true
+        },
+        series: [
+          <?php foreach ($arrayUnidades as $unidade => $value) {
+            $aux = "";
+            foreach ($arrayIntervaloIdades as $intervalo) {
+              if(preg_match('/and/i', $intervalo))
+                $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN $intervalo and `Regional` = '$unidade'";
+              else
+                $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) $intervalo AND `Regional` = '$unidade'";
+
+              $aux .= consultaSimplesRetornaUmValor2($sql).",";
+            }
+            echo "{name: '$unidade', data:[$aux]},";
+          }
+          ?>
+        ]
+      });
+    });
+    </script>
+    <!-- ./Porcentagem de Estudantes matriculados por regional -->
 
   </div>
+</div>
 
   <?php require_once('includes/footer.php'); ?>
