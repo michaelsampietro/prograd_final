@@ -78,7 +78,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Categorias <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <!-- <li class="divider"></li> -->
+                <li class="divider"></li>
                 <li class="dropdown-header">Tipos de Gráficos</li>
                 <li><a href="./handler_novo.php?anos=<?php echo $anoSelecionadoPOST ?>">Contagem</a></li>
                 <li><a href="./porcentagem.php?anos=<?php echo $anoSelecionadoPOST ?>">Porcentagem</a></li>

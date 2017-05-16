@@ -49,7 +49,7 @@
 
     .main{
       position: absolute;
-      width: calc(100% - 40px); 
+      width: calc(100% - 40px);
       margin-left: 40px;
       float: right;
     }
@@ -67,7 +67,7 @@
       width: 100%;
       margin-left: 0px;
     }
-    
+
     nav.sidebar a{
       padding-right: 13px;
     }
@@ -119,7 +119,7 @@
       opacity: 0;
     }
   }
-   
+
   @media (min-width: 1330px) {
 
     .main{
@@ -151,4 +151,3 @@
 
 
 */
-
