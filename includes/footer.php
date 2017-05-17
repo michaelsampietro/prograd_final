@@ -3,7 +3,7 @@
 	<div class="modal"><!-- Place at bottom of page --></div>
 
 	<footer>
-	<div id="footer" class="container">
+	<!-- <div id="footer" class="container">
 		<h1>footer</h1>
 		<a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
 
@@ -23,7 +23,9 @@
 				</div>
 			</div>
 	  </div>
-	</div>
+	</div> -->
+
+	 <div id="footer-brasil"></div> 
 	</footer>
 
 	<!-- On Page Load script -->
@@ -85,6 +87,6 @@
 		</script>
 
 
-
+		<script defer="defer" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
 	</body>
 </html>
