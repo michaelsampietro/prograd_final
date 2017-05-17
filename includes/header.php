@@ -20,7 +20,7 @@
 
 		<link rel="stylesheet" href="./lib/table/css/bootstrap-table.css">
 
-  	<script src="./charts/Chart.js"></script>
+		<script src="./charts/Chart.js"></script>
   	<script src="https://code.highcharts.com/highcharts.src.js"></script>
 		<script src="lib/bootstrap/js/bootstrap.min.js" charset="utf-8"></script>
 		<!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> -->
@@ -36,6 +36,9 @@
 		<script src="./bower_components/tableExport.jquery.plugin/tableExport.min.js" charset="utf-8"></script>
 		<script src="./bower_components/jspdf-autotable/dist/jspdf.plugin.autotable.js" charset="utf-8"></script>
 		<script src="./bower_components/html2canvas/build/html2canvas.min.js" charset="utf-8"></script>
+
+		<!-- Barra brasil -->
+		<script defer="defer" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
 
 		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.5/js/tableexport.min.js" charset="utf-8"></script> -->
 

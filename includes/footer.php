@@ -25,7 +25,7 @@
 	  </div>
 	</div> -->
 
-	 <div id="footer-brasil"></div> 
+	 <div id="footer-brasil"></div>
 	</footer>
 
 	<!-- On Page Load script -->
@@ -85,8 +85,5 @@
 		        $.LoadingOverlay("hide");
 		    });
 		</script>
-
-
-		<script defer="defer" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
 	</body>
 </html>
