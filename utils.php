@@ -233,7 +233,7 @@ function consultaSimplesRetornaSomaAsString($array, $sql)
   // Dando push no array para inserir o Total, que é a soma de todas as regionais
   array_push($array, array_sum($array));
   $conn->close();
-  echo round(end($array), 2);
+  return round(end($array), 2);
 }
 
 function consultaSimplesRetornaMediaAsString($array, $sql)
@@ -340,4 +340,37 @@ function geraGrafico ($arrayCategories, $tipo, $titulo, $subtitulo, $legendaY) {
   return $html;
 }
 
+function geraGraficoPizza ($tipo, $titulo, $subtitulo) {
+  $html = "chart: {
+      plotBackgroundColor: null,
+      plotBorderWidth: null,
+      plotShadow: false,
+      type: '$tipo'
+    },
+    title: {
+      text: '$titulo'
+    },
+    subtitle: {
+      text: '$subtitulo'
+    },
+    tooltip: {
+        pointFormat: '<b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+      pie: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: {
+          enabled: true,
+          format: '{point.percentage:.2f} %',
+          style: {
+            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+          }
+        },
+        showInLegend: true
+      }
+    },";
+
+return $html;
+}
 ?>

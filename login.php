@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-include_once('includes/header.php'); 
+include_once('includes/header.php');
 include_once('utils.php');
 
 // $email = htmlspecialchars($_POST["email"]);
@@ -28,7 +28,7 @@ mysqli_fetch_assoc($result);
 if (mysqli_num_rows($result) === 0) {
   echo "Email/Senha inválidos!" . mysqli_connect_error();
 }
-else 
+else
   echo "Olá, $email!";
 
 ?>
@@ -50,7 +50,7 @@ else
 </div>
 <div id="section-add-user" class="tab-content">
   <div class="row">
-    <h2>Adicioar novo usuário</h2>         
+    <h2>Adicioar novo usuário</h2>
     <form class="form-horizontal" method="post" action="handlers/add-user-handler.php">
       <fieldset>
         <!-- Form Name -->
@@ -58,46 +58,46 @@ else
 
         <!-- Text input-->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="textinput">Nome</label>  
+          <label class="col-md-4 control-label" for="textinput">Nome</label>
           <div class="col-md-4">
           <input id="nome" name="nome" placeholder="Digite o Nome" class="form-control input-md" required="" type="text">
-          <span class="help-block"> </span>  
+          <span class="help-block"> </span>
           </div>
         </div>
 
         <!-- Text input-->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="textinput">Sobrenome</label>  
+          <label class="col-md-4 control-label" for="textinput">Sobrenome</label>
           <div class="col-md-4">
           <input id="sobrenome" name="sobrenome" placeholder="Digite o sobrenome" class="form-control input-md" required="" type="text">
-          <span class="help-block"> </span>  
+          <span class="help-block"> </span>
           </div>
         </div>
 
         <!-- Text input-->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="textinput">Email</label>  
+          <label class="col-md-4 control-label" for="textinput">Email</label>
           <div class="col-md-4">
           <input id="email" name="email" placeholder="Digite o email" class="form-control input-md" required="" type="email">
-          <span class="help-block"> </span>  
+          <span class="help-block"> </span>
           </div>
         </div>
 
         <!-- Text input-->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="textinput">Senha</label>  
+          <label class="col-md-4 control-label" for="textinput">Senha</label>
           <div class="col-md-4">
             <input id="senha" name="senha" placeholder="Digite a senha" class="form-control input-md" required="" type="password">
-            <span class="help-block"> </span>  
+            <span class="help-block"> </span>
           </div>
         </div>
 
         <!-- Text input-->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="textinput">Confirme a Senha</label>  
+          <label class="col-md-4 control-label" for="textinput">Confirme a Senha</label>
           <div class="col-md-4">
             <input id="confirm-senha" name="confirm-senha" placeholder="Digite a senha novamente" class="form-control input-md" required="" type="password">
-            <span class="help-block"> </span>  
+            <span class="help-block"> </span>
           </div>
         </div>
 
@@ -144,5 +144,5 @@ $(document).ready(function () {
 
 
 <?php
-include_once('includes/footer.php'); 
+include_once('includes/footer.php');
 ?>

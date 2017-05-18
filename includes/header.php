@@ -21,7 +21,8 @@
 		<link rel="stylesheet" href="./lib/table/css/bootstrap-table.css">
 
 		<script src="./charts/Chart.js"></script>
-  	<script src="https://code.highcharts.com/highcharts.src.js"></script>
+  	<script src="https://code.highcharts.com/highcharts.js"></script>
+		<script src="http://code.highcharts.com/modules/exporting.js" charset="utf-8"></script>
 		<script src="lib/bootstrap/js/bootstrap.min.js" charset="utf-8"></script>
 		<!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> <!-- Bootstrap jQuery-->

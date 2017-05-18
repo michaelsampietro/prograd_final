@@ -8,14 +8,11 @@ O projeto é baseado no documento PDF disponível em /doc/modelo.pdf
 
 ## Módulos utilizados:
 
-Algumas ferramentas disponibilizadas gratuitamente na internet foram utilizadas, sendo elas:
-
-[Bootstrap v3.3.7](http://getbootstrap.com/)  
-[jQuery](https://jquery.com/)  
-[Highcharts](https://www.highcharts.com/)  
-[bootstrap-table](http://bootstrap-table.wenzhixin.net.cn/)  
-[bootstrap-table-export](https://github.com/wenzhixin/bootstrap-table/tree/master/src/extensions/export)  
-[tableExport](https://github.com/hhurz/tableExport.jquery.plugin)  
+Bootstrap
+Highcharts
+bootstrap-table
+bootstrap-table-export
+tableExport
 
 ## Linguagem
 
