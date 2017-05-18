@@ -279,8 +279,8 @@
       <?php  // Gerar opcoes do gráfico
       $arrayCategories  = array();    // Categorias do gráfico
       // Inserindo valores no array de categorias
-      foreach ($arrayIntervaloIdades as $intervalo) {
-        $arrayCategories[] = $intervalo;
+      for ($i=1; $i <= 10; $i++) {
+        $arrayCategories[] = $i;
       }
 
       $tipo       = 'column';               // Tipo do gráfico
@@ -292,7 +292,7 @@
       ?>
 
       $(function () {
-      var myChart = Highcharts.chart('porcentagem-faixa-etaria', {
+      var myChart = Highcharts.chart('porcentagem-media-global', {
         <?php echo $opcoes; ?>
         tooltip: {
           pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}%</b><br/>',
@@ -301,13 +301,11 @@
         series: [
           <?php foreach ($arrayUnidades as $unidade => $value) {
             $aux = "";
-            foreach ($arrayIntervaloIdades as $intervalo) {
-              if(preg_match('/and/i', $intervalo))
-                $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) BETWEEN $intervalo and `Regional` = '$unidade'";
-              else
-                $sql = "SELECT COUNT(*) * 100.0 / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` WHERE `Regional` = '$unidade') AS count FROM `$anoSelecionadoPOST` WHERE FLOOR(ABS(DATEDIFF(CURRENT_DATE, STR_TO_DATE(nascimento, '%m/%d/%y'))/365)) $intervalo AND `Regional` = '$unidade'";
+            for ($index = 0; $index < 10; $index++) {
+              $aux = $index + 1;
+              $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` WHERE `media_global` <> 0 AND `Regional` = '$unidade') * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `media_global` > $index and `media_global` <= $aux AND `Regional` = '$unidade'";
 
-              $aux .= consultaSimplesRetornaUmValor2($sql).",";
+              $aux .= consultaSimplesRetornaString2($sql);
             }
             echo "{name: '$unidade', data:[$aux]},";
           }
