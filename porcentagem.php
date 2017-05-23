@@ -97,7 +97,7 @@
     <div class="row">
       <div class="col-md-6">
         <div class="panel panel-info">
-          <div class="panel panel-heading">Porcentagem de Estudantes Matriculados em <?php echo $anoSelecionadoPOST; ?> por Regional</div>
+          <div class="panel panel-heading">Porcentagem de Estudantes Matriculados em <?php echo $anoSelecionadoPOST; ?> por Idade e Regional</div>
           <div class="panel-body">
             <div id="porcentagem-faixa-etaria" style="width:100%; height:400px;"></div>
           </div>
@@ -105,14 +105,15 @@
       </div>      <!--./col-md-6 -->
       <div class="col-md-6">
         <div class="panel panel-info">
-          <div class="panel panel-heading">Porcentagem de Estudantes Matriculados em <?php echo $anoSelecionadoPOST; ?> por Regional</div>
+          <div class="panel panel-heading">Porcentagem de Estudantes Matriculados em <?php echo $anoSelecionadoPOST; ?> por Idade e Regional</div>
           <div class="panel-body">
             <?php $arrayIntervaloIdades = array ("< 18",  "18 a 20", "21 a 23", "24 a 26", "27 a 29", "30 a 35", "36 a 40", "41 a 45", "> 45"); ?>
             <!-- auto generated code -->
             <table id="tabela-porcentagem-faixa-etaria"
               class="table"
               data-toggle="table"
-              data-click-to-select="true">
+              data-click-to-select="true"
+              data-show-export="true">
               <thead>
                 <th data-sortable="true">Regional</th>
                 <?php
@@ -163,11 +164,7 @@
     </div>        <!--./row -->
     <script>
       <?php  // Gerar opcoes do gráfico
-      $arrayCategories  = array();    // Categorias do gráfico
-      // Inserindo valores no array de categorias
-      foreach ($arrayIntervaloIdades as $intervalo) {
-        $arrayCategories[] = $intervalo;
-      }
+      $arrayCategories  = array ("< 18",  "18 a 20", "21 a 23", "24 a 26", "27 a 29", "30 a 35", "36 a 40", "41 a 45", "> 45");    // Categorias do gráfico
 
       $tipo       = 'column';               // Tipo do gráfico
       $titulo     = '';                     // Título Gráfico
@@ -204,7 +201,7 @@
     </script>
     <!-- ./Porcentagem de Estudantes matriculados por regional -->
 
-    <!-- Porcentagem de Estudantes matriculados por regional -->
+    <!-- porcentagem Média global dos estudantes -->
     <!-- Gráfico de BARRA -->
     <div class="row">
       <div class="col-md-6">
@@ -301,12 +298,12 @@
         series: [
           <?php foreach ($arrayUnidades as $unidade => $value) {
             $aux = "";
-                for ($index = 0; $index < 10; $index++) {
-                $aux = $index + 1;
-                $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` WHERE `media_global` <> 0) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `media_global` > $index and `media_global` <= $aux";
-                $aux .= consultaSimplesRetornaString2($sql);
+            for ($index = 0; $index < 10; $index++) {
+              $index2 = $index + 1;
+              $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` WHERE `media_global` <> 0 and `Regional` = '$unidade') * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `media_global` > $index and `media_global` <= $index2 and `Regional` = '$unidade'";
+
+              $aux .= consultaSimplesRetornaString2($sql);
             }
-            echo "$aux";
             echo "{name: '$unidade', data:[$aux]},";
           }
           ?>
@@ -314,85 +311,8 @@
       });
     });
     </script>
-    <!-- ./Porcentagem de Estudantes matriculados por regional -->
+    <!-- ./Porcentagem por media global -->
 
-    <!-- Estudantes anteriores a 2012 -->
-    <!-- Grafico PIZZA -->
-    <div class="row">
-      <div class="col-md-6">
-        <div class="panel panel-info">
-          <div class="panel-heading">Porcentagem de estudantes com ingresso anterior a 2012</div>
-          <div class="panel-body">
-            <div id="porcentagem-ingresso-ate-2012"></div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="panel panel-info">
-          <div class="panel-heading">Porcentagem de estudantes com ingresso anterior a 2012</div>
-          <div class="panel-body">
-            <table id = "tabela-ingresso-ate-2012"
-            class="table"
-            data-toggle="table"
-            data-show-export="true">
-              <thead>
-                <th data-sortable="true">Ingresso</th>
-                <th>Porcentagem de Estudantes</th>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Ampla Concorrência (AC)</td>
-                  <td>
-                  <?php
-                      $sql = "SELECT count(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` <= 2012) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` <> ('UFGInclui - Negro Escola Pública') and `acao_afirmativa` <> 'UFGInclui - Indígena' and `acao_afirmativa` <> ('UFGInclui - Escola Pública') and `acao_afirmativa` <> ('UFGInclui - Quilombola') and `acao_afirmativa` <> ('UFGInclui - Surdo') and `ano_ingresso` <= 2012";
-                    consultaSimplesRetornaUmValor($sql);
-                  ?>
-                  %</td>
-                </tr>
-                <tr>
-                  <td>UFGInclui</td>
-                  <td>
-                      <?php
-                      $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` <= 2012) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` <= 2012 and `acao_afirmativa` =";
-                      echo consultaSimplesRetornaSomaAsString($arrayAcaoAfirmativa, $sql);
-                  ?>
-                  %</td>
-                </tr>
-              </tbody>
-            </table>
-            <h6><small>Ações Afirmativas:
-              <?php foreach ($arrayAcaoAfirmativa as $acao => $value) {
-                echo "$acao, ";
-              }
-              ?>
-            </small></h6>
-          </div>
-        </div>
-      </div>
-    </div>
-    <script type="text/javascript">
-    $(function() {
-      var myChart = Highcharts.chart('porcentagem-ingresso-ate-2012', {
-        <?php echo geraGraficoPizza('pie', '', '') ?> // Gerando opcoes do grafico
-        series: [{
-          name: 'Regionais',
-          colorByPoint: true,
-          data: [
-            {
-              name: 'Ampla Concorrência',
-              <?php $sql = "SELECT COUNT(*) as count FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` <= 2012 and `acao_afirmativa` <> ('UFGInclui - Negro Escola Pública') and `acao_afirmativa` <> 'UFGInclui - Indígena' and `acao_afirmativa` <> ('UFGInclui - Escola Pública') and `acao_afirmativa` <> ('UFGInclui - Quilombola') and `acao_afirmativa` <> ('UFGInclui - Surdo')" ?>
-              y: <?php echo consultaSimplesRetornaUmValor2($sql) ?>
-            }, {
-              name: 'Ação Afirmativa',
-              <?php $sql = "SELECT COUNT(*) as count FROM `$anoSelecionadoPOST`  WHERE `ano_ingresso` <= 2012 and `acao_afirmativa` = " ?>
-              y: <?php echo consultaSimplesRetornaSomaAsString($arrayAcaoAfirmativa, $sql) ?>
-            }
-          ]
-        }]
-      })
-    });
-    </script>
-    <!-- ./Estudantes anteriores a 2012 -->
 
     <!-- Porcentagem de Estudantes por Sexo e Regional -->
     <!-- Gráfico de BARRA -->
@@ -413,6 +333,7 @@
               id="porcentagem-estudantes-sexo-e-regional"
               class="table"
               data-toggle="table"
+              data-show-export="true"
               >
                 <thead>
                   <th data-sortable="true">Regional</th>
@@ -503,6 +424,183 @@
       });
     </script>
     <!-- ./Porcentagem de Estudantes por Sexo e Regional -->
+
+    <!-- Estudantes anteriores a 2012 -->
+    <!-- Grafico PIZZA -->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="panel panel-info">
+          <div class="panel-heading">Porcentagem de estudantes com ingresso anterior a 2012</div>
+          <div class="panel-body">
+            <div id="porcentagem-ingresso-ate-2012"></div>
+            <h6><small>Ações Afirmativas:
+              <?php foreach ($arrayAcaoAfirmativa as $acao => $value) {
+                echo "$acao, ";
+              }
+              ?>
+            </small></h6>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="panel panel-info">
+          <div class="panel-heading">Porcentagem de estudantes com ingresso anterior a 2012</div>
+          <div class="panel-body">
+            <table id = "tabela-ingresso-ate-2012"
+            class="table"
+            data-toggle="table"
+            data-show-export="true">
+              <thead>
+                <th data-sortable="true">Ingresso</th>
+                <th>Porcentagem de Estudantes</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Ampla Concorrência (AC)</td>
+                  <td>
+                  <?php
+                      $sql = "SELECT count(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` <= 2012) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `acao_afirmativa` <> ('UFGInclui - Negro Escola Pública') and `acao_afirmativa` <> 'UFGInclui - Indígena' and `acao_afirmativa` <> ('UFGInclui - Escola Pública') and `acao_afirmativa` <> ('UFGInclui - Quilombola') and `acao_afirmativa` <> ('UFGInclui - Surdo') and `ano_ingresso` <= 2012";
+                    consultaSimplesRetornaUmValor($sql);
+                  ?>
+                  %</td>
+                </tr>
+                <tr>
+                  <td>UFGInclui</td>
+                  <td>
+                      <?php
+                      $sql = "SELECT COUNT(*) / (SELECT COUNT(*) FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` <= 2012) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` <= 2012 and `acao_afirmativa` =";
+                      echo consultaSimplesRetornaSomaAsString($arrayAcaoAfirmativa, $sql);
+                  ?>
+                  %</td>
+                </tr>
+              </tbody>
+            </table>
+            <h6><small>Ações Afirmativas:
+              <?php foreach ($arrayAcaoAfirmativa as $acao => $value) {
+                echo "$acao, ";
+              }
+              ?>
+            </small></h6>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      $(function() {
+        var myChart = Highcharts.chart('porcentagem-ingresso-ate-2012', {
+          <?php echo geraGraficoPizza('pie', '', '') ?> // Gerando opcoes do grafico
+          series: [{
+            name: 'Regionais',
+            colorByPoint: true,
+            data: [
+              {
+                name: 'Ampla Concorrência',
+                <?php $sql = "SELECT COUNT(*) as count FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` <= 2012 and `acao_afirmativa` <> ('UFGInclui - Negro Escola Pública') and `acao_afirmativa` <> 'UFGInclui - Indígena' and `acao_afirmativa` <> ('UFGInclui - Escola Pública') and `acao_afirmativa` <> ('UFGInclui - Quilombola') and `acao_afirmativa` <> ('UFGInclui - Surdo')" ?>
+                y: <?php echo consultaSimplesRetornaUmValor2($sql) ?>
+              }, {
+                name: 'Ação Afirmativa',
+                <?php $sql = "SELECT COUNT(*) as count FROM `$anoSelecionadoPOST`  WHERE `ano_ingresso` <= 2012 and `acao_afirmativa` = " ?>
+                y: <?php echo consultaSimplesRetornaSomaAsString($arrayAcaoAfirmativa, $sql) ?>
+              }
+            ]
+          }]
+        })
+      });
+    </script>
+    <!-- ./Estudantes anteriores a 2012 -->
+
+    <!-- Estudantes posteriores a 2013 (lei de cotas e ufginclui) -->
+    <!-- Grafico PIZZA -->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="panel panel-info">
+          <div class="panel-heading">Porcentagem de Estudantes com Ingresso Após 2013 (Lei de Cotas e UFGInclui)</div>
+          <div class="panel-body">
+            <div id="porcentagem-ingresso-apos-2013"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="panel panel-info">
+          <div class="panel-heading">Porcentagem de Estudantes com Ingresso Após 2013 (Lei de Cotas e UFGInclui)</div>
+          <div class="panel-body">
+            <table
+            class="table"
+            data-toggle="table"
+            data-show-export="true">
+              <thead>
+                <th>Ingresso</th>
+                <th>Porcentagem de Estudantes</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Ampla Concorrencia (AC)</td>
+                  <td>
+                      <?php $sql = "SELECT count(*) / (SELECT COUNT(*)
+                                                         FROM   `$anoSelecionadoPOST`
+                                                         WHERE  `ano_ingresso` >= 2013) * 100.0 AS count
+                                      FROM   `$anoSelecionadoPOST`
+                                      WHERE  `acao_afirmativa` <> '(DC Renda Inferior)'
+                                             and `acao_afirmativa` <> '(DC Renda Superior)'
+                                             and `acao_afirmativa` <> '(PPI Renda Inferior)'
+                                             and `acao_afirmativa` <> '(PPI Renda Superior)'
+                                             and `ano_ingresso` >= 2013 ";
+                      echo consultaSimplesRetornaUmValor($sql); ?>
+                  %</td>
+                </tr>
+                <tr>
+                  <td>Lei de Cotas e UFGInclui</td>
+                  <td><?php $sql = "SELECT Count(*) /
+                                             (
+                                                    SELECT Count(*)
+                                                    FROM   `$anoSelecionadoPOST`
+                                                    WHERE  `ano_ingresso` >= 2013) * 100.0 AS count
+                                      FROM   `$anoSelecionadoPOST`
+                                      WHERE  `ano_ingresso` >= 2013
+                                      AND    `acao_afirmativa` =";
+                      echo consultaSimplesRetornaSomaAsString($arrayRendas, $sql);?>
+                  %</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      $(function () {
+        var myChart = Highcharts.chart('porcentagem-ingresso-apos-2013', {
+          <?php echo geraGraficoPizza('pie', '', '') ?> // Gerando opcoes do grafico
+          series: [{
+            name: 'Regionais',
+            colorByPoint: true,
+            data: [
+              {
+                name: 'Ampla Concorrência',
+                <?php $sql = "SELECT count(*) / (
+                                  SELECT COUNT(*)
+                                  FROM   `$anoSelecionadoPOST`
+                                  WHERE  `ano_ingresso` >= 2013) * 100.0 AS count
+                                FROM   `$anoSelecionadoPOST`
+                                WHERE  `acao_afirmativa` <> '(DC Renda Inferior)'
+                                   and `acao_afirmativa` <> '(DC Renda Superior)'
+                                   and `acao_afirmativa` <> '(PPI Renda Inferior)'
+                                   and `acao_afirmativa` <> '(PPI Renda Superior)'
+                                   and `ano_ingresso` >= 2013 "; ?>
+                y: <?php echo $aux = consultaSimplesRetornaUmValor($sql) ?>
+              }, {
+                name: 'Ação Afirmativa',
+                <?php $sql = "SELECT Count(*) / (SELECT Count(*) FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` >= 2013) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` >= 2013 AND `acao_afirmativa` ="; ?>
+                y: <?php echo consultaSimplesRetornaSomaAsString($arrayAcaoAfirmativa, $sql) ?>
+              }
+            ]
+          }]
+        })
+      })
+    </script>
+
+    <!-- ./Estudantes posteriores a 2013 (lei de cotas e ufginclui) -->
+
 
   </div>
 </div>

@@ -15,8 +15,8 @@
 		<link rel="stylesheet" type="text/css" href="styles/login_modal.css">
 		<!-- <link rel="stylesheet" type="text/css" href="styles/login.css"> -->
 		<link rel="stylesheet" type="text/css" media="print" href="styles/print.css">
-		<link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css">
-		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+		<!-- <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css"> -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 		<link rel="stylesheet" href="./lib/table/css/bootstrap-table.css">
 
