@@ -54,6 +54,18 @@
     'UFGInclui - Surdo' => 0,
   );
 
+  $arrayAcoesAfirmativasCompleto = array(
+    'UFGInclui - Escola Pública' => 0,
+    'UFGInclui - Negro Escola Pública' => 0,
+    '(DC Renda Inferior)' => 0,
+    '(PPI Renda Inferior)' => 0,
+    '(DC Renda Superior)' => 0,
+    '(PPI Renda Superior)' => 0,
+    'UFGInclui - Indígena' => 0,
+    'UFGInclui - Quilombola' => 0,
+    'UFGInclui - Surdo' => 0,
+  );
+
   // Pegando array de anos
   $sql = "SELECT distinct ano_ingresso FROM `$anoSelecionadoPOST` where ano_ingresso >= 2011 order by ano_ingresso asc";
   $arrayAnos = consultaSimplesRetornaArray($sql);
@@ -544,6 +556,9 @@
                                              and `acao_afirmativa` <> '(DC Renda Superior)'
                                              and `acao_afirmativa` <> '(PPI Renda Inferior)'
                                              and `acao_afirmativa` <> '(PPI Renda Superior)'
+                                             and `acao_afirmativa` <> 'UFGInclui - Indígena'
+                                             and `acao_afirmativa` <> 'UFGInclui - Quilombola'
+                                             and `acao_afirmativa` <> 'UFGInclui - Surdo'
                                              and `ano_ingresso` >= 2013 ";
                       echo consultaSimplesRetornaUmValor($sql); ?>
                   %</td>
@@ -558,7 +573,7 @@
                                       FROM   `$anoSelecionadoPOST`
                                       WHERE  `ano_ingresso` >= 2013
                                       AND    `acao_afirmativa` =";
-                      echo consultaSimplesRetornaSomaAsString($arrayRendas, $sql);?>
+                      echo consultaSimplesRetornaSomaAsString($arrayAcoesAfirmativas, $sql);?>
                   %</td>
                 </tr>
               </tbody>
@@ -577,30 +592,127 @@
             data: [
               {
                 name: 'Ampla Concorrência',
-                <?php $sql = "SELECT count(*) / (
-                                  SELECT COUNT(*)
-                                  FROM   `$anoSelecionadoPOST`
-                                  WHERE  `ano_ingresso` >= 2013) * 100.0 AS count
-                                FROM   `$anoSelecionadoPOST`
-                                WHERE  `acao_afirmativa` <> '(DC Renda Inferior)'
-                                   and `acao_afirmativa` <> '(DC Renda Superior)'
-                                   and `acao_afirmativa` <> '(PPI Renda Inferior)'
-                                   and `acao_afirmativa` <> '(PPI Renda Superior)'
-                                   and `ano_ingresso` >= 2013 "; ?>
-                y: <?php echo $aux = consultaSimplesRetornaUmValor($sql) ?>
+                <?php $sql = "SELECT COUNT(*) as count
+                              FROM `$anoSelecionadoPOST`
+                              WHERE `ano_ingresso`>=2013
+                                and `acao_afirmativa` <> '(DC Renda Inferior)'
+                                and `acao_afirmativa` <> '(DC Renda Superior)'
+                                and `acao_afirmativa` <> '(PPI Renda Inferior)'
+                                and `acao_afirmativa` <> '(PPI Renda Superior)'
+                                and `acao_afirmativa` <> 'UFGInclui - Indígena'
+                                and `acao_afirmativa` <> 'UFGInclui - Quilombola'
+                                and `acao_afirmativa` <> 'UFGInclui - Surdo'";
+                ?>
+                y: <?php echo consultaSimplesRetornaUmValor2($sql); ?>
               }, {
                 name: 'Ação Afirmativa',
-                <?php $sql = "SELECT Count(*) / (SELECT Count(*) FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` >= 2013) * 100.0 AS count FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` >= 2013 AND `acao_afirmativa` ="; ?>
-                y: <?php echo consultaSimplesRetornaSomaAsString($arrayAcaoAfirmativa, $sql) ?>
+                <?php $sql = "SELECT Count(*) AS count FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` >= 2013 AND `acao_afirmativa` ="; ?>
+                y: <?php echo consultaSimplesRetornaSomaAsString($arrayAcoesAfirmativas, $sql); ?>
               }
             ]
           }]
         })
       })
     </script>
-
     <!-- ./Estudantes posteriores a 2013 (lei de cotas e ufginclui) -->
 
+    <!-- Estudantes matriculados em 2016 por ação afirmativa e lei de cotas -->
+    <!-- Gráfico PIZZA -->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="panel panel-info">
+          <div class="panel-heading">Porcentagem de Estudantes Ingressantes via SISU em <?php echo $anoSelecionadoPOST ?> por Ampla Concorrência e Ação Afirmativa</div>
+          <div class="panel-body">
+            <div id='porcentagem-estudantes-sisu'></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="panel panel-info">
+          <div class="panel-heading">Porcentagem de Estudantes Ingressantes via SISU em <?php echo $anoSelecionadoPOST ?> por Ampla Concorrência e Ação Afirmativa</div>
+          <div class="panel-body">
+            <table
+            class="table"
+            data-toggle="table"
+            data-show-export="true">
+              <thead>
+                <th>Ingresso</th>
+                <th>Porcentagem de Estudantes</th>
+              </thead>
+              <tbody>
+
+                <?php // Dados para a tabela
+                    $sql = "SELECT count(*) / (SELECT COUNT(*)
+                                                       FROM `$anoSelecionadoPOST`
+                                                       WHERE ano_ingresso = '$anoSelecionadoPOST'
+                                                             and forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'
+                                    ) * 100.0 AS count
+                                    FROM `$anoSelecionadoPOST`
+                                    WHERE `acao_afirmativa` <> '(DC Renda Inferior)'
+                                           and `acao_afirmativa` <> '(DC Renda Superior)'
+                                           and `acao_afirmativa` <> '(PPI Renda Inferior)'
+                                           and `acao_afirmativa` <> '(PPI Renda Superior)'
+                                           and `acao_afirmativa` <> 'UFGInclui - Negro Escola Pública'
+                                           and `acao_afirmativa` <> 'UFGInclui - Indígena'
+                                           and `acao_afirmativa` <> 'UFGInclui - Escola Pública'
+                                           and `acao_afirmativa` <> 'UFGInclui - Quilombola'
+                                           and `acao_afirmativa` <> 'UFGInclui - Surdo'
+                                           and ano_ingresso = '$anoSelecionadoPOST'
+                                           and forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'";
+
+                    // Ao invés de fazer uma nova pesquisa, é mais eficiente simplesmente fazer a diferença (visto que esses são os únicos dois dados no gráfico. Sendo assim, a função retorna um array para um vetor auxiliar. A diferença entre 100 e esse vetor será a outra porcentagem necessária.
+                    $amplaConcorrencia = consultaSimplesRetornaArray($sql);
+                    $acaoAfirmativa = 100 - $amplaConcorrencia[0]; ?>
+                <tr>
+                  <td>Ampla Concorrência (AC)</td>
+                  <td><?php echo round($amplaConcorrencia[0], 2) ?>%</td>
+                </tr>
+                <tr>
+                  <td>Lei de Cotas e UFGInclui</td>
+                  <td><?php echo round($acaoAfirmativa, 2) ?>%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      $(function () {
+        var myChart = Highcharts.chart('porcentagem-estudantes-sisu', {
+          <?php echo geraGraficoPizza('pie', '', '') ?> // Gerando opcoes do grafico
+          series: [{
+            name: 'Regionais',
+            colorByPoint: true,
+            data: [
+              {
+                name: 'Ampla Concorrência',
+                <?php $sql = "SELECT count(*) AS count
+                              FROM `$anoSelecionadoPOST`
+                              WHERE `acao_afirmativa` <> '(DC Renda Inferior)'
+                                and `acao_afirmativa` <> '(DC Renda Superior)'
+                                and `acao_afirmativa` <> '(PPI Renda Inferior)'
+                                and `acao_afirmativa` <> '(PPI Renda Superior)'
+                                and `acao_afirmativa` <> 'UFGInclui - Negro Escola Pública'
+                                and `acao_afirmativa` <> 'UFGInclui - Indígena'
+                                and `acao_afirmativa` <> 'UFGInclui - Escola Pública'
+                                and `acao_afirmativa` <> 'UFGInclui - Quilombola'
+                                and `acao_afirmativa` <> 'UFGInclui - Surdo'
+                                and ano_ingresso = '$anoSelecionadoPOST'
+                                and forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU'";
+                ?>
+                y: <?php echo consultaSimplesRetornaUmValor2($sql); ?>
+              }, {
+                name: 'Ação Afirmativa',
+                <?php $sql = "SELECT Count(*) AS count FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` = '$anoSelecionadoPOST' and forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU' AND `acao_afirmativa` ="; ?>
+                y: <?php echo consultaSimplesRetornaSomaAsString($arrayAcoesAfirmativasCompleto, $sql); ?>
+              }
+            ]
+          }]
+        })
+      })
+    </script>
+    <!-- ./Estudantes matriculados em 2016 por ação afirmativa -->
 
   </div>
 </div>
