@@ -82,7 +82,7 @@
                 <li class="dropdown-header">Tipos de Gráficos</li>
                 <li><a href="./handler_novo.php?anos=<?php echo $anoSelecionadoPOST ?>">Contagem</a></li>
                 <li><a href="./porcentagem.php?anos=<?php echo $anoSelecionadoPOST ?>">Porcentagem</a></li>
-                <li><a href="#">Médias</a></li>
+                <li><a href="./media.php?anos=<?php echo $anoSelecionadoPOST ?>">Médias</a></li>
                 <li><a href="#">Todos</a></li>
               </ul>
             </li>

@@ -54,18 +54,6 @@
     'UFGInclui - Surdo' => 0,
   );
 
-  $arrayAcoesAfirmativasCompleto = array(
-    'UFGInclui - Escola Pública' => 0,
-    'UFGInclui - Negro Escola Pública' => 0,
-    '(DC Renda Inferior)' => 0,
-    '(PPI Renda Inferior)' => 0,
-    '(DC Renda Superior)' => 0,
-    '(PPI Renda Superior)' => 0,
-    'UFGInclui - Indígena' => 0,
-    'UFGInclui - Quilombola' => 0,
-    'UFGInclui - Surdo' => 0,
-  );
-
   // Pegando array de anos
   $sql = "SELECT distinct ano_ingresso FROM `$anoSelecionadoPOST` where ano_ingresso >= 2011 order by ano_ingresso asc";
   $arrayAnos = consultaSimplesRetornaArray($sql);
@@ -90,11 +78,11 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Categorias <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li class="divider"></li>
+                <!-- <li class="divider"></li> -->
                 <li class="dropdown-header">Tipos de Gráficos</li>
                 <li><a href="./handler_novo.php?anos=<?php echo $anoSelecionadoPOST ?>">Contagem</a></li>
                 <li><a href="./porcentagem.php?anos=<?php echo $anoSelecionadoPOST ?>">Porcentagem</a></li>
-                <li><a href="#">Médias</a></li>
+                <li><a href="./media.php?anos=<?php echo $anoSelecionadoPOST ?>">Médias</a></li>
                 <li><a href="#">Todos</a></li>
               </ul>
             </li>
@@ -103,7 +91,7 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-9 col-lg-10"> <!-- Conteudo -->
+  <div class="col-sm-9 col-lg-10">
     <!-- Porcentagem de Estudantes matriculados por regional -->
     <!-- Gráfico de BARRA -->
     <div class="row">
