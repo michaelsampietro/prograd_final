@@ -18,13 +18,43 @@
 	font-size: 8px;
 }
 
-/*
-footer {
+.navbar .divider-vertical {
+    height: 10px;
+    margin: 0 9px;
+    border-right: 1px solid #ffffff;
+    border-left: 1px solid #f2f2f2;
+}
+
+.navbar-inverse .divider-vertical {
+    border-right-color: #222222;
+    border-left-color: #111111;
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    background-color: black;
+    color: black;
+}
+
+@media (max-width: 767px) {
+    .navbar-collapse .nav > .divider-vertical {
+        display: none;
+     }
+}
+
+
+/*footer {
 	clear: both;
 	bottom: 0;
 	position: absolute;
 	background-color: black;
 }*/
+
+.footer {
+  position: static;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
 
 canvas {
   display: none;

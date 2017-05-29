@@ -2,7 +2,7 @@
 <!-- Tela de loading -->
 	<div class="modal"><!-- Place at bottom of page --></div>
 
-	<footer>
+	<footer class="footer">
 	<!-- <div id="footer" class="container">
 		<h1>footer</h1>
 		<a href="#" data-toggle="modal" data-target="#login-modal">Login</a>

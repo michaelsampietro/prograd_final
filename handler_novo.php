@@ -75,17 +75,10 @@
         <div class="navbar-collapse collapse sidebar-navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="./">Início</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Categorias <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <!-- <li class="divider"></li> -->
-                <li class="dropdown-header">Tipos de Gráficos</li>
-                <li><a href="./handler_novo.php?anos=<?php echo $anoSelecionadoPOST ?>">Contagem</a></li>
-                <li><a href="./porcentagem.php?anos=<?php echo $anoSelecionadoPOST ?>">Porcentagem</a></li>
-                <li><a href="./media.php?anos=<?php echo $anoSelecionadoPOST ?>">Médias</a></li>
-                <li><a href="#">Todos</a></li>
-              </ul>
-            </li>
+            <li class="divider-vertical"><hr></li>
+            <li><a href="./handler_novo.php?anos=<?php echo $anoSelecionadoPOST ?>">Contagem</a></li>
+            <li><a href="./porcentagem.php?anos=<?php echo $anoSelecionadoPOST ?>">Porcentagem</a></li>
+            <li><a href="./media.php?anos=<?php echo $anoSelecionadoPOST ?>">Médias</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
