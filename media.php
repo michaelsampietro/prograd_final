@@ -5,6 +5,8 @@
   require_once 'utils.php';
   require_once 'includes/header.php';
 
+  $urlAtual = $_SERVER['REQUEST_URI'];
+
   $anoSelecionadoPOST = htmlspecialchars($_GET['anos']);
 
   if (isset($_GET['tipo']))
@@ -74,17 +76,33 @@
         </div>
         <div class="navbar-collapse collapse sidebar-navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="./">Início</a></li>
+            <li><a href="./">Início</a></li>
             <li class="divider-vertical"><hr></li>
             <li><a href="./handler.php?anos=<?php echo $anoSelecionadoPOST ?>">Contagem</a></li>
             <li><a href="./porcentagem.php?anos=<?php echo $anoSelecionadoPOST ?>">Porcentagem</a></li>
-            <li><a href="./media.php?anos=<?php echo $anoSelecionadoPOST ?>">Médias</a></li>
+            <li class="active"><a href="./media.php?anos=<?php echo $anoSelecionadoPOST ?>">Médias</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </div>
   </div>
   <div class="col-sm-9 col-lg-10">
+    <div class="row">
+      <div class="col-md-5 col-lg-5 col-sm-9 col-xs-12">
+        <form class="form-inline" action="<?php echo $urlAtual ?>.php" method="get">
+            <div class='form-group'>
+                <label for='sel1'>Escolha um ano: </label>
+                <select class='form-control' id='sel1' name='anos'>
+                    <!-- Função para gerar um dropdown com anos -->
+                    <?php dropdownAnos(); ?>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Selecionar</button>
+        </form>
+      </div>
+    </div>
+    <hr>
+
 
     <!-- Média das médias anterior a 2012 (UFGInclui) -->
     <!-- Gráfico de colunas -->
