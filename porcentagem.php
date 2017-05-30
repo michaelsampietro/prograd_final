@@ -638,7 +638,6 @@
                 <th>Porcentagem de Estudantes</th>
               </thead>
               <tbody>
-
                 <?php // Dados para a tabela
                     $sql = "SELECT count(*) / (SELECT COUNT(*)
                                                        FROM `$anoSelecionadoPOST`
@@ -703,7 +702,7 @@
               }, {
                 name: 'Ação Afirmativa',
                 <?php $sql = "SELECT Count(*) AS count FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` = '$anoSelecionadoPOST' and forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU' AND `acao_afirmativa` ="; ?>
-                y: <?php echo consultaSimplesRetornaSomaAsString($arrayAcoesAfirmativasCompleto, $sql); ?>
+                y: <?php echo consultaSimplesRetornaSomaAsString($arrayAcoesAfirmativas, $sql); ?>
               }
             ]
           }]
