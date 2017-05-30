@@ -42,12 +42,11 @@
 }
 
 
-/*footer {
+.footer-index {
 	clear: both;
 	bottom: 0;
 	position: absolute;
-	background-color: black;
-}*/
+}
 
 .footer {
   position: static;
