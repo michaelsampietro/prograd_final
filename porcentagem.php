@@ -2,8 +2,17 @@
   ini_set('display_errors', 1);
   ini_set('display_startup_errors', 1);
   error_reporting(E_ALL);
+
+  ob_start();
   require_once 'utils.php';
   require_once 'includes/header.php';
+  $buffer=ob_get_contents();
+  ob_end_clean();
+
+  $title = "Gráficos de Porcentagem - Página de Relatórios da UFG";
+  $buffer = preg_replace('/(<title>)(.*?)(<\/title>)/i', '$1' . $title . '$3', $buffer);
+
+  echo $buffer;
 
   $urlAtual = $_SERVER['REQUEST_URI'];
 
@@ -702,7 +711,7 @@
               }, {
                 name: 'Ação Afirmativa',
                 <?php $sql = "SELECT Count(*) AS count FROM `$anoSelecionadoPOST` WHERE `ano_ingresso` = '$anoSelecionadoPOST' and forma_ingresso = 'SISTEMA DE SELEÇÃO UNIFICADA - SiSU' AND `acao_afirmativa` ="; ?>
-                y: <?php echo consultaSimplesRetornaSomaAsString($arrayAcoesAfirmativas, $sql); ?>
+                y: <?php echo consultaSimplesRetornaSomaAsString($arrayAcoesAfirmativasossi, $sql); ?>
               }
             ]
           }]

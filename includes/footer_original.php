@@ -1,52 +1,32 @@
 
+<!-- Tela de loading -->
+	<div class="modal"><!-- Place at bottom of page --></div>
 
+	<footer class="footer">
+	<!-- <div id="footer" class="container">
+		<h1>footer</h1>
+		<a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
 
+		<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+		  	<div class="modal-dialog">
+				<div class="loginmodal-container">
+					<h1>Login to Your Account</h1><br>
+				  	<form action="login.php" method="post">
+						<input type="email" name="email" placeholder="E-mail">
+						<input type="password" name="pass" placeholder="Senha">
+						<input type="submit" name="login" class="login loginmodal-submit" value="Login">
+				  	</form>
 
-<nav id="footer" class="navbar navbar-default">
-  <div id="footer-container" class="container">
-		<div class="col-md-3">
-			<a href="https://www.prograd.ufg.br/">
- 			 <img src="./images/logo-prograd-footer.png" alt="PROGRAD - Pró-Reitoria de Graduação">
- 		 </a> <br><br>
-	 </div>
-	 <div class="col-md-3">
-		 <p>
-			 <b>Pró-Reitoria de Graduação</b>
-			 <br>
-			 <b>Localização</b>
-			 <br>
-			 Universidade Federal de Goiás - UFG - Campus Samambaia <br>
-			 Prédio da Reitoria - Térreo <br>
-			 Avenida Esperança, s/n. <br>
-			 Campus Universitário, Goiânia/GO. <br>
-			 CEP: 74690-900 <br><br>
-		 </p>
-	 </div>
-	 <div class="col-md-3">
-		 <p>
-			 Telefone: (62) 3521-1070 <br>
-			 FAX: (62) 3521-1162 <br>
-			 Contato: prograd@ufg.br <br>
-			 <b><a class="link-footer" href="https://prograd.ufg.br/feedback">Fale Conosco</a></b><br><br>
+				  	<div class="login-help">
+						<a href="#">Register</a> - <a href="#">Forgot Password</a>
+				  	</div>
+				</div>
+			</div>
+	  </div>
+	</div> -->
 
-			 <b><a class="link-footer" href="http://www.ouvidoria.ufg.br/">Ouvidoria </a></b>
-			 <b><a class="link-footer" href="https://www.ufg.br/pages/63497">Políticas de Privacidade </a></b>
-		 </p>
-	 </div>
-	 <div class="col-md-3">
-		 <a class="link-footer" href="https://ufgnet.ufg.br/"><b>Portal UFGNet</b></a> <br>
-		 <a class="link-footer" href="https://mail.ufg.br/"><b>WebMail</b></a> <br>
-		 <a class="link-footer" href="https://www.ufg.br/pages/63398"><b>Processos</b></a> <br>
-		 <a class="link-footer" href="http://www.ufg.br/pages/63397-resolucoes"><b>Resoluções</b></a> <br>
-		 <a class="link-footer "href="http://www.ufg.br/pages/63399-telefones"><b>Lista de Telefones</b></a> <br> <br>
-
-		 <a href="http://sic.ufg.br/">
-			 <img src="./images/acesso-informacao-footer.png" alt="Acesso à informação">
-		 </a> <br>
-	 </div>
-  </div>
-</nav>
-
+	 <div id="footer-brasil"></div>
+	</footer>
 
 	<!-- On Page Load script -->
 	<script type="text/javascript">
@@ -105,7 +85,5 @@
 		        $.LoadingOverlay("hide");
 		    });
 		</script>
-
-
 	</body>
 </html>

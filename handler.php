@@ -2,8 +2,17 @@
   ini_set('display_errors', 1);
   ini_set('display_startup_errors', 1);
   error_reporting(E_ALL);
+
+  ob_start();
   require_once 'utils.php';
   require_once 'includes/header.php';
+  $buffer=ob_get_contents();
+  ob_end_clean();
+
+  $title = "Gráficos de Contagem - Página de Relatórios da UFG";
+  $buffer = preg_replace('/(<title>)(.*?)(<\/title>)/i', '$1' . $title . '$3', $buffer);
+
+  echo $buffer;
 
   $urlAtual = $_SERVER['REQUEST_URI'];
 

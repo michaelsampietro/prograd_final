@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Bootstrap Example</title>
+		<title>Início - Página de Relatórios da UFG</title>
 	  <meta charset="utf-8">
 	  <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -57,6 +57,39 @@
 		<script src="cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js" charset="utf-8"></script>
 		<script src="cdn.datatables.net/buttons/1.3.1/js/buttons.print.min.js" charset="utf-8"></script>
 		<script src="../lib/table/extensions/table-contextmenu/bootstrap-table-contextmenu.js" charset="utf-8"></script> -->
+
+		<!-- Prograd (prograd) -->
+		<style type="text/css">
+			#navbar-topo {
+				padding: 0px !important;
+				height: 150px !important;
+				background-color: white;
+				border-bottom: 3px solid #689ECA;
+			}
+			body {
+				padding-bottom: -20px;
+				margin-bottom: -20px;
+			}
+			#footer {
+				padding: 0px;
+				color: white;
+				background-color: #2576B2;
+			}
+			#footer-container {
+				background-color: #689ECA;
+				color: white;
+			}
+			#footer-index {
+				position: absolute;
+				width: 100%
+				left: 0;
+				bottom: 0;
+			}
+			.link-footer, .link-footer:hover, .link-footer:visited{
+				color:white;
+				text-decoration: none;
+			}
+		</style>
 	</head>
 
 	<body class="" onload="onPageLoad();">
@@ -67,13 +100,38 @@
 			</ul>
 		</div>
 
-		<nav id="header" class="navbar navbar-default navbar-collapse">
+
+		  <nav id="navbar-topo" class="navbar navbar-default">
+				<div class="container">
+					<div class="container-fluid">
+						<div class="nav-header">
+							<div class="row">
+								<div class="col-sm-4">
+									<div class="row">
+										<div class="col-xs-6">
+											<a class="navbar-brand" target="_blank" href="https://www.prograd.ufg.br/">
+												<img alt="Prograd - Pró-Reitoria de Graduação" id="prograd" src="./images/prograd_logo.svg" class="img img-responsive">
+											</a>
+										</div>
+										<div class="col-xs-6">
+											<a class="navbar-brand" target="_blank" href="https://www.ufg.br/">
+												<img alt="UFG - Universidade Federal de Goiás" id="ufg" class="img img-responsive" src="./images/ufg_logo.png">
+											</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		  </nav>
+
+		<!-- <nav id="header" class="navbar navbar-default navbar-collapse">
 		  <div class="container-fluid">
 		    <div class="navbar-header">
 		      <a class="navbar-brand" href="../prograd_michael/index.php">
-		        <!-- <img alt="Brand" src="images/ufg_logo.png"> -->
+		         <img alt="Brand" src="images/ufg_logo.png">
 		      </a>
 		      <a id="relatorios" class="navbar-brand" >Página de relatórios UFG por ano</a>
 		    </div>
 		  </div>
-		</nav>
+		</nav> -->
