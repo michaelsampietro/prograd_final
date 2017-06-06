@@ -5,7 +5,7 @@
 <nav id="footer" class="navbar navbar-default">
   <div id="footer-container" class="container">
 		<div class="col-md-3">
-			<a href="https://www.prograd.ufg.br/">
+			<a target="_blank" href="https://www.prograd.ufg.br/">
  			 <img src="./images/logo-prograd-footer.png" alt="PROGRAD - Pró-Reitoria de Graduação">
  		 </a> <br><br>
 	 </div>
@@ -27,20 +27,20 @@
 			 Telefone: (62) 3521-1070 <br>
 			 FAX: (62) 3521-1162 <br>
 			 Contato: prograd@ufg.br <br>
-			 <b><a class="link-footer" href="https://prograd.ufg.br/feedback">Fale Conosco</a></b><br><br>
+			 <b><a  target="_blank" class="link-footer" href="https://prograd.ufg.br/feedback">Fale Conosco</a></b><br><br>
 
-			 <b><a class="link-footer" href="http://www.ouvidoria.ufg.br/">Ouvidoria </a></b>
-			 <b><a class="link-footer" href="https://www.ufg.br/pages/63497">Políticas de Privacidade </a></b>
+			 <b><a  target="_blank" class="link-footer" href="http://www.ouvidoria.ufg.br/">Ouvidoria </a></b>
+			 <b><a  target="_blank" class="link-footer" href="https://www.ufg.br/pages/63497">Políticas de Privacidade </a></b>
 		 </p>
 	 </div>
 	 <div class="col-md-3">
-		 <a class="link-footer" href="https://ufgnet.ufg.br/"><b>Portal UFGNet</b></a> <br>
-		 <a class="link-footer" href="https://mail.ufg.br/"><b>WebMail</b></a> <br>
-		 <a class="link-footer" href="https://www.ufg.br/pages/63398"><b>Processos</b></a> <br>
-		 <a class="link-footer" href="http://www.ufg.br/pages/63397-resolucoes"><b>Resoluções</b></a> <br>
-		 <a class="link-footer "href="http://www.ufg.br/pages/63399-telefones"><b>Lista de Telefones</b></a> <br> <br>
+		 <a  target="_blank" class="link-footer" href="https://ufgnet.ufg.br/"><b>Portal UFGNet</b></a> <br>
+		 <a  target="_blank" class="link-footer" href="https://mail.ufg.br/"><b>WebMail</b></a> <br>
+		 <a  target="_blank" class="link-footer" href="https://www.ufg.br/pages/63398"><b>Processos</b></a> <br>
+		 <a  target="_blank" class="link-footer" href="http://www.ufg.br/pages/63397-resolucoes"><b>Resoluções</b></a> <br>
+		 <a  target="_blank" class="link-footer "href="http://www.ufg.br/pages/63399-telefones"><b>Lista de Telefones</b></a> <br> <br>
 
-		 <a href="http://sic.ufg.br/">
+		 <a target="_blank" href="http://sic.ufg.br/">
 			 <img src="./images/acesso-informacao-footer.png" alt="Acesso à informação">
 		 </a> <br>
 	 </div>
