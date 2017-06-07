@@ -18,4 +18,7 @@
     padding-top: 12px;
     padding-bottom: 12px;
   }
+  .sidebar-nav .navbar li:hover {
+    background-color: #E7E7E7;
+  }
 }

@@ -1,0 +1,48 @@
+#navbar-topo {
+  padding: 0px !important;
+  height: 150px !important;
+  background-color: white;
+  border-bottom: 3px solid #689ECA;
+}
+
+#footer {
+  padding: 0px;
+  color: white;
+  background-color: #2576B2;
+}
+
+#footer-container {
+  background-color: #689ECA;
+  color: white;
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 769px) {
+  #footer-index {
+    background-color: #2576B2;
+  	clear: both;
+  	bottom: 0;
+    right: 0;
+    left: 0;
+  	position: absolute;
+  }
+}
+
+/* Arrumando links */
+#footer a:visited, #footer a:active, #footer a {
+  color: white !important;
+}
+
+ #footer a:hover {
+   color: white !important;
+   text-decoration: underline !important;
+ }
+
+ #footer-index a:visited, #footer-index a:active, #footer-index a {
+   color: white !important;
+ }
+
+  #footer-index a:hover {
+    color: white !important;
+    text-decoration: underline !important;
+  }

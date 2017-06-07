@@ -8,16 +8,11 @@
   border-radius: 2px !important;
 }
 
-#relatorios {
-	font-size: 2.0em;
-	padding-top: 30px;
+.imagem-navbar-topo {
+
 }
 
-.texto-informativo {
-	color: #fff;
-	font-size: 8px;
-}
-
+/*
 .navbar .divider-vertical {
     height: 10px;
     margin: 0 9px;
@@ -33,7 +28,7 @@
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
     background-color: black;
     color: black;
-}
+}*/
 
 @media (max-width: 767px) {
     .navbar-collapse .nav > .divider-vertical {
@@ -50,23 +45,6 @@
   }
 }
 
-/*.footer-index {
-	clear: both;
-	bottom: 0;
-	position: absolute;
-}*/
-
-/*.footer {
-  position: static;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}*/
-
-canvas {
-  display: none;
-}
-
 .panel {
 	text-align: justify;
  }
@@ -78,40 +56,9 @@ canvas {
     float: none;
 }
 
-td.tabela-negrito {
-	font-weight: bold;
-}
 
-#container-geral {
-  padding-bottom: 10px;
-}
-
-#container-geral div canvas {
-	display: none;
-}
-
-#container-geral div div {
-	display: none;
-}
-
-#container-geral div table {
-	display: none;
-}
+/* Botão de loading */
 /*
-.text-center {
-	text-align: left;
-}*/
-/*
-h3 {
-	text-align: left;
-	cursor: pointer;
-}
-
-.h3-normal {
-	text-align: left;
-	cursor: auto !important;
-}*/
-
 .modal {
     display:    none;
     position:   fixed;
@@ -124,16 +71,16 @@ h3 {
                 url('http://i.stack.imgur.com/FhHRx.gif')
                 50% 50%
                 no-repeat;
-}
+}*/
 
 /* When the body has the loading class, we turn
    the scrollbar off with overflow:hidden */
-body.loading {
+/*body.loading {
     overflow: hidden;
-}
+}*/
 
 /* Anytime the body has the loading class, our
    modal element will be visible */
-body.loading .modal {
+/*body.loading .modal {
     display: block;
-}
+}*/

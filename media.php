@@ -71,30 +71,9 @@
 ?>
 
 <div class="row">
-  <div class="col-sm-3 col-lg-2">
-    <div class="sidebar-nav">
-      <div class="navbar navbar-default" role="navigation">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <span class="visible-xs navbar-brand">Menu</span>
-        </div>
-        <div class="navbar-collapse collapse sidebar-navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="./">Início</a></li>
-            <li class="divider-vertical"><hr></li>
-            <li><a href="./handler.php?anos=<?php echo $anoSelecionadoPOST ?>">Contagem</a></li>
-            <li><a href="./porcentagem.php?anos=<?php echo $anoSelecionadoPOST ?>">Porcentagem</a></li>
-            <li class="active"><a href="./media.php?anos=<?php echo $anoSelecionadoPOST ?>">Médias</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </div>
-  </div>
+  <!-- Menu lateral -->
+  <?php require_once 'includes/navbar-left.php'; ?>
+
   <div class="col-sm-9 col-lg-10">
     <div class="row">
       <div class="col-md-5 col-lg-5 col-sm-9 col-xs-12">

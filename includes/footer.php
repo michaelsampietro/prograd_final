@@ -1,7 +1,3 @@
-
-
-
-
 <nav id="footer" class="navbar navbar-default">
   <div id="footer-container" class="container">
 		<div class="col-md-3">
@@ -19,7 +15,8 @@
 			 Prédio da Reitoria - Térreo <br>
 			 Avenida Esperança, s/n. <br>
 			 Campus Universitário, Goiânia/GO. <br>
-			 CEP: 74690-900 <br><br>
+			 CEP: 74690-900 <br><br> <br>
+       <a target="_blank" href="https://www.ufg.br/pages/63491"><b>Mapas da UFG</b></a>
 		 </p>
 	 </div>
 	 <div class="col-md-3">
@@ -29,8 +26,8 @@
 			 Contato: prograd@ufg.br <br>
 			 <b><a  target="_blank" class="link-footer" href="https://prograd.ufg.br/feedback">Fale Conosco</a></b><br><br>
 
-			 <b><a  target="_blank" class="link-footer" href="http://www.ouvidoria.ufg.br/">Ouvidoria </a></b>
-			 <b><a  target="_blank" class="link-footer" href="https://www.ufg.br/pages/63497">Políticas de Privacidade </a></b>
+			 <b><a  target="_blank" class="link-footer" href="http://www.ouvidoria.ufg.br/">Ouvidoria </a></b> <br>
+			 <b><a  target="_blank" class="link-footer" href="https://www.ufg.br/pages/63497">Políticas de Privacidade </a></b><br>
 		 </p>
 	 </div>
 	 <div class="col-md-3">
@@ -47,65 +44,67 @@
   </div>
 </nav>
 
+<!-- On Page Load script -->
+<script type="text/javascript">
+    function onPageLoad() {
+        insereTabelaVagasRegional();
+        insereTabelaNumeroDeCursos();
+    }
 
-	<!-- On Page Load script -->
-	<script type="text/javascript">
-		    function onPageLoad() {
-		        insereTabelaVagasRegional();
-		        insereTabelaNumeroDeCursos();
-		    }
+    // abrindo/fechando quando tem canvas
+    $(document).ready(function() {
+        $(".row").each(function() {
+            $("h3").each(function() {
+                $(this).siblings("canvas").hide();
+                $(this).siblings("h7").hide();
+                $(this).siblings("table").hide();
+                $(this).addClass("noprint");
+            });
+            $("h3").click(function() {
+                // se tiver escondido, quando clicar no h3 é pra ir pro centro
+                // se não tiver escondido, quando clicar é pro h3 ir pra esquerda..
+                if ($(this).siblings("canvas").is(":hidden")) {
+                    $(this).addClass("text-center");
+                    $(this).siblings("canvas").show();
+                    $(this).siblings("h7").show();
+                    $(this).removeClass("noprint");
+                } else {
+                    $(this).removeClass("text-center");
+                    $(this).siblings("canvas").hide();
+                    $(this).siblings("h7").hide();
+                    $(this).addClass("noprint");
+                }
+            });
+        });
+    });
 
-		    // abrindo/fechando quando tem canvas
-		    $(document).ready(function() {
-		        $(".row").each(function() {
-		            $("h3").each(function() {
-		                $(this).siblings("canvas").hide();
-		                $(this).siblings("h7").hide();
-		                $(this).siblings("table").hide();
-		                $(this).addClass("noprint");
-		            });
-		            $("h3").click(function() {
-		                // se tiver escondido, quando clicar no h3 é pra ir pro centro
-		                // se não tiver escondido, quando clicar é pro h3 ir pra esquerda..
-		                if ($(this).siblings("canvas").is(":hidden")) {
-		                    $(this).addClass("text-center");
-		                    $(this).siblings("canvas").show();
-		                    $(this).siblings("h7").show();
-		                    $(this).removeClass("noprint");
-		                } else {
-		                    $(this).removeClass("text-center");
-		                    $(this).siblings("canvas").hide();
-		                    $(this).siblings("h7").hide();
-		                    $(this).addClass("noprint");
-		                }
-		            });
-		        });
-		    });
+    $(document).ready(function() {
+        $(".row").each(function() {
+            $("h3").each(function() {
+                $(this).siblings("div").hide();
+            });
+        });
+    });
+    $(document).ready(function() {
+        $(".row").each(function() {
+            $("h3").each(function() {
+                $(this).siblings("table").hide();
+            });
+            $("h3").click(function() {
+                $(this).siblings("table").toggle();
+            })
+        });
+    });
 
-		    $(document).ready(function() {
-		        $(".row").each(function() {
-		            $("h3").each(function() {
-		                $(this).siblings("div").hide();
-		            });
-		        });
-		    });
-		    $(document).ready(function() {
-		        $(".row").each(function() {
-		            $("h3").each(function() {
-		                $(this).siblings("table").hide();
-		            });
-		            $("h3").click(function() {
-		                $(this).siblings("table").toggle();
-		            })
-		        });
-		    });
+    // escondendo loading button
+    $(document).ready(function() {
+        $.LoadingOverlay("hide");
+    });
 
-		    // escondendo loading button
-		    $(document).ready(function() {
-		        $.LoadingOverlay("hide");
-		    });
-		</script>
+    $("#sistemas-ufg").change(function() {
+      document.location.href=$(this).val();
+    });
+</script>
 
-
-	</body>
+</body>
 </html>

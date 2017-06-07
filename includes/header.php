@@ -1,4 +1,20 @@
 <?php header('Content-Type: text/html; charset=utf-8'); ?>
+
+
+<!-- Array com todas as páginas principais
+Será usado para gerar o menu lateral dinamicamente. -->
+<?php
+
+$pages = array();
+$pages["index.php"] = "Início";
+$pages["handler.php"] = "Contagem";
+$pages["porcentagem.php"] = "Porcentagem";
+$pages["media.php"] = "Médias";
+
+$activePage = basename($_SERVER['PHP_SELF']);
+
+?>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -13,6 +29,7 @@
 		<link rel="stylesheet" type="text/css" href="styles/navbar-left.css">
 		<link rel="stylesheet" type="text/css" href="styles/tipos_graficos.css">
 		<link rel="stylesheet" type="text/css" href="styles/login_modal.css">
+		<link rel="stylesheet" type="text/css" href="styles/footers.css">
 		<!-- <link rel="stylesheet" type="text/css" href="styles/login.css"> -->
 		<link rel="stylesheet" type="text/css" media="print" href="styles/print.css">
 		<!-- <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css"> -->
@@ -57,39 +74,6 @@
 		<script src="cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js" charset="utf-8"></script>
 		<script src="cdn.datatables.net/buttons/1.3.1/js/buttons.print.min.js" charset="utf-8"></script>
 		<script src="../lib/table/extensions/table-contextmenu/bootstrap-table-contextmenu.js" charset="utf-8"></script> -->
-
-		<!-- Prograd (prograd) -->
-		<style type="text/css">
-			#navbar-topo {
-				padding: 0px !important;
-				height: 150px !important;
-				background-color: white;
-				border-bottom: 3px solid #689ECA;
-			}
-			body {
-				padding-bottom: -20px;
-				margin-bottom: -20px;
-			}
-			#footer {
-				padding: 0px;
-				color: white;
-				background-color: #2576B2;
-			}
-			#footer-container {
-				background-color: #689ECA;
-				color: white;
-			}
-			#footer-index {
-				position: absolute;
-				width: 100%
-				left: 0;
-				bottom: 0;
-			}
-			.link-footer, .link-footer:hover, .link-footer:visited{
-				color:white;
-				text-decoration: none;
-			}
-		</style>
 	</head>
 
 	<body class="" onload="onPageLoad();">
@@ -106,32 +90,30 @@
 					<div class="container-fluid">
 						<div class="nav-header">
 							<div class="row">
-								<div class="col-sm-4">
-									<div class="row">
-										<div class="col-xs-6">
+								<div class="col-sm-5">
+									<div class="row" style="margin-top: -12px;">
+										<div class="imagem-navbar-topo col-xs-6">
 											<a class="navbar-brand" target="_blank" href="https://www.prograd.ufg.br/">
 												<img alt="Prograd - Pró-Reitoria de Graduação" id="prograd" src="./images/prograd_logo.svg" class="img img-responsive">
 											</a>
 										</div>
-										<div class="col-xs-6">
+										<div class="imagem-navbar-topo col-xs-6">
 											<a class="navbar-brand" target="_blank" href="https://www.ufg.br/">
 												<img alt="UFG - Universidade Federal de Goiás" id="ufg" class="img img-responsive" src="./images/ufg_logo.png">
 											</a>
 									</div>
 								</div>
 							</div>
+							<div class="navbar-right">
+								<select id="sistemas-ufg" name="sistemas-ufg">
+									<option value="http://ufgnet.ufg.br">Portal UFGNet</option>
+									<option value="http://mail.ufg.br">Webmail</option>
+									<option value="https://sigaa.sistemas.ufg.br">Matrícula</option>
+									<option value="http://sistemas.ufg.br/CONCURSOS_WEB/">Concursos</option>
+									<option value="http://portalsig.ufg.br">Portal SIG</option>
+								</select>
+							</div>
 						</div>
 					</div>
 				</div>
 		  </nav>
-
-		<!-- <nav id="header" class="navbar navbar-default navbar-collapse">
-		  <div class="container-fluid">
-		    <div class="navbar-header">
-		      <a class="navbar-brand" href="../prograd_michael/index.php">
-		         <img alt="Brand" src="images/ufg_logo.png">
-		      </a>
-		      <a id="relatorios" class="navbar-brand" >Página de relatórios UFG por ano</a>
-		    </div>
-		  </div>
-		</nav> -->
