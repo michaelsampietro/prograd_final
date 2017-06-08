@@ -1,4 +1,4 @@
-<nav id="footer" class="navbar navbar-default">
+<nav id="footer" class="col-md-12 navbar navbar-default">
   <div id="footer-container" class="container">
 		<div class="col-md-3">
 			<a target="_blank" href="https://www.prograd.ufg.br/">
@@ -46,10 +46,10 @@
 
 <!-- On Page Load script -->
 <script type="text/javascript">
-    function onPageLoad() {
-        insereTabelaVagasRegional();
-        insereTabelaNumeroDeCursos();
-    }
+    // function onPageLoad() {
+    //     insereTabelaVagasRegional();
+    //     insereTabelaNumeroDeCursos();
+    // }
 
     // abrindo/fechando quando tem canvas
     $(document).ready(function() {
@@ -97,14 +97,14 @@
     });
 
     // escondendo loading button
-    $(document).ready(function() {
-        $.LoadingOverlay("hide");
-    });
+    // $(document).ready(function() {
+    //     $.LoadingOverlay("hide");
+    // });
 
     $("#sistemas-ufg").change(function() {
-      document.location.href=$(this).val();
+      var url = $(this).val();
+      window.open(url);
     });
 </script>
-
 </body>
 </html>

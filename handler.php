@@ -746,16 +746,6 @@
               <th>Ação Afirmativa</th>
               <th data-sortable="true">Número de Estudantes</th>
             </thead>
-            <script>
-            $(document).ready(function() {
-              $('#tabela-lei-de-cotas-e-ufg-inclui').DataTable( {
-                  dom: 'Bfrtip',
-                  buttons: [
-                      'print'
-                  ]
-              } );
-            } );
-          </script>
             <tbody>
               <tr>
                 <td>Ampla Concorrência</td>

@@ -108,11 +108,6 @@
 
 <!-- On Page Load script -->
 <script type="text/javascript">
-    function onPageLoad() {
-        insereTabelaVagasRegional();
-        insereTabelaNumeroDeCursos();
-    }
-
     // abrindo/fechando quando tem canvas
     $(document).ready(function() {
         $(".row").each(function() {
@@ -158,13 +153,9 @@
         });
     });
 
-    // escondendo loading button
-    $(document).ready(function() {
-        $.LoadingOverlay("hide");
-    });
-
     $("#sistemas-ufg").change(function() {
-      document.location.href=$(this).val();
+      var url = $(this).val();
+      window.open(url);
     });
 </script>
 
