@@ -30,7 +30,7 @@ $activePage = basename($_SERVER['PHP_SELF']);
 		<link rel="stylesheet" type="text/css" href="styles/tipos_graficos.css">
 		<link rel="stylesheet" type="text/css" href="styles/login_modal.css">
 		<link rel="stylesheet" type="text/css" href="styles/footers.css">
-		<link rel="stylesheet" type="text/css" media="print" href="styles/print.css">
+		<!-- <link rel="stylesheet" type="text/css" media="print" href="styles/print.css"> -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 		<link rel="stylesheet" href="./lib/table/css/bootstrap-table.css">
